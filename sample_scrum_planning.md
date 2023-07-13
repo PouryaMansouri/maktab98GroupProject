@@ -51,8 +51,7 @@
     - Implement Django Form Objects, Django Sessions, and Django Users and Authentication 🔒👥
     - Create a custom backend authentication for Django using phone numbers 📱📞
     - Implement basic frontend design using HTML, CSS, and Bootstrap 🎨💻
-    - Write unit tests for authentication that cover more than 95% of the code 🧪✅
-
+      
 ### Sprint 2 (Week 2)
 
 - Online Menu and Staff Panel
