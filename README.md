@@ -1,12 +1,12 @@
 # 🌟 CafeShop Adventure: The Quest for the Ultimate Django Fullstack Project 🌟
 
-Greetings, young Django developers! Your journey is about to start, and it's going to be a thrilling one! As junior Django full-stack developers, you have been tasked with a project of great importance. Café owners from the mystical land of Pythonia need your help to create an online menu and staff panel for their beloved café, the _CafeShop_.
+Welcome, young Django developers, to the CafeShop Adventure! You have been selected to embark on a thrilling journey to create the ultimate Django full-stack project. CafeShop, the most popular coffee shop in the mystical land of Pythonia, needs your expertise to build an online menu and staff panel. 
 
-You have been chosen for this mission because of your skills in Django, Scrum, SQL, ERD, Git, HTML, CSS, Bootstrap, and GitHub. Your adventure will last three weeks, and each week, you'll learn new techniques that will aid you in your quest.
+Your mission, should you choose to accept it, is to create a fully functional web application that will allow customers to browse the cafe's menu, place orders, and earn rewards, while also enabling staff members to manage orders, view sales analytics, and update the menu. The Product Manager, Pourya Mansouri, has called upon you to take on this quest, and the four great Teacher Assistants, Fateme Alimirzaei, Mahdi Mirzaei, Milad Hoseinzadeh, and Hananeh Falah, will guide you through this exciting journey.
 
-Pourya Mansouri, the  Product Manager, shall oversee your progress, while Fateme Alimirzaei, Mahdi Mirzaei, Milad Hoseinzadeh, and Hananeh Falah, the four great Teacher Assistants, will guide you through the treacherous waters of software development as your Product Owners.
+Your task is divided into three sections, each with a score of 100 points. Each section will take one week to complete, and at the end of each week, you will deliver your work. You will also follow the Agile methodology in weekly sprints, with one team member serving as the Scrum Master.
 
-So, gear up, assemble your team, and embark on this epic journey! Remember, each group must choose one member as a Scrum Master, and follow the Agile methodology in weekly sprints.
+To encourage quality work, thorough testing, and documentation, we expect the test coverage to be over 95%, and each group must create a README file for their GitHub repository that explains the project and provides setup and run instructions.
 
 ## 🌈 Project Sections and Points 🎯
 
@@ -21,7 +21,7 @@ So, gear up, assemble your team, and embark on this epic journey! Remember, each
 
 #### Basic Models (30 points)
 
-- Create the necessary models for café items and categories.
+- Create the necessary models for cafe items and categories.
 - Create models for staff, customer orders, and order items.
 - Define relationships between the models.
 
@@ -72,12 +72,20 @@ So, gear up, assemble your team, and embark on this epic journey! Remember, each
 
 🏆 **Achievements:** A stunning, fully functional CaféShop website.
 
-🎁 **Incentives:** The eternal gratitude of CaféShop owners and a great project for your portfolio.
+🎁 **Incentives:** The eternal gratitude of CafeShop owners and a great project for your portfolio.
 
-🚀 **Deliverables:** The final CaféShop project with all features, frontend magic, and a responsive design.
+🚀 **Deliverables:** The final CafeShop project with all features, frontend magic, and a responsive design.
 
 ## 📚 Documentation and Setup
 
 Each group must create a README file for their GitHub repository that explains the project and provides setup and run instructions. This will ensure that your project is easy to understand and use by others in the future.
 
-Remember, this journey is filled with fun and excitement! Give it your best, and may the force of Django be with you! 🚀
+## 💰 Achievements and Incentives
+
+To motivate and reward your hard work, we have added some incentives. 
+
+- Early bird bonus: Complete each section by the end of the week and earn 20 extra points. 🐥👀
+- Presentation bonus: Present your completed work at the end of each week and earn an additional 20 points. 🎤👨‍🏫
+- Completion bonus: Complete all tasks for the entire project and earn a bonus 40 points. 🎉🏆
+
+Good luck on your adventure, young Django developers! With your skills and dedication, you can createa fantastic project that will make CafeShop owners and customers happy. Remember to work collaboratively, communicate effectively, and have fun while learning and growing as developers. May the force of Django be with you! 🚀
