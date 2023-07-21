@@ -45,7 +45,6 @@
     - Enable the manager to generate and download detailed sales reports. 📊👨‍💼📝
 
 4. Deployment and Finishing Touches
-    - Deploy the project on a platform of your choice, such as Heroku or AWS. 🚀🌐👨‍💻
     - Ensure the website is live, functional, and accessible to customers. 🌟👨‍💻👀
     - Implement Django Generic Views. 🐍👨‍💻📄
     - Add statistics and insights for the manager. 📊👨‍💼🔍
