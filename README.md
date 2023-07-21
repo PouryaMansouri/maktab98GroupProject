@@ -87,7 +87,7 @@ To encourage quality work, thorough testing, and documentation, we expect the te
 🚀 **Deliverables:** A complete, fully functional, and responsive web application.
 
 
-### Section 4: Testing, Analytics Feature, Documentation, and Deployment (100 points)
+### Section 4: Testing, Analytics Feature, Documentation (100 points)
 
 
 #### Manager's Dashboard: Analytics and Reports 📈 (40 points)
@@ -96,29 +96,23 @@ To encourage quality work, thorough testing, and documentation, we expect the te
 - Enable the manager to generate and download detailed sales reports.
 - The analytics feature should provide insights into the most popular cafe items, peak business hours, and customer demographic data.
 
-#### Testing 🧪 (35 points)
+#### Testing 🧪 (40 points)
 
 - Write unit tests for the code.
 - Ensure test coverage of at least 95%.
 - Handle and resolve any bugs or issues.
 
-#### Documentation 📝 (15 points)
+#### Documentation 📝 (20 points)
 
 - Write clear, concise, and comprehensive documentation.
 - Create a README file that accurately describes the project, provides setup and run instructions, and explains how to contribute.
-
-#### Deployment 🚀 (10 points)
-
-- Deploy the project on a platform of your choice.
-- Ensure the website is live, functional, and error-free.
-- Present the project to the Product Manager, Pourya Mansouri, and your Bootcamp instructors.
 
 🏆 **Achievements:**
 
 - Create a comprehensive analytics dashboard with detailed sales reports.
 - Deliver a well-tested codebase with a test coverage of at least 95%.
 - Deliver clear and comprehensive documentation that facilitates the project's maintenance and future development.
-- Deliver a well-documented, well-tested, and deployed project that meets the project's requirements.
+- Deliver a well-documented, and well-tested project that meets the project's requirements.
 
 🎁 **Incentives:**
 
