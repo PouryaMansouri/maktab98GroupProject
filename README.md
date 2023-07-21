@@ -87,9 +87,8 @@ To encourage quality work, thorough testing, and documentation, we expect the te
 🚀 **Deliverables:** A complete, fully functional, and responsive web application.
 
 
-## Section 4: Testing, Analytics Feature, Documentation, and Deployment (100 points)
+### Section 4: Testing, Analytics Feature, Documentation, and Deployment (100 points)
 
-This section focuses on testing, implementing, documenting, and deploying the Analytics Feature. To meet the requirement of adding the Analytics Feature to the last section, this section includes the following tasks:
 
 #### Manager's Dashboard: Analytics and Reports 📈 (40 points)
 
