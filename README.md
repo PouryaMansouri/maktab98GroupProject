@@ -4,7 +4,7 @@ Welcome, young Django developers, to the Maktab98 CafeShop Adventure! You have b
 
 Your mission, should you choose to accept it, is to create a fully functional web application that will allow customers to browse the cafe's menu, place orders, and earn rewards, while also enabling staff members to manage orders, view sales analytics, and update the menu. The Product Manager, Pourya Mansouri, has called upon you to take on this quest, and your Bootcamp instructors will guide you through this exciting journey.
 
-Your task is divided into three sections, each with a score of 100 points. Each section will take one week to complete, and at the end of each week, you will deliver your work. You will also follow the Agile methodology in weekly sprints, with one team member serving as the Scrum Master.
+Your task is divided into four sections, with each section having a score of 100 points. The first section will take two weeks to complete, and the remaining sections will each take one week to complete. You will also follow the Agile methodology in weekly sprints, with one team member serving as the Scrum Master.
 
 To encourage quality work, thorough testing, and documentation, we expect the test coverage to be over 95%, and each group must create a README file for their GitHub repository that explains the project and provides setup and run instructions.
 
@@ -12,29 +12,39 @@ To encourage quality work, thorough testing, and documentation, we expect the te
 
 ### Section 1: Project Setup, Basic Models, and Authentication (100 points)
 
-#### Project Setup 🛠️ (20 points)
+#### Scrum Tasks (15 points)
+
+- Create a detailed project plan outlining the tasks that need to be completed in each section.
+- Set up a Trello board or another task management tool to track progress and assign tasks.
+
+#### Cafe Template 🍴 (15 points)
+
+- Choose a suitable template for the project and create the necessary template structure.
+- Write the template pages required for the cafe website, including the home page, menu page, cart page, checkout page, and staff panel page.
+
+#### Project Setup 🛠️ (10 points)
 
 - Create a new Django project and app.
 - Configure the app to use PostgreSQL as the database.
 - Initialize a Git repository and commit your initial project files.
 - Create an ERD (Entity Relationship Diagram) for your data model.
 
-#### Basic Models 📊 (30 points)
+#### Basic Models 📊 (25 points)
 
 - Create the necessary models for cafe items and categories.
 - Create models for staff, customer orders, and order items.
 - Define relationships between the models.
 
-#### Authentication 🔒 (50 points)
+#### Authentication 🔒 (35 points)
 
 - Implement Django Form Objects, Django Sessions, and Django Users and Authentication.
 - Create a custom backend authentication for Django using phone numbers.
 
-🏆 **Achievements:** Basic project setup, data models, and authentication.
+🏆 **Achievements:** Detailed project plan, a suitable template for the project, basic project setup, data models, and authentication.
 
-🎁 **Incentives:** A solid foundation for your project, the admiration of your peers.
+🎁 **Incentives:** A solid foundation for your project, the admiration of your peers, and test coverage of at least 95%.
 
-🚀 **Deliverables:** A working Django project with basic models and authentication in place.
+🚀 **Deliverables:** A working Django project with a suitable template for the cafe website, basic models and authentication in place, as well as a detailed project plan.
 
 ### Section 2: Online Menu and Staff Panel (100 points)
 
@@ -64,29 +74,62 @@ To encourage quality work, thorough testing, and documentation, we expect the te
 - Add statistics and insights for the manager.
 - Improve the user interface and user experience.
 
-#### Frontend Magic ✨ (60 points)
+#### Frontend Magic ✨(60 points)
 
-- Polish the frontend using HTML, CSS, and Bootstrap.
-- Implement JavaScript and DOM manipulation.
-- Optimize the website for different devices and screen sizes.
+- Implement frontend frameworks and libraries.
+- Add animations, transitions, and interactive elements.
+- Optimize the website for mobile devices and ensure it is responsive.
 
-🏆 **Achievements:** A stunning, fully functional Maktab98 CafeShop website.
+🏆 **Achievements:** A polished, interactive, and user-friendly web application.
 
-🎁 **Incentives:** The eternal gratitude of CafeShop owners and a great project for your portfolio, and test coverage of at least 95%.
+🎁 **Incentives:** The admiration of your peers, a fully developed project to add to your portfolio, and test coverage of at least 95%.
 
-🚀 **Deliverables:** The final Maktab98 CafeShop project with all features, frontend magic, and a responsive design.
+🚀 **Deliverables:** A complete, fully functional, and responsive web application.
 
-## 📚 Documentation and Setup
+### Section 4: Testing, Documentation, and Deployment (100 points)
 
-Each group must create a README file for their GitHub repository that explains the project and provides setup and run instructions. This will ensure that your project is easy to understand and use by others in the future.
 
-## 💰 Achievements and Incentives
+## 🎥 Analytics Feature 📊
 
-To motivate and reward your hard work, we have added some incentives. 
+To meet the requirement of adding an analytics feature to the last section, the following tasks should be added to Section 3: Dessert - Finishing Touches and Frontend Magic.
 
-- Early bird bonus: Complete each section by the end of the week and earn 20 extra points. 🐥👀
-- Presentation bonus: Present your completed work at the end of each week and earn an additional 20 points. 🎤👨‍🏫
-- Completion bonus: Complete all tasks for the entire project and earn a bonus 40 points. 🎉🏆
-- Test coverage bonus: Achieve a test coverage of over 95% and earn an additional 20 points. 🧪👨‍🔬
+#### Manager's Dashboard: Analytics and Reports 📈 (40 points)
 
-Good luck on your adventure, young Django developers! With your skills and dedication, you can create a fantastic project that will make the Maktab938 Bootcamp proud. Remember to work collaboratively, communicate effectively, and have fun while learning and growing as developers. May the force of Django be with you! 🚀
+- Implement an analytics dashboard for the manager view.
+- The dashboard should display key sales metrics and trends.
+- Enable the manager to generate and download detailed sales reports.
+- The analytics feature should provide insights into the most popular cafe items, peak business hours, customer demographic data, etc.
+
+🏆 **Achievements:** A comprehensive analytics dashboard with detailed sales reports.
+
+🎁 **Incentives:** A step closer to the project's completion, and the admiration of your Bootcamp instructors for implementing a complex feature.
+
+🚀 **Deliverables:** An updated staff panel with a functional analytics dashboard and reporting feature.
+
+#### Testing 🧪 (35 points)
+
+- Write unit tests for your code.
+- Ensure a test coverage of at least 95%.
+- Handle and fix any bugs or issues.
+
+#### Documentation 📝 (15 points)
+
+- Write clear, concise, and comprehensive documentation.
+- Create a README file that accurately describes the project, provides setup and run instructions, and explains how to contribute.
+
+#### Deployment 🚀 (10 points)
+
+- Deploy the project on a platform of your choice.
+- Ensure the website is live, functional, and error-free.
+- Present your project to the Product Manager, Pourya Mansouri, and your Bootcamp instructors.
+
+🏆 **Achievements:** A well-documented, well-tested, and deployed project.
+
+🎁 **Incentives:** The admiration of your Product Manager and instructors, a project you can be proud of, and test coverage of at least 95%.
+
+🚀 **Deliverables:** A well-documented, well-tested, and live web application.
+
+## Final Note 📌
+
+Remember, this is a team project. Collaboration, communication, and creativity are key. Make the most of this opportunity to learn, grow, and create something amazing together. Good luck, and may the odds be ever in your favor!
+
