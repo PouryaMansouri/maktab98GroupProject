@@ -1,41 +1,58 @@
 ## User Stories
 
-- As a customer, I want to be able to browse the cafe's menu, see item details, and add items to my cart. 🧐🍔🛒
-- As a customer, I want to be able to place an order, track it, and earn loyalty rewards. 🤑📱👀
-- As a staff member, I want to be able to manage orders, view sales analytics, and update the menu. 💼📈📝
-- As a manager, I want to be able to view detailed sales reports, manage staff permissions, and receive email notifications for new orders. 📊👨‍💼📧
+### Customer User Stories
+
+1. As a customer, I want to be able to browse the cafe's menu, see item details, and add items to my cart. 🧐🍔🛒
+2. As a customer, I want to be able to place an order, track it, and earn loyalty rewards. 🤑📱👀
+
+### Staff User Stories
+
+1. As a staff member, I want to be able to manage orders, view sales analytics, and update the menu. 💼📈📝
+
+### Manager User Stories
+
+1. As a manager, I want to be able to view detailed sales reports, manage staff permissions, and receive email notifications for new orders. 📊👨‍💼📧
+2. As a manager, I want to be able to analyze sales data and understand customer behavior to make informed decisions. 📈🧐📊
 
 ## Product Backlog
 
-- Authentication and Basic Models
-    - Create a Django project and app using a template 🐍🖥️
-    - Configure the app to use PostgreSQL as the database 🐘🗄️
-    - Create an ERD (Entity Relationship Diagram) for the data model 📊📈
-    - Create the necessary models for cafe items and categories 🍔🥤🍩
-    - Create models for staff, customer orders, and order items 💼🛒👨‍🍳
-    - Define relationships between the models 🤝💞
-    - Implement Django Form Objects, Django Sessions, and Django Users and Authentication 🔒👥
-    - Create a custom backend authentication for Django using phone numbers 📱📞
-    - Implement basic frontend design using HTML, CSS, and Bootstrap 🎨💻
+1. Project Setup, Basic Models, and Authentication
+    - Create a detailed project plan outlining the tasks that need to be completed in each section. 📝👨‍💻🗒️
+    - Set up a Trello board or another task management tool to track progress and assign tasks. 📌👀📈
+    - Choose a suitable template for the project and create the necessary template structure. 🎨🖌️📐
+    - Write the necessary template pages for the cafe website, including the home page, menu page, cart page, checkout page, and staff panel page. 📄🍔🛒
+    - Create a new Django project and app. 🆕👨‍💻🐍
+    - Configure the app to use PostgreSQL as the database. 🗃️🔧🐘
+    - Initialize a Git repository and commit your initial project files. 📦📝👨‍💻
+    - Create an ERD (Entity Relationship Diagram) for your data model. 🗂️🤔📊
+    - Create the necessary models for cafe items and categories. 🍔🍟🍩
+    - Create models for staff, customer orders, and order items. 📋📦📝
+    - Define relationships between the models. 🔗🔍📊
+    - Implement Django Form Objects, Django Sessions, and Django Users and Authentication. 🔑👥👨‍💻
+    - Create a custom backend authentication for Django using phone numbers. 📱🔑📞
 
-- Online Menu and Staff Panel
-    - Implement the online menu with categories and items 🍔🥤🍩
-    - Allow customers to view items, search, and see details 🧐🔍👀
-    - Handle cart functionality using cookies, and track orders using sessions 🛒🍪
-    - Implement Django Class Views and Django Test 🐍🧪
-    - Create a staff panel with authorization, allowing staff to see and manage orders 💼👨‍🍳📝
-    - Implement manager-specific features using Django permissions in views and templates 👨‍💼👀📝
-    - Improve frontend design and add interactive elements using JavaScript and DOM manipulation 🎨🤩🕹️
+2. Online Menu and Staff Panel
+    - Implement the online menu with categories and items. 🍔🍟🍩
+    - Allow customers to view items, search, and see details. 🔍👀📈
+    - Handle cart functionality using cookies, and track orders using sessions. 🛒🍪📝
+    - Implement Django Class Views and Django Test. 🐍👨‍💻🧪
+    - Create a staff panel with authorization, allowing staff to see and manage orders. 💼👀📊
+    - Implement manager-specific features using Django permissions in views and templates. 👨‍💼🔒👀
 
-- Final Features and Frontend Magic
-    - Implement Django Generic Views 🐍🔍
-    - Add statistics and insights for the manager 📊📈👨‍💼
-    - Improve the user interface and user experience 🎨🤩👍
-    - Polish the frontend using HTML, CSS, and Bootstrap 🎨💅💻
-    - Implement JavaScript and DOM manipulation 🕹️🤖
-    - Optimize the website for different devices and screen sizes 📱💻🖥️
-    - Write unit tests for final features that cover more than 95% of the code 🧪✅
-    - Address any remaining high-priority tasks 📝🚨
+3. Analytics Feature
+    - Add analytics tracking for customer behavior, such as most popular items, peak business hours, and customer demographic data. 📈🧐📊
+    - Implement an analytics dashboard for the manager view that displays key sales metrics and trends. 📊👨‍💼📈
+    - Enable the manager to generate and download detailed sales reports. 📊👨‍💼📝
+
+4. Deployment and Finishing Touches
+    - Deploy the project on a platform of your choice, such as Heroku or AWS. 🚀🌐👨‍💻
+    - Ensure the website is live, functional, and accessible to customers. 🌟👨‍💻👀
+    - Implement Django Generic Views. 🐍👨‍💻📄
+    - Add statistics and insights for the manager. 📊👨‍💼🔍
+    - Improve the user interface and user experience. 💻🤩👌
+    - Implement frontend frameworks and libraries. 🎨🖥️📚
+    - Add animations, transitions, and interactive elements.
+	
 
 ## Sprint Planning
 
