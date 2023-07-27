@@ -26,7 +26,7 @@ class Product(models.Model):
     is_available = models.BooleanField(default= True)
     description = models.TextField()
     price = models.FloatField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT)
 
 class OrderItem(models.Model):
     quantity = models.IntegerField()
