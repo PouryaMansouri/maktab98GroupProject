@@ -11,3 +11,18 @@ class Order(models.Model):
     # Foreign keys
     customer = models.ManyToManyField(User, through= 'OrderItem')
     personnel= models.ManyToManyField(User, through='OrderItem', null=True)
+
+class Category(models.Model):
+    pass
+
+def product_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT / product_<id>/<filename>
+    return 'product_{0}/{1}'.format(instance.id, filename)
+
+class Product(models.Model):
+    name = models.CharField(max_length=255)
+    image = models.ImageField(upload_to = product_directory_path)
+    is_available = models.BooleanField(default= True)
+    description = models.TextField()
+    price = models.FloatField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
