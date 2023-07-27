@@ -9,6 +9,7 @@ class Order(models.Model):
     total_price_= models.FloatField()
 
     # Foreign keys
+    # OrderItem will be bridge table between Order and Product
     customer = models.ManyToManyField(User, through= 'OrderItem')
     personnel= models.ManyToManyField(User, through='OrderItem', null=True)
 
