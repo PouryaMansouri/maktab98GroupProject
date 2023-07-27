@@ -27,3 +27,8 @@ class Product(models.Model):
     description = models.TextField()
     price = models.FloatField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+class OrderItem(models.Model):
+    quantity = models.IntegerField()
+    order = models.ForeignKey(Order)
+    product = models.ForeignKey(Product)
