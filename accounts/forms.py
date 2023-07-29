@@ -38,3 +38,24 @@ class PersonelChangeForm(forms.ModelForm):
     class Meta:
         model = Personnel
         fields = ["full_name", "email", "phone_number", "image"]
+
+class UserLoginForm(forms.Form):
+    
+    phone_number = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Phone Number',
+                'label' : 'Phone Number'
+            }
+        )
+    )
+    
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder' : 'Password'
+            }
+        )
+    )
