@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
+from .managers import PersonnelManager
 
 
 # Create your models here.
@@ -12,13 +13,15 @@ class Personnel(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
 
+    objects = PersonnelManager()
+
     USERNAME_FIELD = "phone_number"
     REQUIRED_FIELDS = ["email", "full_name"]
 
     def __str__(self):
         return self.email
 
-    def has_perms(self, perm_list, obj=None):
+    def has_perm(user_obj, perm, obj=None):
         return True
 
     def has_module_perms(self, app_label):
