@@ -18,16 +18,18 @@ class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete= models.PROTECT)
     personnel= models.ForeignKey(Personnel, null=True, on_delete= models.PROTECT)
 
-class Category(models.Model):
-    pass
+def item_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT / <instance.__class__.__name__>_<id>/<filename>
+    return '{2}_{0}/{1}'.format(instance.id, filename, instance.__class__.__name__)
 
-def product_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT / product_<id>/<filename>
-    return 'product_{0}/{1}'.format(instance.id, filename)
+
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+    image = models.ImageField(upload_to = item_directory_path)
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
-    image = models.ImageField(upload_to = product_directory_path)
+    image = models.ImageField(upload_to = item_directory_path)
     is_available = models.BooleanField(default= True)
     description = models.TextField()
     price = models.FloatField()
