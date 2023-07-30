@@ -15,4 +15,5 @@ class cart:
         self.cart[product_id]['quantity'] += quantity
         self.save()
 
-    def
+    def save(self)
+        self.session.modified = True
