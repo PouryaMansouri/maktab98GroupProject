@@ -1,0 +1,15 @@
+{% extends 'bose.html' %}
+
+{% block content %}
+    <h2>{{ product.name}}</h2>
+    <small>{{ product.created }}</small><br/>
+    <p>{{ product.price}} Toman</p>
+    <img src="{{ product.image.url}}" style="width: 300px;">
+    <p>{{ product.description }}</p><br/><br/>
+    <form action="{% url 'orders: cart_add' product. id %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="add to cart">
+    </form>
+{% endblock %}
+
