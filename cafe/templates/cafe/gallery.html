@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {%block content%}
-<section class="breadcrumb-area pt-140 pb-140 bg_img" data-background="{% static 'images/bg/breadcrumb-bg-1.jpeg' %}" data-overlay="dark" data-opacity="5">
-    <div class="shape shape__1"><img src="{% static 'images/shape/breadcrumb-shape-1.png' %}" alt=""></div>
-    <div class="shape shape__2"><img src="{% static 'images/shape/breadcrumb-shape-2.png' %}" alt=""></div>
+<section class="breadcrumb-area pt-140 pb-140 bg_img" data-overlay="dark" data-opacity="5">
+    <div class="shape shape__1"><img src="{% static 'cafe/images/shape/breadcrumb-shape-1.png' %}" alt=""></div>
+    <div class="shape shape__2"><img src="{% static 'cafe/images/shape/breadcrumb-shape-2.png' %}" alt=""></div>
     <div class="container">
         <div class="row">
             <div class="col-xl-12 text-center">
@@ -10,7 +10,7 @@
                 <div class="cafena-breadcrumb breadcrumbs">
                     <ul class="list-unstyled d-flex align-items-center justify-content-center">
                         <li class="cafenabcrumb-item duxinbcrumb-begin">
-                            <a href="{% url 'menu' %}"><span>Home</span></a>
+                            <a href="{% url 'cafe:menu' %}"><span>Home</span></a>
                         </li>
                         <li class="cafenabcrumb-item duxinbcrumb-end">
                             <span>Gallery</span>
@@ -22,10 +22,10 @@
     </div>
 </section>
 <div class="popular-menu__area position-relative pt-120 pb-120">
-        <span class="shape shape__1 position-absolute"><img src="{% static 'images/shape/menu-shape-1.png' %}" alt=""></span>
-        <span class="shape shape__2 position-absolute"><img src="{% static 'images/shape/menu-shape-2.png' %}" alt=""></span>
-        <span class="shape shape__3 position-absolute"><img src="{% static 'images/shape/menu-shape-3.png' %}" alt=""></span>
-        <span class="shape shape__4 position-absolute"><img src="{% static 'images/shape/menu-shape-4.png' %}" alt=""></span>
+        <span class="shape shape__1 position-absolute"><img src="{% static 'cafe/images/shape/menu-shape-1.png' %}" alt=""></span>
+        <span class="shape shape__2 position-absolute"><img src="{% static 'cafe/images/shape/menu-shape-2.png' %}" alt=""></span>
+        <span class="shape shape__3 position-absolute"><img src="{% static 'cafe/images/shape/menu-shape-3.png' %}" alt=""></span>
+        <span class="shape shape__4 position-absolute"><img src="{% static 'cafe/images/shape/menu-shape-4.png' %}" alt=""></span>
         <div class="container">
             <div class="row">
                 <div class="col-xl-12 text-center">
@@ -45,37 +45,37 @@
             <div class="row popular-menu__masonary mt-none-30">
                 <div class="popular-menu__item mt-30 cat1 cat5 cat6">
                     <div class="popular-menu__thumb--2">
-                        <img src="{% static 'images/gallery/gallery-1.jpeg' %}" alt="">
+                        <img src="{% static 'cafe/images/gallery/gallery-1.jpeg' %}" alt="">
                     </div>
                 </div>
                 <div class="popular-menu__item mt-30">
                     <div class="popular-menu__thumb">
-                        <img src="{% static 'images/gallery/gallery-2.jpeg' %}" alt="">
+                        <img src="{% static 'cafe/images/gallery/gallery-2.jpeg' %}" alt="">
                     </div>
                 </div>
                 <div class="popular-menu__item long mt-30 cat2 cat4 cat3">
                     <div class="popular-menu__thumb">
-                        <img src="{% static 'images/gallery/gallery-3.jpeg' %}" alt="">
+                        <img src="{% static 'cafe/images/gallery/gallery-3.jpeg' %}" alt="">
                     </div>
                 </div>
                 <div class="popular-menu__item wide mt-30 cat1 cat6">
                     <div class="popular-menu__thumb">
-                        <img src="{% static 'images/gallery/gallery-4.jpeg' %}" alt="">
+                        <img src="{% static 'cafe/images/gallery/gallery-4.jpeg' %}" alt="">
                     </div>
                 </div>
                 <div class="popular-menu__item mt-30 cat2 cat3">
                     <div class="popular-menu__thumb">
-                        <img src="{% static 'images/gallery/gallery-5.jpeg' %}" alt="">
+                        <img src="{% static 'cafe/images/gallery/gallery-5.jpeg' %}" alt="">
                     </div>
                 </div>
                 <div class="popular-menu__item mt-30 cat1 cat5">
                     <div class="popular-menu__thumb">
-                        <img src="{% static 'images/gallery/gallery-6.jpeg' %}" alt="">
+                        <img src="{% static 'cafe/images/gallery/gallery-6.jpeg' %}" alt="">
                     </div>
                 </div>
                 <div class="popular-menu__item mt-30 cat4 cat3">
                     <div class="popular-menu__thumb">
-                        <img src="{% static 'images/gallery/gallery-7.jpeg' %}" alt="">
+                        <img src="{% static 'cafe/images/gallery/gallery-7.jpeg' %}" alt="">
                     </div>
                 </div>
             </div>

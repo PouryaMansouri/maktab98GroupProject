@@ -1,3 +1,5 @@
+{% load static %}
+
 <footer class="site-footer dark-bg pt-155 position-relative">
         <div class="footer__top">
             <a href="#" class="go-top go-top__white position-absolute d-flex align-items-center justify-content-center">
@@ -8,7 +10,7 @@
                     <div class="col-xl-3 col-lg-6 mt-30">
                         <div class="footer__widget footer__info">
                             <div class="item d-flex align-items-center justify-content-center">
-                                <img src="assets/images/icons/ft-phone.png" alt="">
+                                <img src="{% static 'images/icons/ft-phone.png' %}" alt="">
                                 <span>Phone :</span>
                                 <a href="tel:88019339702520">+88019 339 702 520</a>
                             </div>
@@ -17,7 +19,7 @@
                     <div class="col-xl-4 col-lg-6 mt-30 pl-55">
                         <div class="footer__widget footer__info">
                             <div class="item d-flex align-items-center justify-content-start">
-                                <img src="assets/images/icons/ft-map-marker.png" alt="">
+                                <img src=" {% static 'images/icons/ft-map-marker.png' %}" alt="">
                                 <span>Address :</span>
                                 <p>30 North West New</p>
                             </div>
@@ -41,7 +43,7 @@
                 <div class="row">
                     <div class="col-lg-7">
                         <div class="footer__logo--content">
-                            <img class="mb-15" src="assets/images/logo/logo.png" alt="">
+                            <img class="mb-15" src="{% static 'images/logo/logo.png' %}" alt="">
                             <p>Donec et nibh maximus, congue est eu, mattis nunc. Praesent ut quam quis quam venenatis fringilla. Morbi vestibulum</p>
                         </div>
                     </div>
