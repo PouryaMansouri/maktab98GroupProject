@@ -11,7 +11,7 @@ class UserLoginView(View):
     
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('home:home')
+            return redirect('cafe:home')
         return super().dispatch(request, *args, **kwargs)
     
     def get(self, request):
@@ -38,7 +38,7 @@ class UserLoginView(View):
                     'Logged in Successfully',
                     'success'
                 )
-                return redirect('index')
+                return redirect('cafe:home')
             messages.error(
                 request,
                 'Invalid Phone number or password'
