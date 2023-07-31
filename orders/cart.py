@@ -28,7 +28,7 @@ class cart:
         self.cart[product_id]['quantity'] += quantity
         self.save()
 
-    def save(self)
+    def save(self):
         self.session.modified = True
 
     def get_total_price(self):
