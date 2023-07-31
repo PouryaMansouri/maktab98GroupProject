@@ -2,7 +2,7 @@ from cafe.models import Product
 
 CART_SESSION_ID='cart'
 
-class cart:
+class Cart:
     def __init__(self, request):
         self.session = request.session
         cart=self.session.get(CART_SESSION_ID)
