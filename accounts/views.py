@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from forms import UserLoginForm
+from .forms import UserLoginForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
@@ -9,7 +9,7 @@ class UserLoginView(View):
     form_class = UserLoginForm
     template_name = 'accounts/login.html'
     
-    def dispatch(self, request, *args: Any, **kwargs: Any):
+    def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect('home:home')
         return super().dispatch(request, *args, **kwargs)
