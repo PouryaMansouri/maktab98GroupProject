@@ -1,14 +1,14 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html class="no-js" lang="zxx">
+<html class="no-js" lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Cafena - Coffee Shop </title>
+    <title>{% block title %}{% endblock %}</title>
 
     <!--====== Favicon ======-->
     <link rel="shortcut icon" href="{% static 'images/logo/favicon.ico' %}">
@@ -70,19 +70,13 @@
         </div>
     </div>
     <header class="site-header">
-        {%block aboutus%}
-        {%endblock%}
         {%include 'inc/navbar.html'%}
     </header>
+    {% include 'inc/messages.html' %}
     {%block content%}
     {%endblock%}
     {%include 'inc/footer.html'%}
     {%include 'inc/script.html'%}
-</body>
-
-</html>
-
-</html>
 </body>
 
 </html>
