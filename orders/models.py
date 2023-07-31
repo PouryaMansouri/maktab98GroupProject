@@ -1,5 +1,6 @@
 from django.db import models
-from cafe.models import Customer, Product, Personnel
+from cafe.models import Customer, Product
+from accounts.models import Personnel
 # Create your models here.
 class Order(models.Model):
     table_name = models.IntegerField(null=True)
