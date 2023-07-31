@@ -1,14 +1,14 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
-from .forms import PersonnelcreationForm, PersonelChangeForm
+from .forms import PersonnelCreationForm, PersonnelChangeForm
 from .models import Personnel
 
 
 # Register your models here.
 class PersonnelAdmin(UserAdmin):
-    add_form = PersonnelcreationForm
-    form = PersonelChangeForm
+    add_form = PersonnelCreationForm
+    form = PersonnelChangeForm
 
     list_display = ("full_name", "phone_number", "email", "is_admin")
     list_filter = ("is_admin", "is_active")
