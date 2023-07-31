@@ -17,7 +17,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to=item_directory_path)
     is_available = models.BooleanField(default=True)
     description = models.TextField()
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=6, decimal_places=2)
 
     # Foreign keys
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
