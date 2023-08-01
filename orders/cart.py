@@ -17,9 +17,10 @@ class Cart:
         cart = self.cart.copy()
         for product in products:
             cart[str(product.id)]['product'] = product
+
         for item in cart.values():
-            item['total_price'] = int(item['price'])*  item['quantity']
-        yield item     
+            item['total_price'] = float(item['price'])*  item['quantity']
+            yield item     
 
     def add (self, product , quantity):
         product_id=str(product.id)
@@ -32,4 +33,4 @@ class Cart:
         self.session.modified = True
 
     def get_total_price(self):
-        return sum(int(item['price'])* item['quantity'] for item in self.cart.values())
+        return sum(float(item['price'])* item['quantity'] for item in self.cart.values())
