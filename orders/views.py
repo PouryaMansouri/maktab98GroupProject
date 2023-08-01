@@ -19,5 +19,5 @@ class CartAddView(View):
         form = CartAddForm (request.POST) 
         if form.is_valid():
             cart.add(product,form.cleaned_data['quantity'])
-        return redirect('orders: cart')
+        return redirect('orders:cart')
 

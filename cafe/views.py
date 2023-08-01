@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 from .models import Product
+from orders.forms import CartAddForm
 
 # Create your views here.
 def Menu(request):
@@ -24,4 +25,5 @@ class ProductDetail(View):
 class ProductDetail2(View):
     def get(self , request , pk):
         productd = Product.objects.get(pk=pk)
-        return render(request, 'cafe/product_detail.html' , {'productd':productd})
+        form=CartAddForm()
+        return render(request, 'cafe/product_detail.html' , {'productd':productd ,'form':form} )
