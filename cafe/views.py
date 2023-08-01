@@ -8,7 +8,7 @@ def Menu(request):
 
 class HomeView(View):
     def get(self, request):
-        return render(request, 'home/index.html')    
+        return render(request, 'cafe/index.html')    
 
     def post(self, request):
-        return render(request, 'home/index.html')
+        return render(request, 'cafe/index.html')
