@@ -42,7 +42,7 @@ To encourage quality work, thorough testing, and documentation, we expect the te
 
 🏆 **Achievements:** Detailed project plan, a suitable template for the project, basic project setup, data models, and authentication.
 
-🎁 **Incentives:** A solid foundation for your project, the admiration of your peers, and test coverage of at least 95%.
+🎁 **Incentives:** A solid foundation for your project, the admiration of your peers.
 
 🚀 **Deliverables:** A working Django project with a suitable template for the cafe website, basic models and authentication in place, as well as a detailed project plan.
 
