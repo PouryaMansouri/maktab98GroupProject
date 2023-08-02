@@ -7,7 +7,7 @@ from django.contrib import messages
 # Create your views here.
 class UserLoginView(View):
     form_class = UserLoginForm
-    template_name = 'accounts/login.html'
+    template_name = 'accounts/personnel_login.html'
     
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -28,8 +28,7 @@ class UserLoginView(View):
             cd = form.cleaned_data
             user = authenticate(
                 request,
-                username = cd['phone_number'],
-                password = cd['password']
+                phone_number = cd['phone_number'],
             )
             if user is not None:
                 login(request, user)
