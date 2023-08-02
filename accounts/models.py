@@ -32,6 +32,11 @@ class Personnel(AbstractBaseUser):
         return self.is_admin
 
 
+
+class Customer(models.Model):
+    name = models.CharField(max_length=255, null=True)
+    phone_number = models.CharField(max_length=20, unique=True)
+
 class OtpCode(models.Model):
     phone_number = models.CharField(max_length=11, unique=True)
     code = models.SmallIntegerField()
