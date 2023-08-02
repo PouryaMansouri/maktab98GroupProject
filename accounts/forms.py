@@ -31,3 +31,7 @@ class UserLoginForm(forms.Form):
             attrs={"class": "form-control", "placeholder": "Password"}
         )
     )
+
+
+class VerifyCodeForm(forms.Form):
+    code = forms.IntegerField()
