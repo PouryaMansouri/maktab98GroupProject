@@ -35,7 +35,6 @@
                     <div class="popular-menu__wrapper m-auto d-inline-block">
                         <div class="popular-menu__filter d-flex justify-content-center align-items-center mb-45">
                             <button class="active" data-filter="*">All</button>
-                            {{all_categories.value}}
                         {% for category in all_categories %}
                             <button data-filter=".{{category.name}}">{{category.name}}</button>
                         {% endfor %}
