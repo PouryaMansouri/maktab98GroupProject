@@ -23,7 +23,8 @@ class SearchView(View):
         ).distinct()
         return render(
             request,
-            'search_results.html'
+            'search_results.html',
+            {'results': results}
         )
     
     def post(self, request):
