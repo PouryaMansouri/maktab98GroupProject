@@ -19,18 +19,13 @@ class UserLoginForm(forms.Form):
     phone_number = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                "class": "form-control",
+                "class": "form-control mb-3",
                 "placeholder": "Phone Number",
                 "label": "Phone Number",
             }
         )
     )
 
-    password = forms.CharField(
-        widget=forms.PasswordInput(
-            attrs={"class": "form-control", "placeholder": "Password"}
-        )
-    )
 
 
 class VerifyCodeForm(forms.Form):
