@@ -23,7 +23,7 @@ class SearchView(View):
         ).distinct()
         return render(
             request,
-            'search_results.html',
+            'cafe/search_results.html',
             {'results': results}
         )
     
