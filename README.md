@@ -56,13 +56,13 @@ To encourage quality work, thorough testing, and documentation, we expect the te
 
 #### Staff Panel 👨‍💼 (60 points)
 
-- Implement Django Class Views and Django Test.
+- Implement Django Class Views.
 - Create a staff panel with authorization, allowing staff to see and manage orders.
 - Implement manager-specific features using Django permissions in views and templates.
 
 🏆 **Achievements:** An interactive online menu and a functional staff panel.
 
-🎁 **Incentives:** A step closer to completing the project, growing fame for your Bootcamp in Tehran, and test coverage of at least 95%.
+🎁 **Incentives:** A step closer to completing the project, growing fame for your Bootcamp in Tehran.
 
 🚀 **Deliverables:** A fully functional online menu and staff panel.
 
