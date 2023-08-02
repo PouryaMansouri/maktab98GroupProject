@@ -18,8 +18,8 @@ class HomeView(View):
         return render(request, 'cafe/home.html')    
 
 class SearchView(View):
-    def post(self, request):
-        searched = request.POST['searched']
+    def get(self, request):
+        searched = request.GET.get('searched')
         results = Product.objects.filter(
             Q(name__icontains=searched) | Q(description__icontains=searched)
         ).distinct()
