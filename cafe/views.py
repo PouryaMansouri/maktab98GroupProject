@@ -26,7 +26,4 @@ class SearchView(View):
             'cafe/search_results.html',
             {'results': results}
         )
-    
-    def post(self, request):
-        pass
         
