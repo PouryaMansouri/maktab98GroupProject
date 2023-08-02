@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 from .models import Category, Product
+from django.db.models import Q
 
 # Create your views here.
 def Menu(request):
@@ -16,5 +17,15 @@ class HomeView(View):
     def post(self, request):
         return render(request, 'cafe/home.html')    
 
+class SearchView(View):
     def post(self, request):
-        return render(request, 'cafe/home.html')
+        searched = request.POST['searched']
+        results = Product.objects.filter(
+            Q(name__icontains=searched) | Q(description__icontains=searched)
+        ).distinct()
+        return render(
+            request,
+            'search_results.html',
+            {"results": results}
+        )
+        
