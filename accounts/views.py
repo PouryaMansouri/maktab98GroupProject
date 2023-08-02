@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from .forms import UserLoginForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 # Create your views here.
@@ -45,3 +45,7 @@ class UserLoginView(View):
         return render(request, self.template_name, {'form' : form})
             
             
+class UserLogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect("cafe:home")
