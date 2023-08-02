@@ -15,7 +15,7 @@ class PersonnelChangeForm(UserChangeForm):
         fields = ["full_name", "email", "phone_number", "image"]
 
 
-class UserLoginForm(forms.Form):
+class UserCustomerLoginForm(forms.Form):
     phone_number = forms.CharField(
         widget=forms.TextInput(
             attrs={
