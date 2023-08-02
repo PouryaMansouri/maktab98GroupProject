@@ -37,7 +37,7 @@
                             <span class="close"><i class="fal fa-times"></i></span>
                         </div>
                         <div class="search__form">
-                            <form role="search" method="get" action="index.html">
+                            <form role="search" method="get" action="{% url 'cafe:search_results' %}">
                                 <input type="search" name="searched" value="" placeholder="Search Keywords">
                                 <button type="submit"><i class="far fa-search"></i></button>
                             </form>
