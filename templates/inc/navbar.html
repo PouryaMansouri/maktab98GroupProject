@@ -15,15 +15,12 @@
                             <li><a href="{% url 'cafe:menu' %}">Menu</a></li>
                             <li><a href="#">About</a></li>
                             <li><a href="#">Reservation</a></li>
-                            <!-- <li><a href="#">Gallery</a></li> -->
-                            <!-- <li><a href="shop.html">Shop</a>
-                                <ul class="sub-menu">
-                                    <li><a href="shop.html">Shop</a></li>
-                                    <li><a href="product-details.html">Shop Details</a></li>
-                                    <li><a href="cart.html">Shop Cart</a></li>
-                                    <li><a href="checkout.html">Shop Checkout</a></li>
-                                </ul>
-                            </li> -->
+                            {% if not user.is_authenticated %}
+                            <li><a href="{% url 'accounts:login' %}">Login</a></li>
+                            {% endif %}
+                            {% if user.is_authenticated %}
+                            <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
+                            {% endif %}
                             <li><a href="#">Contact</a></li>
                         </ul>
                     </nav>

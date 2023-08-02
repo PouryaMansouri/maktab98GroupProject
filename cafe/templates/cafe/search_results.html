@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% block content %}
 <section class="breadcrumb-area pt-140 pb-140 bg_img" data-overlay="dark" data-opacity="5">
     <div class="shape shape__1"><img src="{% static 'cafe/images/shape/breadcrumb-shape-1.png' %}" alt=""></div>
     <div class="shape shape__2"><img src="{% static 'cafe/images/shape/breadcrumb-shape-2.png' %}" alt=""></div>
@@ -45,3 +45,4 @@
             </div>
             {% endfor %}
         </div>
+        {% endblock %}

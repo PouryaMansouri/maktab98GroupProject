@@ -7,16 +7,15 @@ from django.db.models import Q
 def Menu(request):
     all_categories = Category.objects.all()
     all_products = Product.objects.all()
-
     context = {'all_categories': all_categories, 'all_products': all_products}
-    return render(request, 'cafe/menu.html', context)
+    return render(request, 'cafe/home.html', context)
 
 class HomeView(View):
     def get(self, request):
-        return render(request, 'cafe/index.html')    
+        return render(request, 'cafe/home.html')    
 
     def post(self, request):
-        return render(request, 'cafe/index.html')
+        return render(request, 'cafe/home.html')    
 
 class SearchView(View):
     def get(self, request):

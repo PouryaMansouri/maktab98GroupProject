@@ -15,19 +15,18 @@ class PersonnelChangeForm(UserChangeForm):
         fields = ["full_name", "email", "phone_number", "image"]
 
 
-class UserLoginForm(forms.Form):
+class UserCustomerLoginForm(forms.Form):
     phone_number = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                "class": "form-control",
+                "class": "form-control mb-3",
                 "placeholder": "Phone Number",
                 "label": "Phone Number",
             }
         )
     )
 
-    password = forms.CharField(
-        widget=forms.PasswordInput(
-            attrs={"class": "form-control", "placeholder": "Password"}
-        )
-    )
+
+
+class VerifyCodeForm(forms.Form):
+    code = forms.IntegerField()
