@@ -17,10 +17,7 @@ class HomeView(View):
 
 class SearchView(View):
     def get(self, request):
-        pass
-    
-    def post(self, request):
-        searched = request.POST['searched']
+        searched = request.GET.get('searched')
         results = Product.objects.filter(
             Q(name__icontains=searched) | Q(description__icontains=searched)
         ).distinct()
@@ -28,4 +25,7 @@ class SearchView(View):
             request,
             'search_results.html'
         )
+    
+    def post(self, request):
+        pass
         
