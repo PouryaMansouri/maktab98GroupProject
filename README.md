@@ -58,7 +58,6 @@ To encourage quality work, thorough testing, and documentation, we expect the te
 
 - Implement Django Class Views.
 - Create a staff panel with authorization, allowing staff to see and manage orders.
-- Implement manager-specific features using Django permissions in views and templates.
 
 🏆 **Achievements:** An interactive online menu and a functional staff panel.
 
@@ -72,6 +71,7 @@ To encourage quality work, thorough testing, and documentation, we expect the te
 
 - Implement Django Generic Views.
 - Add statistics and insights for the manager.
+- Implement manager-specific features using Django permissions in views and templates.
 - Improve the user interface and user experience.
 
 #### Frontend Magic ✨(60 points)
