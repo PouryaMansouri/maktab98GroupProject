@@ -8,6 +8,7 @@ from .models import OTPCode
 from .forms import UserCustomerLoginForm, OTPForm
 
 from random import randint
+import datetime
 
 
 # Create your views here.
@@ -46,7 +47,7 @@ class UserLoginView(View):
 class UserVerifyPersonnelView(View):
     form_class = OTPForm
 
-    def setup(self, request, *args: Any, **kwargs: Any):
+    def setup(self, request, *args, **kwargs):
         self.session = request.session["personnel_info"]
         return super().setup(request, *args, **kwargs)
 
@@ -69,7 +70,11 @@ class UserVerifyPersonnelView(View):
             entered_code = int(digit1 + digit2 + digit3 + digit4)
             print(entered_code)
 
-            if entered_code == otp_instance.code and otp_instance.created:
+            expired_time = datetime.datetime.now() - datetime.timedelta(minutes=1)
+            if (
+                entered_code == otp_instance.code
+                and otp_instance.created > expired_time
+            ):
                 user = authenticate(
                     request,
                     phone_number=phone_number,
