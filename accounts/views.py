@@ -9,6 +9,7 @@ from .forms import UserCustomerLoginForm, OTPForm
 
 from random import randint
 import datetime
+import pytz
 
 
 # Create your views here.
@@ -70,7 +71,7 @@ class UserVerifyPersonnelView(View):
             entered_code = int(digit1 + digit2 + digit3 + digit4)
             print(entered_code)
 
-            expired_time = datetime.datetime.now() - datetime.timedelta(minutes=1)
+            expired_time = datetime.datetime.now(tz=pytz.timezone("Asia/Tehran")) - datetime.timedelta(minutes=1)
             if (
                 entered_code == otp_instance.code
                 and otp_instance.created > expired_time
@@ -88,10 +89,10 @@ class UserVerifyPersonnelView(View):
                     messages.error(
                         request, "The code or phone_number is wrong!", "error"
                     )
-                    return redirect("accounts:login")
+                    return redirect("accounts:verify_personnel")
             else:
                 messages.error(request, "The code or phone_number is wrong!", "error")
-                return redirect("accounts:login")
+                return redirect("accounts:verify_personnel")
 
 
 class UserLogoutView(View):
