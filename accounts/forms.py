@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
-from .models import Personnel
+from .models import Personnel, OTPCode
 
 
 class PersonnelCreationForm(UserCreationForm):
@@ -25,6 +25,14 @@ class UserCustomerLoginForm(forms.Form):
             }
         )
     )
+
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data["phone_number"]
+        print(phone_number)
+        OTPCode.objects.filter(phone_number=phone_number).delete()
+        print("done")
+        return phone_number
+
 
 
 class OTPForm(forms.Form):
