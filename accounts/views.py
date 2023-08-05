@@ -9,6 +9,7 @@ from .forms import UserCustomerLoginForm, OTPForm
 
 from random import randint
 
+
 # Create your views here.
 class UserLoginView(View):
     form_class = UserCustomerLoginForm
@@ -40,6 +41,52 @@ class UserLoginView(View):
             return redirect("accounts:verify_personnel")
 
         return render(request, self.template_name, {"form": form})
+
+
+class UserVerifyPersonnelView(View):
+    form_class = OTPForm
+
+    def setup(self, request, *args: Any, **kwargs: Any):
+        self.session = request.session["personnel_info"]
+        return super().setup(request, *args, **kwargs)
+
+    def get(self, request):
+        form = self.form_class()
+        context = {"form": form}
+        return render(request, "accounts/personnel_verify.html", context=context)
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        phone_number = self.session["phone_number"]
+        print(phone_number)
+        otp_instance = OTPCode.objects.get(phone_number=phone_number)
+        if form.is_valid():
+            cd = form.cleaned_data
+            digit1 = cd["digit1"]
+            digit2 = cd["digit2"]
+            digit3 = cd["digit3"]
+            digit4 = cd["digit4"]
+            entered_code = int(digit1 + digit2 + digit3 + digit4)
+            print(entered_code)
+
+            if entered_code == otp_instance.code and otp_instance.created:
+                user = authenticate(
+                    request,
+                    phone_number=phone_number,
+                )
+                print(user)
+                if user is not None:
+                    login(request, user)
+                    messages.success(request, "Logged in Successfully", "success")
+                    return redirect("cafe:home")
+                else:
+                    messages.error(
+                        request, "The code or phone_number is wrong!", "error"
+                    )
+                    return redirect("accounts:login")
+            else:
+                messages.error(request, "The code or phone_number is wrong!", "error")
+                return redirect("accounts:login")
 
 
 class UserLogoutView(View):
