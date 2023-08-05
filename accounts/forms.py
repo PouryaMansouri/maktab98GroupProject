@@ -27,6 +27,16 @@ class UserCustomerLoginForm(forms.Form):
     )
 
 
-
-class VerifyCodeForm(forms.Form):
-    code = forms.IntegerField()
+class OTPForm(forms.Form):
+    digit1 = forms.CharField(
+        max_length=1, widget=forms.TextInput(attrs={"maxlength": "1"})
+    )
+    digit2 = forms.CharField(
+        max_length=1, widget=forms.TextInput(attrs={"maxlength": "1"})
+    )
+    digit3 = forms.CharField(
+        max_length=1, widget=forms.TextInput(attrs={"maxlength": "1"})
+    )
+    digit4 = forms.CharField(
+        max_length=1, widget=forms.TextInput(attrs={"maxlength": "1"})
+    )
