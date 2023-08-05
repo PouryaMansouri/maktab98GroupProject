@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from .forms import UserCustomerLoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
+from utils import send_otp_code
+from .models import OTPCode
+from .forms import UserCustomerLoginForm, OTPForm
+
+from random import randint
 
 # Create your views here.
 class UserLoginView(View):
@@ -21,17 +25,20 @@ class UserLoginView(View):
 
     def post(self, request):
         form = self.form_class(request.POST)
+        session = request.session["personnel_info"] = {}
+        print(session)
         if form.is_valid():
             cd = form.cleaned_data
-            user = authenticate(
-                request,
-                phone_number=cd["phone_number"],
-            )
-            if user is not None:
-                login(request, user)
-                messages.success(request, "Logged in Successfully", "success")
-                return redirect("cafe:home")
-            messages.error(request, "Invalid Phone number or password")
+            print(cd)
+            phone_number = cd["phone_number"]
+            print(phone_number)
+            code = randint(1000, 9999)
+            # send_otp_code(phone_number, code)
+            print(code)
+            OTPCode.objects.create(phone_number=phone_number, code=code)
+            session["phone_number"] = phone_number
+            return redirect("accounts:verify_personnel")
+
         return render(request, self.template_name, {"form": form})
 
 
