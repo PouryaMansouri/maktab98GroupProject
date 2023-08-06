@@ -14,6 +14,10 @@ class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete= models.PROTECT)
     personnel= models.ForeignKey(Personnel, null=True, on_delete= models.PROTECT)
 
+    def __str__(self) -> str:
+        return f"{self.table_name} || {self.status} || {self.create_time}"
+
+
 class OrderItem(models.Model):
     quantity = models.IntegerField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
@@ -21,3 +25,6 @@ class OrderItem(models.Model):
     # Foreign keys
     order = models.ForeignKey(Order, on_delete= models.CASCADE)
     product = models.ForeignKey(Product, on_delete= models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.order.table_name} || {self.product} || {self.quantity}"
