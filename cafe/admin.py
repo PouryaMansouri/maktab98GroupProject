@@ -3,9 +3,10 @@ from .models import Category,Product
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    pass
+    list_display =('name' ,)
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    pass
+    list_display =('name' , 'price' , 'is_available' , 'category')
+    list_filter = ('is_available' ,'category')
 
