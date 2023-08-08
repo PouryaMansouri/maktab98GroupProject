@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from .models import Product
+from .models import Product , Category
 
 # Create your views here.
 def Menu(request):
