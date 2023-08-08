@@ -99,3 +99,7 @@ class UserLogoutView(View):
     def get(self, request):
         logout(request)
         return redirect("cafe:home")
+
+class ManageOrders(view):
+    def get(self , request):
+        return render(request, 'accounts/manage_orders.html')
