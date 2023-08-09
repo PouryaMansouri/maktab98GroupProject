@@ -24,7 +24,6 @@ class CartAddView(View):
             cart.add(product, form.cleaned_data["quantity"])
             response = cart.save("orders:cart")
         return response
-        # return redirect('orders:cart')
 
 
 class CartRemoveView(View):
@@ -34,13 +33,14 @@ class CartRemoveView(View):
         cart.remove(product)
         response = cart.save("orders:cart")
         return response
-    
+
+
 class CheckoutView(View):
     def get(self, request):
         form = CustomerForm()
         context = {"form": form}
         return render(request, "orders/checkout.html", context=context)
-    
+
 
 class AddOrderView(View):
     def post(self, request):
@@ -84,36 +84,40 @@ class AddOrderView(View):
             session_order.append(total_cost)
             response = cart.delete("orders:order_detail")
             return response
-        else:
-            pass
 
-class OrderCreateView(LoginRequiredMixin , View):
-    def get(self,request):
-        cart=Cart(request)
-        order=Order.objects.create(user=request.user)
+
+class OrderCreateView(LoginRequiredMixin, View):
+    def get(self, request):
+        cart = Cart(request)
+        order = Order.objects.create(user=request.user)
         for item in cart:
-            OrderItem.objects.create( product=item['product'] , price=float(item['price']) , quantity=item['quantity'])
-        return redirect('orders:order_detail',)
+            OrderItem.objects.create(
+                product=item["product"],
+                price=float(item["price"]),
+                quantity=item["quantity"],
+            )
+        return redirect(
+            "orders:order_detail",
+        )
 
-def order_list(request):
-    orders = Order.objects.all()
-    return render(request, 'home.html', {'orders': orders})
 
-def order_accept(request, pk):
-    order = Order.objects.get(pk=pk)
-    order.status = 'a'
-    order.save()
-    return redirect('accounts:manage_orders')
+class OrderAccept(View):
+    def get(self, request, pk):
+        order = Order.objects.get(pk=pk)
+        order.status = "a"
+        order.save()
+        return redirect("accounts:manage_orders")
 
-def order_reject(request, pk):
-    order = Order.objects.get(pk=pk)
-    order.status = 'r'
-    order.save()
-    return redirect('accounts:manage_orders')
+
+class OrderReject(View):
+    def get(self, request, pk):
+        order = Order.objects.get(pk=pk)
+        order.status = "r"
+        order.save()
+        return redirect("accounts:manage_orders")
+
 
 class OrderDetailView(View):
     def get(self, request):
         session = request.session.get("orders_info")
         return render(request, "orders/detail.html", {"session": session})
-
-
