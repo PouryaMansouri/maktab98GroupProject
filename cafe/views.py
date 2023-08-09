@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import View
-from .models import Product
+from .models import Category, Product
+from django.db.models import Q
 
 # Create your views here.
 def Menu(request):
@@ -8,11 +9,6 @@ def Menu(request):
     all_products = Product.objects.all()
     context = {'all_categories': all_categories, 'all_products': all_products}
     return render(request, 'cafe/home.html', context)
-
-
-    products = Product.objects.all()
-    context = {}
-    return render(request, 'cafe/menu.html',  {'products':products})
 
 class HomeView(View):
     def get(self, request):
