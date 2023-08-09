@@ -84,8 +84,6 @@ class AddOrderView(View):
             session_order.append(total_cost)
             response = cart.delete("orders:order_detail")
             return response
-        else:
-            pass
 
 
 class OrderCreateView(LoginRequiredMixin, View):
