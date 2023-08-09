@@ -30,7 +30,6 @@ class UserLoginView(View):
     def post(self, request):
         form = self.form_class(request.POST)
         session = request.session["personnel_info"] = {}
-        print(session)
         if form.is_valid():
             cd = form.cleaned_data
             phone_number = cd["phone_number"]
