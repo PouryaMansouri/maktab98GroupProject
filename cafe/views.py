@@ -4,7 +4,6 @@ from .models import Product, Category
 from orders.forms import CartAddForm
 from django.db.models import Q
 
-
 def Menu(request):
     all_categories = Category.objects.all()
     all_products = Product.objects.all()
@@ -15,7 +14,6 @@ def Menu(request):
         "form": form,
     }
     return render(request, "cafe/home.html", context)
-
 
 class HomeView(View):
     def get(self, request):

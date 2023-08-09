@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'cafe.apps.CafeConfig',
     'accounts.apps.AccountsConfig',
     'orders.apps.OrdersConfig',
+    'dynamic.apps.DynamicConfig',
 ]
 
 MIDDLEWARE = [
@@ -125,7 +126,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
 os.path.join(BASE_DIR, 'static'),
 os.path.join(BASE_DIR, 'cafe', 'static'),
-os.path.join(BASE_DIR, 'accounts', 'static')
+os.path.join(BASE_DIR, 'accounts', 'static'),
+os.path.join(BASE_DIR, 'dynamic', 'static'),
 ]
 #STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
 
