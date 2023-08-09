@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from .models import Product, Category
 from orders.forms import CartAddForm
+from django.db.models import Q
 
 
 def Menu(request):
