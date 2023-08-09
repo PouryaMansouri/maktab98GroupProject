@@ -26,5 +26,9 @@ class Cart:
         else:
             self.cart[product_id]["quantity"] += quantity
 
-
+    def save(self, destination):
+        serialized_cart = json.dumps(self.cart)
+        response = redirect(destination)
+        response.set_cookie(CART_COOKIE_KEY, serialized_cart)
+        return response
 
