@@ -87,8 +87,32 @@ class AddOrderView(View):
         else:
             pass
 
+class OrderCreateView(LoginRequiredMixin , View):
+    def get(self,request):
+        cart=Cart(request)
+        order=Order.objects.create(user=request.user)
+        for item in cart:
+            OrderItem.objects.create( product=item['product'] , price=float(item['price']) , quantity=item['quantity'])
+        return redirect('orders:order_detail',)
+
+def order_list(request):
+    orders = Order.objects.all()
+    return render(request, 'home.html', {'orders': orders})
+
+def order_accept(request, pk):
+    order = Order.objects.get(pk=pk)
+    order.status = 'accepted'
+    order.save()
+    return redirect('home.html', pk=pk)
+
+def order_reject(request, pk):
+    order = Order.objects.get(pk=pk)
+    order.status = 'rejected'
+    order.save()
+    return redirect('home.html', pk=pk)
 
 class OrderDetailView(View):
     def get(self, request):
         session = request.session.get("orders_info")
         return render(request, "orders/detail.html", {"session": session})
+

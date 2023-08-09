@@ -4,7 +4,6 @@ from .models import Product, Category
 from orders.forms import CartAddForm
 
 
-# Create your views here.
 def Menu(request):
     all_categories = Category.objects.all()
     all_products = Product.objects.all()

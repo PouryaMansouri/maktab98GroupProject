@@ -4,7 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 from utils import send_otp_code
-from .models import OTPCode
+from .models import OTPCode 
+from orders.models import Order
 from .forms import UserCustomerLoginForm, OTPForm
 
 from random import randint
@@ -82,7 +83,7 @@ class UserVerifyPersonnelView(View):
                 if user is not None:
                     login(request, user)
                     messages.success(request, "Logged in Successfully", "success")
-                    return redirect("cafe:home")
+                    return redirect("accounts:manage_orders")
                 else:
                     messages.error(
                         request, "The code or phone_number is wrong!", "error"
@@ -97,3 +98,8 @@ class UserLogoutView(View):
     def get(self, request):
         logout(request)
         return redirect("cafe:home")
+
+class ManageOrders(View):
+    def get(self , request):
+        orders = Order.objects.all()
+        return render(request, 'accounts/manage_orders.html', {'orders': orders})
