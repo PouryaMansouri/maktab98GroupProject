@@ -34,6 +34,12 @@ class CartRemoveView(View):
         cart.remove(product)
         response = cart.save("orders:cart")
         return response
+    
+class CheckoutView(View):
+    def get(self, request):
+        form = CustomerForm()
+        context = {"form": form}
+        return render(request, "orders/checkout.html", context=context)
 
 
 
