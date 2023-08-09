@@ -43,7 +43,7 @@ class UserLoginView(View):
         return render(request, self.template_name, {"form": form})
 
 
-class UserVerifyPersonnelView(View):
+class UserVerifyView(View):
     form_class = OTPForm
 
     def setup(self, request, *args, **kwargs):
