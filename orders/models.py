@@ -6,12 +6,6 @@ from accounts.models import Personnel
 
 # Create your models here.
 class Order(models.Model):
-    STATUS_CHOICES = (
-        ('pending', 'pending'),
-        ('accepted', 'accepted'),
-        ('rejected', 'rejected')
-    )
-    status = models.CharField(max_length=10,choices=STATUS_CHOICES,default='pending')
     table_name = models.IntegerField(null=True)
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True, null=True)
