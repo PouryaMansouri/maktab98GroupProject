@@ -8,11 +8,11 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-12 text-center">
-                <h2 class="page-title">cafena orders</h2>
+                <h2 class="page-title">cafena menu</h2>
                 <div class="cafena-breadcrumb breadcrumbs">
                     <ul class="list-unstyled d-flex align-items-center justify-content-center">
                         <li class="cafenabcrumb-item duxinbcrumb-end">
-                            <span>orders</span>
+                            <span>menu</span>
                         </li>
                     </ul>
                 </div>
@@ -25,46 +25,56 @@
         <div class="row">
             <div class="col-xl-12 text-center">
                 <div class="section-heading section-heading__black mb-40">
-                    <span class="sub-title">orders</span>
-                    <h2 class="title">Our Customers orders</h2>
+                    <span class="sub-title">menu</span>
+                    <h2 class="title">Our Popular Menu</h2>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
-                
-                <div class="table-wrap">
-                    <table class="table">
-                    <thead class="thead-primary">
-                      <tr>
-                        <th>order ID</th>
-                        <th>Customer</th>
-                        <th>table No.</th>
-                        <th>price</th>
-                        <th>status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr> 
-                        {% for order in orders %}
-                        <th scope="row" class="scope" >{{order.id}}</th>
-                        <td>{{order.customer}}</td>
-                        <td>{{order.table_name}}</td>
-                        <td>{{order.total_price}}</td>
-                        <td>{{order.status}}</td>
-                        <td><a href="{% url 'order_detail' order.pk %}" class="btn btn-primary">{{ order.pk }}</a></td>
-                        {% if order.status == 'pending' %}
-                            <td><a href="{% url 'order_accept' order.pk %}" class="btn btn-success">accept</a></td>
-                            <td><a href="{% url 'order_reject' order.pk %}" class="btn btn-danger">reject</a></td>
-                        {% endif %}
-                        {% endfor %}            
-                      </tr>
-                    </tbody>
-                  </table>
+            <div class="col-xl-12 text-center">
+                <div class="popular-menu__wrapper m-auto d-inline-block">
+                    <div class="popular-menu__filter d-flex justify-content-center align-items-center mb-45">
+                        <button class="active" data-filter="*">All</button>
+                        {% for category in all_categories %}
+                        <button data-filter=".{{category.name}}">{{category.name}}</button>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
         <div id="popular-menu-grid-2" class="row popular-menu__grid popular-menu__lists mt-none-30">
+            <div class="col-xl-6 col-lg-6 col-md-6 l-item grid-sizer"></div>
+            {% for product in all_products %}
+            <div class="col-xl-6 col-lg-6 col-md-6 l-item grid-item {{product.category}} mt-35">
+                <div class="popular-menu__list">
+                    <div class="thumb">
+                        <img src="{{ product.image.url }}" alt="">
+                    </div>
+                    <div class="content">
+                        <h3 class="title border-effect"><a href="#0">{{ product.name}}</a></h3>
+                        <span class="price">{{product.price}}</span>
+                    </div >
+                      <div class="card-body">
+                        <form method="post" action="{% url 'orders:cart_add' product.id %}">
+                            {% csrf_token %}
+                            <div class="form-group col-3" style="display: inline-block;">
+                                <label for="id_quantity">Quantity:</label>
+                                {{ form.quantity }}
+                            </div>
+                            <div class="form-group" style="display: inline-block;">
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    <i class="fas fa-utensils"></i> Add to Order
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
         <div class="row">
             <div class="col-xl-12 text-center">
                 <a href="#0" class="site-btn mt-60">load more</a>
