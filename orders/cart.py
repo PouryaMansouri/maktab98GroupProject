@@ -26,6 +26,12 @@ class Cart:
         else:
             self.cart[product_id]["quantity"] += quantity
 
+
+    def remove(self, product):
+        product_id = str(product.id)
+        if product_id in self.cart:
+            del self.cart[product_id]
+
     def save(self, destination):
         serialized_cart = json.dumps(self.cart)
         response = redirect(destination)
