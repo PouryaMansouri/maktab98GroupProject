@@ -41,11 +41,54 @@ class CheckoutView(View):
         context = {"form": form}
         return render(request, "orders/checkout.html", context=context)
     
+
+class AddOrderView(View):
+    def post(self, request):
+        form = CustomerForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            phone_number = cd["phone_number"]
+            table_number = cd["table_number"]
+            try:
+                customer = Customer.objects.get(phone_number=phone_number)
+            except:
+                customer = Customer.objects.create(phone_number=phone_number)
+
+            table = Table.objects.get(table_number=table_number)
+            order = Order.objects.create(table=table, customer=customer)
+            if request.session.get("orders_info"):
+                session = request.session.get("orders_info")
+            else:
+                session = request.session["orders_info"] = {}
+
+            session_order = session[str(order.id)] = []
+            cart = Cart(request)
+            for key, value in cart:
+                product = Product.objects.get(id=key)
+                OrderItem.objects.create(
+                    order=order,
+                    product=product,
+                    price=float(value["price"]),
+                    quantity=value["quantity"],
+                )
+                session_order.append(
+                    {
+                        "product": value["product"],
+                        "price": value["price"],
+                        "quantity": value["quantity"],
+                        "sub_total": value["sub_total"],
+                    }
+                )
+                request.session.modified = True
+            total_cost = cart.total_price()
+            session_order.append(total_cost)
+            response = cart.delete("orders:order_detail")
+            return response
+        else:
+            pass
+
+
 class OrderDetailView(View):
     def get(self, request):
         session = request.session.get("orders_info")
         return render(request, "orders/detail.html", {"session": session})
-
-
-
-        
