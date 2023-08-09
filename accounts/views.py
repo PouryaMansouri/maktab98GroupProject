@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 from utils import send_otp_code
-from .models import OTPCode 
+from .models import OTPCode
 from orders.models import Order
 from .forms import UserCustomerLoginForm, OTPForm
 
@@ -33,7 +33,6 @@ class UserLoginView(View):
         print(session)
         if form.is_valid():
             cd = form.cleaned_data
-            print(cd)
             phone_number = cd["phone_number"]
             print(phone_number)
             code = randint(1000, 9999)
@@ -71,7 +70,9 @@ class UserVerifyPersonnelView(View):
             entered_code = int(digit1 + digit2 + digit3 + digit4)
             print(entered_code)
 
-            expired_time = datetime.datetime.now(tz=pytz.timezone("Asia/Tehran")) - datetime.timedelta(minutes=1)
+            expired_time = datetime.datetime.now(
+                tz=pytz.timezone("Asia/Tehran")
+            ) - datetime.timedelta(minutes=1)
             if (
                 entered_code == otp_instance.code
                 and otp_instance.created > expired_time
@@ -99,8 +100,9 @@ class UserLogoutView(View):
         logout(request)
         return redirect("cafe:home")
 
+
 class ManageOrders(View):
-    def get(self , request):
+    def get(self, request):
         orders = Order.objects.all()
         total_price = []
         for order in orders:
@@ -108,4 +110,4 @@ class ManageOrders(View):
         orders_with_costs = zip(orders, total_price)
         # context = {'orders': orders, "total_price": total_price}
         context = {"orders_with_costs": orders_with_costs}
-        return render(request, 'accounts/manage_orders.html', context=context)
+        return render(request, "accounts/manage_orders.html", context=context)
