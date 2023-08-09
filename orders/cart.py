@@ -45,6 +45,11 @@ class Cart:
         if product_id in self.cart:
             del self.cart[product_id]
 
+    def total_price(self):
+        return sum(
+            item["quantity"] * float(item["price"]) for item in self.cart.values()
+        )
+
     def save(self, destination):
         serialized_cart = json.dumps(self.cart)
         response = redirect(destination)
