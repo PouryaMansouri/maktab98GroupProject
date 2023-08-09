@@ -101,18 +101,19 @@ def order_list(request):
 
 def order_accept(request, pk):
     order = Order.objects.get(pk=pk)
-    order.status = 'accepted'
+    order.status = 'a'
     order.save()
-    return redirect('home.html', pk=pk)
+    return redirect('accounts:manage_orders')
 
 def order_reject(request, pk):
     order = Order.objects.get(pk=pk)
-    order.status = 'rejected'
+    order.status = 'r'
     order.save()
-    return redirect('home.html', pk=pk)
+    return redirect('accounts:manage_orders')
 
 class OrderDetailView(View):
     def get(self, request):
         session = request.session.get("orders_info")
         return render(request, "orders/detail.html", {"session": session})
+
 

@@ -45,20 +45,20 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr> 
-                        {% for order in orders %}
+                        {% for order,total_cost in orders_with_costs %}
+                        <tr> 
                         <th scope="row" class="scope" >{{order.id}}</th>
-                        <td>{{order.customer}}</td>
-                        <td>{{order.table_name}}</td>
-                        <td>{{order.total_price}}</td>
+                        <td>{{order.customer.phone_number}}</td>
+                        <td>{{order.table.table_number}}</td>
+                        <td>{{total_cost}}</td>
                         <td>{{order.status}}</td>
-                        <td><a href="{% url 'order_detail' order.pk %}" class="btn btn-primary">{{ order.pk }}</a></td>
-                        {% if order.status == 'pending' %}
-                            <td><a href="{% url 'order_accept' order.pk %}" class="btn btn-success">accept</a></td>
-                            <td><a href="{% url 'order_reject' order.pk %}" class="btn btn-danger">reject</a></td>
+                        <td><a href="" class="btn btn-primary"> details </a></td>
+                        {% if order.status == 'p' %}
+                            <td><a href="{% url 'orders:order_accept' order.pk %}" class="btn btn-success">accept</a></td>
+                            <td><a href="{% url 'orders:order_reject' order.pk %}" class="btn btn-danger">reject</a></td>
                         {% endif %}
+                    </tr>
                         {% endfor %}            
-                      </tr>
                     </tbody>
                   </table>
                 </div>

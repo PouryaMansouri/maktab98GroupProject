@@ -102,4 +102,10 @@ class UserLogoutView(View):
 class ManageOrders(View):
     def get(self , request):
         orders = Order.objects.all()
-        return render(request, 'accounts/manage_orders.html', {'orders': orders})
+        total_price = []
+        for order in orders:
+            total_price.append(order.get_total_price())
+        orders_with_costs = zip(orders, total_price)
+        # context = {'orders': orders, "total_price": total_price}
+        context = {"orders_with_costs": orders_with_costs}
+        return render(request, 'accounts/manage_orders.html', context=context)
