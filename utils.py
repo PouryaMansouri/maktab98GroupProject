@@ -11,7 +11,7 @@ def item_directory_path(instance, filename):
     #might be possible model has no records so make instance.__class__ to handle None
     next_id = items.aggregate(Max('id'))['id__max'] + 1 if items else 1
     # file will be uploaded to MEDIA_ROOT / <instance.__class__.__name__>_<id>/<filename>
-    return '{2}_{0}/{1}'.format(next_id, filename, instance.__class__.__name__)
+    return '{2}/{2}_{0}/{1}'.format(next_id, filename, instance.__class__.__name__)
 
 
 def send_otp_code(phone_number, code):
