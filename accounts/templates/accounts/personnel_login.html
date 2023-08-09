@@ -1,0 +1,45 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Personnel Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'css/login/login.css' %}">
+    <style>
+
+        body {
+            background-image: url("{% static 'images/background_login/login.jpg' %}");
+        }
+    </style>
+</head>
+
+<body class="img js-fullheight vh-100">
+    <section class="ftco-section d-flex justify-content-center align-items-center h-75">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+
+                </div>
+                <div class="col-lg-6">
+                    <div class="col-md-6 col-lg-8">
+                        <div class="login-wrap p-0">
+                            <form action="{% url 'accounts:login' %}" class="signin-form" method="post">
+                                    {% csrf_token %}
+                                    {{ form.phone_number }}
+                                    <button type="submit" class="form-control btn btn-primary submit px-3">Login</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
