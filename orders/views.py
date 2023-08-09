@@ -40,6 +40,11 @@ class CheckoutView(View):
         form = CustomerForm()
         context = {"form": form}
         return render(request, "orders/checkout.html", context=context)
+    
+class OrderDetailView(View):
+    def get(self, request):
+        session = request.session.get("orders_info")
+        return render(request, "orders/detail.html", {"session": session})
 
 
 
