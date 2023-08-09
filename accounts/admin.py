@@ -11,7 +11,6 @@ class CustomerAdmin(admin.ModelAdmin):
     search_fields = "phone_number"
 
 
-# Register your models here.
 class PersonnelAdmin(UserAdmin):
     add_form = PersonnelCreationForm
     form = PersonnelChangeForm
