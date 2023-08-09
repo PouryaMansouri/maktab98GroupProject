@@ -58,14 +58,14 @@ class CategoryAdmin(admin.ModelAdmin):
                     pass
 
                 
-            created = Product.objects.update_or_create(
-                name=fields[0],
-                image=fields[1],
-                is_available=fields[2],
-                description=fields[3],
-                price=fields[4],
-                category=category,
-            )
+                created = Product.objects.update_or_create(
+                    name=fields[0],
+                    image=fields[1],
+                    is_available=fields[2],
+                    description=fields[3],
+                    price=fields[4],
+                    category=category,
+                )
 
             url = reverse('admin:index')
             return HttpResponseRedirect(url)
