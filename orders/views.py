@@ -46,3 +46,26 @@ class OrderCreateView(LoginRequiredMixin , View):
         for item in cart:
             OrderItem.objects.create( product=item['product'] , price=float(item['price']) , quantity=item['quantity'])
         return redirect('orders:order_detail',)
+
+def order_list(request):
+    orders = Order.objects.all()
+    return render(request, 'home.html', {'orders': orders})
+
+def order_accept(request, pk):
+    order = Order.objects.get(pk=pk)
+    order.status = 'accepted'
+    order.save()
+    return redirect('home.html', pk=pk)
+
+def order_reject(request, pk):
+    order = Order.objects.get(pk=pk)
+    order.status = 'rejected'
+    order.save()
+    return redirect('home.html', pk=pk)
+
+# def order_update(request, pk):
+#     order = Order.objects.get(pk=pk)
+#     if request.method == 'POST':
+#         order.save()
+#         return redirect('order_detail', pk=pk)
+#     return render(request, 'order_update.html', {'order': order})
