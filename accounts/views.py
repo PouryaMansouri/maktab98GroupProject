@@ -100,6 +100,6 @@ class UserLogoutView(View):
         logout(request)
         return redirect("cafe:home")
 
-class ManageOrders(view):
+class ManageOrders(View):
     def get(self , request):
         return render(request, 'accounts/manage_orders.html')

@@ -8,11 +8,11 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-12 text-center">
-                <h2 class="page-title">cafena menu</h2>
+                <h2 class="page-title">cafena orders</h2>
                 <div class="cafena-breadcrumb breadcrumbs">
                     <ul class="list-unstyled d-flex align-items-center justify-content-center">
                         <li class="cafenabcrumb-item duxinbcrumb-end">
-                            <span>menu</span>
+                            <span>orders</span>
                         </li>
                     </ul>
                 </div>
@@ -25,20 +25,39 @@
         <div class="row">
             <div class="col-xl-12 text-center">
                 <div class="section-heading section-heading__black mb-40">
-                    <span class="sub-title">menu</span>
-                    <h2 class="title">Our Popular Menu</h2>
+                    <span class="sub-title">orders</span>
+                    <h2 class="title">Our Customers orders</h2>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-xl-12 text-center">
-                <div class="popular-menu__wrapper m-auto d-inline-block">
-                    <div class="popular-menu__filter d-flex justify-content-center align-items-center mb-45">
-                        <button class="active" data-filter="*">All</button>
-                        {% for category in all_categories %}
-                        <button data-filter=".{{category.name}}">{{category.name}}</button>
-                        {% endfor %}
-                    </div>
+            <div class="col-md-12">
+                
+                <div class="table-wrap">
+                    <table class="table">
+                    <thead class="thead-primary">
+                      <tr>
+                        <th>order ID</th>
+                        <th>Customer</th>
+                        <th>table No.</th>
+                                            <th>price</th>
+                        <th>status</th>
+                        <th>details</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr> 
+                        {% for order in orders %}
+                        <th scope="row" class="scope" >{{order.id}}</th>
+                        <td>mr Karimi</td>
+                        <td>{{order.table-name}}</td>
+                                            <td>$70.00</td>
+                        <td>pending...</td>
+                        <td><a href="#" class="btn btn-primary">details</a></td>
+                                    
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
             </div>
         </div>
