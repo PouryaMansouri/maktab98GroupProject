@@ -1,114 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <title>Document</title>
-</head>
-<body>
-        <section class="ftco-section">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-md-6 text-center mb-5">
-					<h4 class="heading-section"> </h4>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<h3 class="text-center mb-4">Orders</h3>
-					<div class="table-wrap">
-						<table class="table">
-					    <thead class="thead-primary">
-					      <tr>
-					        <th>order ID</th>
-					        <th>Customer</th>
-					        <th>table No.</th>
-                                                <th>price</th>
-					        <th>status</th>
-					        <th>details</th>
-					      </tr>
-					    </thead>
-					    <tbody>
-					      <tr>
-					        <th scope="row" class="scope" >10001</th>
-					        <td>mr Karimi</td>
-					        <td>1</td>
-                                                <td>$70.00</td>
-					        <td>pending...</td>
-					        <td><a href="#" class="btn btn-primary">details</a></td>
-                                        
-					      </tr>
-                                              <tr>
-					        <th scope="row" class="scope" >10001</th>
-					        <td>mr Karimi</td>
-					        <td>1</td>
-                                                <td>$70.00</td>
-					        <td>pending...</td>
-					        <td><a href="#" class="btn btn-primary">details</a></td>
-                                                
-					      </tr>
-                                              <tr>
-					        <th scope="row" class="scope" >10001</th>
-					        <td>mr Karimi</td>
-					        <td>1</td>
-                                                <td>$70.00</td>
-					        <td>pending...</td>
-					        <td><a href="#" class="btn btn-primary">details</a></td>
-                                                
-					      </tr>
-                                              <tr>
-					        <th scope="row" class="scope" >10001</th>
-					        <td>mr Karimi</td>
-					        <td>1</td>
-                                                <td>$70.00</td>
-					        <td>pending...</td>
-					        <td><a href="#" class="btn btn-primary">details</a></td>
-                                                
-					      </tr>
-                                              <tr>
-					        <th scope="row" class="scope" >10001</th>
-					        <td>mr Karimi</td>
-					        <td>1</td>
-                                                <td>$70.00</td>
-					        <td>pending...</td>
-					        <td><a href="#" class="btn btn-primary">details</a></td>
-                                                
-					      </tr>
-                                              <tr>
-					        <th scope="row" class="scope" >10001</th>
-					        <td>mr Karimi</td>
-					        <td>1</td>
-                                                <td>$70.00</td>
-					        <td>pending...</td>
-					        <td><a href="#" class="btn btn-primary">details</a></td>
-                                                
-					      </tr>
-                                              <tr>
-					        <th scope="row" class="scope" >10001</th>
-					        <td>mr Karimi</td>
-					        <td>1</td>
-                                                <td>$70.00</td>
-					        <td>pending...</td>
-					        <td><a href="#" class="btn btn-primary">details</a></td>
-                                                
-					      </tr>
-                                              <tr>
-					        <th scope="row" class="scope border-bottom-0" >10001</th>
-					        <td class="border-bottom-0">mr Karimi</td>
-					        <td class="border-bottom-0">1</td>
-                                                <td class="border-bottom-0">$70.00</td>
-					        <td class="border-bottom-0">pending...</td>
-					        <td class="border-bottom-0"><a href="#" class="btn btn-primary">details</a></td>
-                                               
-					      </tr>
-					    </tbody>
-					  </table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Menu {% endblock %}
+{%block content%}
+<section class="breadcrumb-area pt-140 pb-140 bg_img" data-overlay="dark" data-opacity="5">
+    <div class="shape shape__1"><img src="{% static 'cafe/images/shape/breadcrumb-shape-1.png' %}" alt=""></div>
+    <div class="shape shape__2"><img src="{% static 'cafe/images/shape/breadcrumb-shape-2.png' %}" alt=""></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12 text-center">
+                <h2 class="page-title">cafena orders</h2>
+                <div class="cafena-breadcrumb breadcrumbs">
+                    <ul class="list-unstyled d-flex align-items-center justify-content-center">
+                        <li class="cafenabcrumb-item duxinbcrumb-end">
+                            <span>orders</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="popular-menu__area position-relative pb-120 pt-115">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12 text-center">
+                <div class="section-heading section-heading__black mb-40">
+                    <span class="sub-title">orders</span>
+                    <h2 class="title">Our Customers orders</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                
+                <div class="table-wrap">
+                    <table class="table">
+                    <thead class="thead-primary">
+                      <tr>
+                        <th>order ID</th>
+                        <th>Customer</th>
+                        <th>table No.</th>
+                        <th>price</th>
+                        <th>status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr> 
+                        {% for order in orders %}
+                        <th scope="row" class="scope" >{{order.id}}</th>
+                        <td>{{order.customer}}</td>
+                        <td>{{order.table_name}}</td>
+                        <td>{{order.total_price}}</td>
+                        <td>{{order.status}}</td>
+                        <td><a href="{% url 'order_detail' order.pk %}" class="btn btn-primary">{{ order.pk }}</a></td>
+                        {% if order.status == 'pending' %}
+                            <td><a href="{% url 'order_accept' order.pk %}" class="btn btn-success">accept</a></td>
+                            <td><a href="{% url 'order_reject' order.pk %}" class="btn btn-danger">reject</a></td>
+                        {% endif %}
+                        {% endfor %}            
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+        </div>
+        <div id="popular-menu-grid-2" class="row popular-menu__grid popular-menu__lists mt-none-30">
+        <div class="row">
+            <div class="col-xl-12 text-center">
+                <a href="#0" class="site-btn mt-60">load more</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
