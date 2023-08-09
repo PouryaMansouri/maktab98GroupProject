@@ -103,16 +103,12 @@ class OrderCreateView(LoginRequiredMixin, View):
         )
 
 
-def order_list(request):
-    orders = Order.objects.all()
-    return render(request, "home.html", {"orders": orders})
-
-
-def order_accept(request, pk):
-    order = Order.objects.get(pk=pk)
-    order.status = "a"
-    order.save()
-    return redirect("accounts:manage_orders")
+class OrderAccept(View):
+    def get(self, request, pk):
+        order = Order.objects.get(pk=pk)
+        order.status = "a"
+        order.save()
+        return redirect("accounts:manage_orders")
 
 
 def order_reject(request, pk):
