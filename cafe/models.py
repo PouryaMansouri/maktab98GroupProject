@@ -6,10 +6,16 @@ class Customer(models.Model):
     name = models.CharField(max_length=255, null=True)
     phone_number = models.CharField(max_length=20, unique=True)
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
     image = models.ImageField(upload_to=item_directory_path)
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class Product(models.Model):
@@ -21,3 +27,6 @@ class Product(models.Model):
 
     # Foreign keys
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
+
+    def __str__(self) -> str:
+        return self.name

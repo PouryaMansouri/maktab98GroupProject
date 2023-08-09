@@ -15,15 +15,12 @@
                             <li><a href="{% url 'cafe:menu' %}">Menu</a></li>
                             <li><a href="#">About</a></li>
                             <li><a href="#">Reservation</a></li>
-                            <!-- <li><a href="#">Gallery</a></li> -->
-                            <!-- <li><a href="shop.html">Shop</a>
-                                <ul class="sub-menu">
-                                    <li><a href="shop.html">Shop</a></li>
-                                    <li><a href="product-details.html">Shop Details</a></li>
-                                    <li><a href="cart.html">Shop Cart</a></li>
-                                    <li><a href="checkout.html">Shop Checkout</a></li>
-                                </ul>
-                            </li> --> 
+                            {% if not user.is_authenticated %}
+                            <li><a href="{% url 'accounts:login' %}">Login</a></li>
+                            {% endif %}
+                            {% if user.is_authenticated %}
+                            <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
+                            {% endif %}
                             <li><a href="#">Contact</a></li>
                         </ul>
                     </nav>
@@ -37,8 +34,8 @@
                             <span class="close"><i class="fal fa-times"></i></span>
                         </div>
                         <div class="search__form">
-                            <form role="search" method="get" action="index.html">
-                                <input type="search" name="s" value="" placeholder="Search Keywords">
+                            <form role="search" method="get" action="{% url 'cafe:search_results' %}">
+                                <input type="search" name="searched" value="" placeholder="Search Keywords">
                                 <button type="submit"><i class="far fa-search"></i></button>
                             </form>
                         </div>
@@ -46,9 +43,9 @@
                     <div class="hamburger-trigger item">
                         <i class="far fa-bars"></i>
                     </div>
-                    <div class="cart cart-trigger item position-relative">
-                        <i class="fa fa-shopping-basket"></i>
-                        <span class="cart__count">3</span>
+                    <div class="cart item position-relative">
+                        <a href="{% url 'orders:cart' %}"><i class="fa fa-shopping-basket"></i></a>
+                        <!-- <span class="cart__count"><a href="{% url 'orders:cart' %}"></a></span> -->
                     </div>
                 </div>
             </div>

@@ -1,0 +1,23 @@
+{%extends 'base.html'%}
+{%block content%}
+
+
+
+
+
+<div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="{{productd.image.url}}" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">{{productd.name}}</h5>
+      <p class="card-text">{{productd.description}}</p>
+      <p>{{productd.price}}</p>
+      <p>{{productd.id}}</p>
+      
+      <form action="{% url 'orders:cart_add' productd.id%}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="add to cart">
+    </form>
+    </div>
+  </div>
+{%endblock%}

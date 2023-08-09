@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Menu {% endblock %}
+{%block content%}
+<section class="breadcrumb-area pt-140 pb-140 bg_img" data-overlay="dark" data-opacity="5">
+    <div class="shape shape__1"><img src="{% static 'cafe/images/shape/breadcrumb-shape-1.png' %}" alt=""></div>
+    <div class="shape shape__2"><img src="{% static 'cafe/images/shape/breadcrumb-shape-2.png' %}" alt=""></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12 text-center">
+                <h2 class="page-title">cafena orders</h2>
+                <div class="cafena-breadcrumb breadcrumbs">
+                    <ul class="list-unstyled d-flex align-items-center justify-content-center">
+                        <li class="cafenabcrumb-item duxinbcrumb-end">
+                            <span>orders</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="popular-menu__area position-relative pb-120 pt-115">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12 text-center">
+                <div class="section-heading section-heading__black mb-40">
+                    <span class="sub-title">orders</span>
+                    <h2 class="title">Our Customers orders</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                
+                <div class="table-wrap">
+                    <table class="table">
+                    <thead class="thead-primary">
+                      <tr>
+                        <th>order ID</th>
+                        <th>Customer</th>
+                        <th>table No.</th>
+                        <th>price</th>
+                        <th>status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for order,total_cost in orders_with_costs %}
+                        <tr> 
+                        <th scope="row" class="scope" >{{order.id}}</th>
+                        <td>{{order.customer.phone_number}}</td>
+                        <td>{{order.table.table_number}}</td>
+                        <td>{{total_cost}}</td>
+                        <td>{{order.status}}</td>
+                        <td><a href="" class="btn btn-primary"> details </a></td>
+                        {% if order.status == 'p' %}
+                            <td><a href="{% url 'orders:order_accept' order.pk %}" class="btn btn-success">accept</a></td>
+                            <td><a href="{% url 'orders:order_reject' order.pk %}" class="btn btn-danger">reject</a></td>
+                        {% endif %}
+                    </tr>
+                        {% endfor %}            
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+        </div>
+        <div id="popular-menu-grid-2" class="row popular-menu__grid popular-menu__lists mt-none-30">
+        <div class="row">
+            <div class="col-xl-12 text-center">
+                <a href="#0" class="site-btn mt-60">load more</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

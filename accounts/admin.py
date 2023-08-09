@@ -2,8 +2,9 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 from .forms import PersonnelCreationForm, PersonnelChangeForm
-from .models import Personnel
+from .models import Personnel, Customer
 
+admin.site.register(Customer)
 
 # Register your models here.
 class PersonnelAdmin(UserAdmin):
