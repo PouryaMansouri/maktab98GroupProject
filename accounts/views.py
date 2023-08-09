@@ -60,7 +60,6 @@ class UserVerifyPersonnelView(View):
     def post(self, request):
         form = self.form_class(request.POST)
         phone_number = self.session["phone_number"]
-        print(phone_number)
         otp_instance = OTPCode.objects.get(phone_number=phone_number)
         if form.is_valid():
             cd = form.cleaned_data
@@ -80,7 +79,6 @@ class UserVerifyPersonnelView(View):
                     request,
                     phone_number=phone_number,
                 )
-                print(user)
                 if user is not None:
                     login(request, user)
                     messages.success(request, "Logged in Successfully", "success")
