@@ -34,10 +34,10 @@ class Personnel(AbstractBaseUser):
 
 
 class Customer(models.Model):
-    name = models.CharField(max_length=255, null=True)
+    name = models.CharField(max_length=255, null=True, blank=True)
     phone_number = models.CharField(max_length=20, unique=True)
 
-class OtpCode(models.Model):
+class OTPCode(models.Model):
     phone_number = models.CharField(max_length=11, unique=True)
     code = models.SmallIntegerField()
     created = models.DateTimeField(auto_now=True)
