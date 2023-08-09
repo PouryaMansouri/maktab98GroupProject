@@ -9,7 +9,7 @@ class Table(models.Model):
 
 
 class Order(models.Model):
-    STATUS_FIELDS = [("p", "Pending"), ("a", "Aaccepted"), ("r", "Rejected")]
+    STATUS_FIELDS = [("p", "Pending"), ("a", "Accepted"), ("r", "Rejected")]
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True, null=True)
     status = models.CharField(max_length=1, choices=STATUS_FIELDS, default="p")
