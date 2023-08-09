@@ -1,45 +1,63 @@
+from django.shortcuts import redirect
+
 from cafe.models import Product
 
-CART_SESSION_ID='cart'
+import json
+
+
+CART_COOKIE_KEY = "cart"
+
 
 class Cart:
-    def __init__(self, request):
-        self.session = request.session
-        cart=self.session.get(CART_SESSION_ID)
-        if not cart :
-            cart=self.session[CART_SESSION_ID]={}
-        self.cart=cart
-
+    def __init__(self, request) -> None:
+        cart = request.COOKIES.get(CART_COOKIE_KEY)
+        if not cart:
+            self.cart = {}
+        else:
+            self.cart = json.loads(cart)
 
     def __iter__(self):
         product_ids = self.cart.keys()
         products = Product.objects.filter(id__in=product_ids)
         cart = self.cart.copy()
         for product in products:
-            cart[str(product.id)]['product'] = product
+            cart[str(product.id)]["price"] = str(product.price)
+            cart[str(product.id)]["sub_total"] = str(
+                cart[str(product.id)]["quantity"] * product.price
+            )
 
-        for item in cart.values():
-            item['total_price'] = float(item['price'])*  item['quantity']
-            yield item     
-    
-    def __len__(self):
-        return sum(item['quantity'] for item in self.cart.values())
-    
-    def add (self, product , quantity):
-        product_id=str(product.id)
-        if product_id not in self.cart:
-            self.cart[product_id]={'quantity':0 , 'price':str(product.price)}
-        self.cart[product_id]['quantity'] += quantity
-        self.save()
+        for key, value in cart.items():
+            yield key, value
 
-    def remove(self , product):
-        product_id=str(product.id)
+    def add(self, product, quantity):
+        product_id = str(product.id)
+        if not product_id in self.cart:
+            self.cart[product_id] = {
+                "product": product.name,
+                "quantity": quantity,
+            }
+        else:
+            self.cart[product_id]["quantity"] += quantity
+
+
+    def remove(self, product):
+        product_id = str(product.id)
         if product_id in self.cart:
             del self.cart[product_id]
-            self.save()
 
-    def save(self):
-        self.session.modified = True
+    def total_price(self):
+        return sum(
+            item["quantity"] * float(item["price"]) for item in self.cart.values()
+        )
 
-    def get_total_price(self):
-        return sum(float(item['price'])* item['quantity'] for item in self.cart.values())
+    def save(self, destination):
+        serialized_cart = json.dumps(self.cart)
+        response = redirect(destination)
+        response.set_cookie(CART_COOKIE_KEY, serialized_cart)
+        return response
+    
+    def delete(self, destination):
+        response = redirect(destination)
+        response.delete_cookie(CART_COOKIE_KEY)
+        return response
+
