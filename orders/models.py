@@ -36,7 +36,7 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return f"{self.order.table_name} || {self.product} || {self.quantity}"
+        return f"{self.product} || {self.quantity}"
 
     def get_cost(self):
         return self.price * self.quantity
