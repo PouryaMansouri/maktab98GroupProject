@@ -32,10 +32,13 @@ class Personnel(AbstractBaseUser):
         return self.is_admin
 
 
-
 class Customer(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
     phone_number = models.CharField(max_length=20, unique=True)
+
+    def __str__(self) -> str:
+        return f"{self.phone_number}"
+
 
 class OTPCode(models.Model):
     phone_number = models.CharField(max_length=11, unique=True)
