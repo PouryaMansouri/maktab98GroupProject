@@ -4,7 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 from utils import send_otp_code
-from .models import OTPCode
+from .models import OTPCode 
+from orders.models import Order
 from .forms import UserCustomerLoginForm, OTPForm
 
 from random import randint
@@ -60,7 +61,6 @@ class UserVerifyPersonnelView(View):
     def post(self, request):
         form = self.form_class(request.POST)
         phone_number = self.session["phone_number"]
-        print(phone_number)
         otp_instance = OTPCode.objects.get(phone_number=phone_number)
         if form.is_valid():
             cd = form.cleaned_data
@@ -80,11 +80,10 @@ class UserVerifyPersonnelView(View):
                     request,
                     phone_number=phone_number,
                 )
-                print(user)
                 if user is not None:
                     login(request, user)
                     messages.success(request, "Logged in Successfully", "success")
-                    return redirect("cafe:home")
+                    return redirect("accounts:manage_orders")
                 else:
                     messages.error(
                         request, "The code or phone_number is wrong!", "error"
@@ -99,3 +98,14 @@ class UserLogoutView(View):
     def get(self, request):
         logout(request)
         return redirect("cafe:home")
+
+class ManageOrders(View):
+    def get(self , request):
+        orders = Order.objects.all()
+        total_price = []
+        for order in orders:
+            total_price.append(order.get_total_price())
+        orders_with_costs = zip(orders, total_price)
+        # context = {'orders': orders, "total_price": total_price}
+        context = {"orders_with_costs": orders_with_costs}
+        return render(request, 'accounts/manage_orders.html', context=context)
