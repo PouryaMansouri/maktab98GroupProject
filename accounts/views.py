@@ -33,7 +33,6 @@ class UserLoginView(View):
         if form.is_valid():
             cd = form.cleaned_data
             phone_number = cd["phone_number"]
-            print(phone_number)
             code = randint(1000, 9999)
             # send_otp_code(phone_number, code)
             print(code)
