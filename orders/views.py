@@ -111,11 +111,12 @@ class OrderAccept(View):
         return redirect("accounts:manage_orders")
 
 
-def order_reject(request, pk):
-    order = Order.objects.get(pk=pk)
-    order.status = "r"
-    order.save()
-    return redirect("accounts:manage_orders")
+class OrderReject(View):
+    def get(self, request, pk):
+        order = Order.objects.get(pk=pk)
+        order.status = "r"
+        order.save()
+        return redirect("accounts:manage_orders")
 
 
 class OrderDetailView(View):
