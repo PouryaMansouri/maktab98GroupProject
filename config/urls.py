@@ -29,3 +29,8 @@ urlpatterns = [
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
+
+#Configure Admin Titles
+admin.site.site_header="Cafena Administration Page"
+admin.site.site_title="Cafena"
+admin.site.index_title="Welcome to the admin area ..."

@@ -14,3 +14,6 @@ urlpatterns = [
     path('<int:pk>/reject/', views.order_reject, name='order_reject'),
     path('checkout/' , views.CheckoutView.as_view() , name='checkout'),
 ]
+
+
+
