@@ -55,4 +55,9 @@ class Cart:
         response = redirect(destination)
         response.set_cookie(CART_COOKIE_KEY, serialized_cart)
         return response
+    
+    def delete(self, destination):
+        response = redirect(destination)
+        response.delete_cookie(CART_COOKIE_KEY)
+        return response
 
