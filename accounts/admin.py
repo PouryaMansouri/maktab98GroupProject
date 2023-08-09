@@ -4,9 +4,8 @@ from django.contrib.auth.models import Group
 from .forms import PersonnelCreationForm, PersonnelChangeForm
 from .models import Personnel, Customer
 
-admin.site.register(Customer)
 
-
+@admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
     list_display = "phone_number"
     search_fields = "phone_number"
