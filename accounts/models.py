@@ -34,7 +34,7 @@ class Personnel(AbstractBaseUser):
 
 
 class Customer(models.Model):
-    name = models.CharField(max_length=255, null=True)
+    name = models.CharField(max_length=255, null=True, blank=True)
     phone_number = models.CharField(max_length=20, unique=True)
 
 class OTPCode(models.Model):

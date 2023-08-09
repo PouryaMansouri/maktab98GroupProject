@@ -1,15 +1,122 @@
-{% extends 'bose.html' %}
 
-{% block content %}
-    <h2>{{ product.name}}</h2>
-    <small>{{ product.created }}</small><br/>
-    <p>{{ product.price}} Toman</p>
-    <img src="{{ product.image.url}}" style="width: 300px;">
-    <p>{{ product.description }}</p><br/><br/>
-    <form action="{% url 'orders: cart_add' product. id %}" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="add to cart">
-    </form>
+{% extends 'base.html' %} {% load static %} {%block content%}
+<section
+  class="breadcrumb-area pt-140 pb-140 bg_img"
+  data-overlay="dark"
+  data-opacity="5"
+>
+  <div class="shape shape__1">
+    <img src="{% static 'cafe/images/shape/breadcrumb-shape-1.png' %}" alt="" />
+  </div>
+  <div class="shape shape__2">
+    <img src="{% static 'cafe/images/shape/breadcrumb-shape-2.png' %}" alt="" />
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12 text-center">
+        <h2 class="page-title">Cafena Cart</h2>
+        <div class="cafena-breadcrumb breadcrumbs">
+          <ul
+            class="list-unstyled d-flex align-items-center justify-content-center"
+          >
+            <li class="cafenabcrumb-item duxinbcrumb-begin">
+              <a href="#"><span>Home</span></a>
+            </li>
+            <li class="cafenabcrumb-item duxinbcrumb-end">
+              <span>cart</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cart-area pt-120 pb-120">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="cart-wrapper">
+          <div class="table-content table-responsive">
+            {% for order_id, order_items in session.items %}
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="cart-product-name">Product Name</th>
+                  <th class="product-price">Price</th>
+                  <th class="product-quantity">Quantity</th>
+                  <th class="product-subtotal">subTotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for order in order_items %}
+                {% if not forloop.last %}
+                <tr>
+                  <td class="product-name">
+                    <a href="#">{{ order.product }}</a>
+                  </td>
+                  <td class="product-price">
+                    <span class="amount">{{ order.price }}</span>
+                  </td>
+                  <td class="product-quantity">{{ order.quantity }}</td>
+                  <td class="product-subtotal">
+                    <span class="amount">{{ order.sub_total }}</span>
+                  </td>
+                </tr>
+                {% else %}
+                <tr class="bg-info">
+                    <td>Total Price:</td>
+                    <td>{{ order }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+              </tbody>
+
+            </table>
+
+            {% endfor %}
+          </div>
+        </div>
+        <div class="cart-bottom-wrapper d-flex align-items-center">
+          <div class="coupon d-flex align-items-center">
+            <input
+              id="coupon_code"
+              class="input-text"
+              name="coupon_code"
+              value=""
+              placeholder="Coupon code"
+              type="text"
+            />
+            <button
+              class="site-btn site-btn site-btn__bghide"
+              name="apply_coupon"
+              type="submit"
+            >
+              Apply coupon
+            </button>
+          </div>
+          <div class="clear-update d-flex align-items-center">
+            <a href="#0" class="site-btn site-btn__bghide">clear cart</a>
+            <a href="#0" class="site-btn site-btn__bghide">update cart</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-end">
+      <div class="col-xl-5 col-lg-7">
+        <div class="cart-total mt-100">
+          <h2 class="title">Cart Total</h2>
+          <div class="ct-sub ct-sub__total">
+            <span>Total</span>
+            <span></span>
+          </div>
+          <a href="{% url 'orders:checkout' %}" class="site-btn">Procced to checkout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 {% endblock %}
-

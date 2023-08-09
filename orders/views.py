@@ -1,43 +1,91 @@
-from django.shortcuts import render, get_object_or_404, redirect 
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from .cart import Cart
 from cafe.models import Product
-from .forms import CartAddForm
+from .forms import CartAddForm, CustomerForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Order , OrderItem
+from .models import Order, OrderItem, Table
+from accounts.models import Customer
 
 
 class CartView(View):
     def get(self, request):
-        cart=Cart(request)
-        return render(request, 'orders/cart.html' , {'cart':cart})
-
-
+        cart = Cart(request)
+        context = {"cart": cart}
+        return render(request, "orders/cart.html", context)
 
 
 class CartAddView(View):
     def post(self, request, product_id):
         cart = Cart(request)
         product = get_object_or_404(Product, id=product_id)
-        form = CartAddForm(request.POST) 
+        form = CartAddForm(request.POST)
         if form.is_valid():
-            cart.add(product,form.cleaned_data['quantity'])
-        return redirect('orders:cart')
+            cart.add(product, form.cleaned_data["quantity"])
+            response = cart.save("orders:cart")
+        return response
+        # return redirect('orders:cart')
 
 
 class CartRemoveView(View):
-    def get(self,request , product_id):
-        cart=Cart(request)
-        product=get_object_or_404(Product , id=product_id)
+    def get(self, request, product_id):
+        cart = Cart(request)
+        product = get_object_or_404(Product, id=product_id)
         cart.remove(product)
-        return redirect('orders:cart')
+        response = cart.save("orders:cart")
+        return response
+    
+class CheckoutView(View):
+    def get(self, request):
+        form = CustomerForm()
+        context = {"form": form}
+        return render(request, "orders/checkout.html", context=context)
     
 
-class OrderDetailView(LoginRequiredMixin , View):
-    def get(self,request,order_id):
-        order =get_object_or_404(Order, id=order_id)
-        return render(request , 'orders/order.html',{'order':order})
+class AddOrderView(View):
+    def post(self, request):
+        form = CustomerForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            phone_number = cd["phone_number"]
+            table_number = cd["table_number"]
+            try:
+                customer = Customer.objects.get(phone_number=phone_number)
+            except:
+                customer = Customer.objects.create(phone_number=phone_number)
 
+            table = Table.objects.get(table_number=table_number)
+            order = Order.objects.create(table=table, customer=customer)
+            if request.session.get("orders_info"):
+                session = request.session.get("orders_info")
+            else:
+                session = request.session["orders_info"] = {}
+
+            session_order = session[str(order.id)] = []
+            cart = Cart(request)
+            for key, value in cart:
+                product = Product.objects.get(id=key)
+                OrderItem.objects.create(
+                    order=order,
+                    product=product,
+                    price=float(value["price"]),
+                    quantity=value["quantity"],
+                )
+                session_order.append(
+                    {
+                        "product": value["product"],
+                        "price": value["price"],
+                        "quantity": value["quantity"],
+                        "sub_total": value["sub_total"],
+                    }
+                )
+                request.session.modified = True
+            total_cost = cart.total_price()
+            session_order.append(total_cost)
+            response = cart.delete("orders:order_detail")
+            return response
+        else:
+            pass
 
 class OrderCreateView(LoginRequiredMixin , View):
     def get(self,request):
@@ -63,9 +111,8 @@ def order_reject(request, pk):
     order.save()
     return redirect('home.html', pk=pk)
 
-# def order_update(request, pk):
-#     order = Order.objects.get(pk=pk)
-#     if request.method == 'POST':
-#         order.save()
-#         return redirect('order_detail', pk=pk)
-#     return render(request, 'order_update.html', {'order': order})
+class OrderDetailView(View):
+    def get(self, request):
+        session = request.session.get("orders_info")
+        return render(request, "orders/detail.html", {"session": session})
+
