@@ -6,6 +6,12 @@ from .models import Personnel, Customer
 
 admin.site.register(Customer)
 
+
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = "phone_number"
+    search_fields = "phone_number"
+
+
 # Register your models here.
 class PersonnelAdmin(UserAdmin):
     add_form = PersonnelCreationForm
