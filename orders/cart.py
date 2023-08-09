@@ -16,6 +16,19 @@ class Cart:
         else:
             self.cart = json.loads(cart)
 
+    def __iter__(self):
+        product_ids = self.cart.keys()
+        products = Product.objects.filter(id__in=product_ids)
+        cart = self.cart.copy()
+        for product in products:
+            cart[str(product.id)]["price"] = str(product.price)
+            cart[str(product.id)]["sub_total"] = str(
+                cart[str(product.id)]["quantity"] * product.price
+            )
+
+        for key, value in cart.items():
+            yield key, value
+
     def add(self, product, quantity):
         product_id = str(product.id)
         if not product_id in self.cart:
