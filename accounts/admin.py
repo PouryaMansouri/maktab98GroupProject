@@ -7,8 +7,8 @@ from .models import Personnel, Customer
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = "phone_number"
-    search_fields = "phone_number"
+    list_display = ("phone_number",)
+    search_fields = ("phone_number",)
 
 
 class PersonnelAdmin(UserAdmin):
@@ -48,7 +48,11 @@ class PersonnelAdmin(UserAdmin):
         ),
         ("Permissions", {"fields": ("is_admin", "is_active")}),
     )
-    search_fields = ("email", "full_name", "phone_number")
+    search_fields = (
+        "email",
+        "full_name",
+        "phone_number",
+    )
     ordering = ("full_name",)
     filter_horizontal = ()
 
