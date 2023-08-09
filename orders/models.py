@@ -24,7 +24,7 @@ class Order(models.Model):
         return sum(item.get_cost() for item in self.orderitem_set.all())
 
     def __str__(self) -> str:
-        return f"{self.table_name} || {self.status} || {self.create_time}"
+        return f"{self.status} || {self.create_time}"
 
 
 class OrderItem(models.Model):
