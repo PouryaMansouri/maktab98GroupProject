@@ -1,4 +1,4 @@
-from typing import Any
+from django.http import Http404
 from django.db import models
 from utils import item_directory_path
 from django.utils.html import mark_safe
@@ -37,3 +37,11 @@ class PageData(models.Model):
     
     def __str__(self) -> str:
         return str(self.target_name) + ' page data'
+
+    @classmethod
+    def get_page_date(cls, target):
+        try:
+            page_data = cls.objects.get(target_name = target)
+            return page_data
+        except:
+            raise Http404
