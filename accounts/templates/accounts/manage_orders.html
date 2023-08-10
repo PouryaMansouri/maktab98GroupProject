@@ -52,7 +52,7 @@
                         <td>{{order.table.table_number}}</td>
                         <td>{{total_cost}}</td>
                         <td>{{order.status}}</td>
-                        <td><a href="" class="btn btn-primary"> details </a></td>
+                        <td><a href="{% url 'accounts:order_detail' order.pk %}" class="btn btn-primary"> details </a></td>
                         {% if order.status == 'p' %}
                             <td><a href="{% url 'orders:order_accept' order.pk %}" class="btn btn-success">accept</a></td>
                             <td><a href="{% url 'orders:order_reject' order.pk %}" class="btn btn-danger">reject</a></td>
