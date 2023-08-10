@@ -65,14 +65,14 @@ To encourage quality work, thorough testing, and documentation, we expect the te
 
 🚀 **Deliverables:** A fully functional online menu and staff panel.
 
-### Section 3: Finishing Touches and Frontend Magic (100 points)
+### Section 3:  Analytics Feature, Finishing Touches and Frontend Magic (100 points)
 
-#### Final Features 🌟 (40 points)
+#### Manager's Dashboard: Analytics and Reports 📈 (40 points)
 
-- Implement Django Generic Views.
-- Add statistics and insights for the manager.
-- Implement manager-specific features using Django permissions in views and templates.
-- Improve the user interface and user experience.
+- Implement an analytics dashboard for the manager view that displays key sales metrics and trends.
+- Enable the manager to generate and download detailed sales reports.
+- The analytics feature should provide insights into the most popular cafe items, peak business hours, and customer demographic data.
+
 
 #### Frontend Magic ✨(60 points)
 
@@ -82,19 +82,20 @@ To encourage quality work, thorough testing, and documentation, we expect the te
 
 🏆 **Achievements:** A polished, interactive, and user-friendly web application.
 
-🎁 **Incentives:** The admiration of your peers, a fully developed project to add to your portfolio, and test coverage of at least 95%.
+🎁 **Incentives:** The admiration of your peers, a fully developed project to add to your portfolio.
 
 🚀 **Deliverables:** A complete, fully functional, and responsive web application.
 
 
-### Section 4: Testing, Analytics Feature, Documentation (100 points)
+### Section 4: Testing, Documentation (100 points)
 
 
-#### Manager's Dashboard: Analytics and Reports 📈 (40 points)
+#### Final Features 🌟 (40 points)
 
-- Implement an analytics dashboard for the manager view that displays key sales metrics and trends.
-- Enable the manager to generate and download detailed sales reports.
-- The analytics feature should provide insights into the most popular cafe items, peak business hours, and customer demographic data.
+- Implement Django Generic Views.
+- Add statistics and insights for the manager.
+- Implement manager-specific features using Django permissions in views and templates.
+- Improve the user interface and user experience.
 
 #### Testing 🧪 (40 points)
 
