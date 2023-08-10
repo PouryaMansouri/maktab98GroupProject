@@ -5,8 +5,9 @@ from django.contrib import messages
 
 from utils import send_otp_code
 from .models import OTPCode
-from orders.models import Order
+from orders.models import Order , OrderItem
 from .forms import UserCustomerLoginForm, OTPForm
+
 
 from random import randint
 import datetime
@@ -109,3 +110,8 @@ class ManageOrders(View):
         # context = {'orders': orders, "total_price": total_price}
         context = {"orders_with_costs": orders_with_costs}
         return render(request, "accounts/manage_orders.html", context=context)
+
+class OrderDetailView(View):
+    def get(self, request , pk):
+        order = Order.objects.get(pk=pk)
+        return render(request, "accounts/order_detail.html", {'order': order})
