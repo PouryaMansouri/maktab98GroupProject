@@ -27,4 +27,5 @@ class SearchView(View):
         results = Product.objects.filter(
             Q(name__icontains=searched) | Q(description__icontains=searched)
         ).distinct()
-        return render(request, "cafe/search_results.html", {"results": results})
+        page_data = PageData.get_page_date('Search_Page')
+        return render(request, "cafe/search_results.html", {"results": results, "page_data": page_data})
