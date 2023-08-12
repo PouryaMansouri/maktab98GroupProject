@@ -67,14 +67,14 @@ To encourage quality work, thorough testing, and documentation, we expect the te
 
 ### Section 3:  Analytics Feature, Finishing Touches and Frontend Magic (100 points)
 
-#### Manager's Dashboard: Analytics and Reports 📈 (40 points)
+#### Manager's Dashboard: Analytics and Reports 📈 (60 points)
 
 - Implement an analytics dashboard for the manager view that displays key sales metrics and trends.
 - Enable the manager to generate and download detailed sales reports.
 - The analytics feature should provide insights into the most popular cafe items, peak business hours, and customer demographic data.
 
 
-#### Frontend Magic ✨(60 points)
+#### Frontend Magic ✨(40 points)
 
 - Implement frontend frameworks and libraries.
 - Add animations, transitions, and interactive elements.
