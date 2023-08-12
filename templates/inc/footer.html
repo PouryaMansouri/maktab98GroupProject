@@ -12,7 +12,7 @@
                             <div class="item d-flex align-items-center justify-content-center">
                                 <img src="{% static 'images/icons/ft-phone.png' %}" alt="">
                                 <span>Phone :</span>
-                                <a href="tel:88019339702520">+88019 339 702 520</a>
+                                <a href="tel:{{page_data.footer.footer_phone}}">{{page_data.footer.footer_phone}}</a>
                             </div>
                         </div>
                     </div>
@@ -43,17 +43,17 @@
                 <div class="row">
                     <div class="col-lg-7">
                         <div class="footer__logo--content">
-                            <img class="mb-15" src="{% static 'images/logo/logo.png' %}" alt="">
-                            <p>Donec et nibh maximus, congue est eu, mattis nunc. Praesent ut quam quis quam venenatis fringilla. Morbi vestibulum</p>
+                            <img class="mb-15" src="{{page_data.footer.footer_logo.url}}" alt="">
+                            <p>{{page_data.footer.footer_text}}</p>
                         </div>
                     </div>
                     <div class="col-lg-5 align-self-end">
                         <div class="social-links d-flex align-items-center justify-content-lg-end">
-                            <a href="#0" target="_blank"><i class="fab fa-twitter"></i></a>
-                            <a href="#0" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#0" target="_blank"><i class="fab fa-youtube"></i></a>
-                            <a href="#0" target="_blank"><i class="fab fa-google-plus-g"></i></a>
-                            <a href="#0" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a href="{{page_data.footer.footer_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>
+                            <a href="{{page_data.footer.footer_telegram}}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                            <a href="{{page_data.footer.footer_youtube}}" target="_blank"><i class="fab fa-youtube"></i></a>
+                            <a href="{{page_data.footer.footer_googleplus}}" target="_blank"><i class="fab fa-google-plus-g"></i></a>
+                            <a href="{{page_data.footer.footer_instagram}}" target="_blank"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
                 </div>
