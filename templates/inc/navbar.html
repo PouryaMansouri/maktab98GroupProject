@@ -79,7 +79,7 @@
                 </div>
                 <div class="col-xl-2 col-lg-2 d-none d-lg-block text-center align-self-center">
                     <div class="logo">
-                        <a href="index.html">
+                        <a href="{% url 'cafe:home' %}">
                             <img src="{% static 'images/logo/logo-black.png' %}" alt="img">
                         </a>
                     </div>
@@ -123,7 +123,7 @@
                 <div class="col-xl-9 col-lg-10 col-6">
                     <div class="wrapper-for-lg d-flex align-items-center">
                         <div class="logo">
-                            <a href="index.html">
+                            <a href="{% url 'cafe:home' %}">
                                 <img src="{% static 'images/logo/logo-black.png' %}" alt="img">
                             </a>
                         </div>
@@ -187,8 +187,8 @@
     </nav>
     <div class="side-info__wrapper d-flex align-items-center justify-content-between">
         <div class="side-info__logo">
-            <a href="index.html">
-                <img src="assets/images/logo/logo-black.png" alt="logo">
+            <a href="{% url 'cafe:home' %}">
+                <img src="{% static 'images/logo/logo-black.png' %}" alt="img">
             </a>
         </div>
         <div class="side-info__close">
@@ -240,8 +240,8 @@
 <aside class="side-info-wrapper show-all">
     <div class="side-info__wrapper d-flex align-items-center justify-content-between">
         <div class="side-info__logo">
-            <a href="index.html">
-                <img src="assets/images/logo/logo-black.png" alt="logo">
+            <a href="{% url 'cafe:home' %}">
+                <img src="{% static 'images/logo/logo-black.png' %}" alt="img">
             </a>
         </div>
         <div class="side-info__close">
