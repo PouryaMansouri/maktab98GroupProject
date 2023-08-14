@@ -71,7 +71,7 @@
                                 {% endif %}
                                 {% if user.is_authenticated %}
                                 <li><a href="{% url 'accounts:manage_orders' %}">Order List</a></li>
-                                <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
+                                <li><a href="{% url 'accounts:logout' %}">{{user.full_name.split.0}}, Logout</a></li>
                                 {% endif %}
                             </ul>
                         </nav>
@@ -137,7 +137,7 @@
                                     {% endif %}
                                     {% if user.is_authenticated %}
                                     <li><a href="{% url 'accounts:manage_orders' %}">Order List</a></li>
-                                    <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
+                                    <li><a href="{% url 'accounts:logout' %}">{{user.full_name.split.0}}, Logout</a></li>
                                     {% endif %}
                                     <li><a href="#">About</a></li>
                                     <li><a href="#">Contact</a></li>
