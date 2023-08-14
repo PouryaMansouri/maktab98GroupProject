@@ -267,7 +267,20 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
+                                        {% for product,values in most_sellar_all.items %}
+                                            <tr>
+                                                <td>{{ values.0 }}</td>
+                                                <td>
+                                                    <div class="m-r-10"><img src="{{ values.1 }}" alt="user" class="rounded" width="45" style="width: 50px; height: 50px;"></div>
+                                                </td>
+                                                <td>{{ values.2 }} </td>
+                                                <td>{{ values.3 }}</td>
+                                                <td>{{ values.4 }}</td>
+                                                <td>{{ values.5 }}</td>
+                                                
+                                            </tr>
+                                            {% endfor %}
+                                            <tr>
                                                 <td colspan="8"><a href="#" class="btn btn-outline-light float-right">View Details</a></td>
                                             </tr>
                                         </tbody>
