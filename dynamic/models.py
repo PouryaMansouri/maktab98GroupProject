@@ -44,4 +44,26 @@ class PageData(models.Model):
             page_data = cls.objects.get(target_name = target)
             return page_data
         except:
-            raise Http404
+            try:
+                page_data = cls.objects.get(target_name = 'Default_Page')
+                return page_data
+            except:
+                default_footer = Footer.objects.create(
+                    footer_name = 'default',
+                    footer_phone = '+989123456789',
+                    footer_logo = 'footer_logo/logo.png',
+                    footer_email = 'mail@mail.com',
+                    footer_text = 'default text',
+                )
+
+                
+                page_data = cls.objects.create(
+                    target_name = 'Default_Page',
+                    title = 'Cafena',
+                    name = 'Cafena',
+                    route = 'Default',
+                    banner = 'PageData/banner.png',
+                    footer = default_footer
+                )
+
+                return default_footer
