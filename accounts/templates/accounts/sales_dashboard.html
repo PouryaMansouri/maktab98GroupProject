@@ -250,9 +250,9 @@
                     <!-- ============================================================== -->
                     <!-- top selling products  -->
                     <!-- ============================================================== -->
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                         <div class="card">
-                            <h5 class="card-header">Top Selling Products</h5>
+                            <h5 class="card-header">Top Selling Products of all time</h5>
                             <div class="card-body p-0">
                                 <div class="table-responsive">
                                     <table class="table">
@@ -280,9 +280,119 @@
                                                 
                                             </tr>
                                             {% endfor %}
-                                            <tr>
-                                                <td colspan="8"><a href="#" class="btn btn-outline-light float-right">View Details</a></td>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                        <div class="card">
+                            <h5 class="card-header">Top Selling Products in this year</h5>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="bg-light">
+                                            <tr class="border-0">
+                                                <th class="border-0">#</th>
+                                                <th class="border-0">Image</th>
+                                                <th class="border-0">Product Name</th>
+                                                <th class="border-0">Quantity</th>
+                                                <th class="border-0">Price</th>
+                                                <th class="border-0">total price</th>
                                             </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for product,values in most_sellar_year.items %}
+                                            <tr>
+                                                <td>{{ values.0 }}</td>
+                                                <td>
+                                                    <div class="m-r-10"><img src="{{ values.1 }}" alt="user" class="rounded" width="45" style="width: 50px; height: 50px;"></div>
+                                                </td>
+                                                <td>{{ values.2 }} </td>
+                                                <td>{{ values.3 }}</td>
+                                                <td>{{ values.4 }}</td>
+                                                <td>{{ values.5 }}</td>
+                                                
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                        <div class="card">
+                            <h5 class="card-header">Top Selling Products in this month</h5>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="bg-light">
+                                            <tr class="border-0">
+                                                <th class="border-0">#</th>
+                                                <th class="border-0">Image</th>
+                                                <th class="border-0">Product Name</th>
+                                                <th class="border-0">Quantity</th>
+                                                <th class="border-0">Price</th>
+                                                <th class="border-0">total price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for product,values in most_sellar_month.items %}
+                                            <tr>
+                                                <td>{{ values.0 }}</td>
+                                                <td>
+                                                    <div class="m-r-10"><img src="{{ values.1 }}" alt="user" class="rounded" width="45" style="width: 50px; height: 50px;"></div>
+                                                </td>
+                                                <td>{{ values.2 }} </td>
+                                                <td>{{ values.3 }}</td>
+                                                <td>{{ values.4 }}</td>
+                                                <td>{{ values.5 }}</td>
+                                                
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                        <div class="card">
+                            <h5 class="card-header">Top Selling Products in this week</h5>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="bg-light">
+                                            <tr class="border-0">
+                                                <th class="border-0">#</th>
+                                                <th class="border-0">Image</th>
+                                                <th class="border-0">Product Name</th>
+                                                <th class="border-0">Quantity</th>
+                                                <th class="border-0">Price</th>
+                                                <th class="border-0">total price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for product,values in most_sellar_week.items %}
+                                            <tr>
+                                                <td>{{ values.0 }}</td>
+                                                <td>
+                                                    <div class="m-r-10"><img src="{{ values.1 }}" alt="user" class="rounded" width="45" style="width: 50px; height: 50px;"></div>
+                                                </td>
+                                                <td>{{ values.2 }} </td>
+                                                <td>{{ values.3 }}</td>
+                                                <td>{{ values.4 }}</td>
+                                                <td>{{ values.5 }}</td>
+                                                
+                                            </tr>
+                                            {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
