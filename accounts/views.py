@@ -114,4 +114,5 @@ class ManageOrders(View):
 class OrderDetailView(View):
     def get(self, request , pk):
         order = Order.objects.get(pk=pk)
-        return render(request, "accounts/order_detail.html", {'order': order})
+        order_items = order.orderitem_set.all()
+        return render(request, "accounts/order_detail.html", {'order_items': order_items , 'order': order})
