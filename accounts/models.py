@@ -39,11 +39,3 @@ class Customer(models.Model):
     def __str__(self) -> str:
         return f"{self.phone_number}"
 
-
-class OTPCode(models.Model):
-    phone_number = models.CharField(max_length=11, unique=True)
-    code = models.SmallIntegerField()
-    created = models.DateTimeField(auto_now=True)
-
-    def __str__(self) -> str:
-        return f"{self.phone_number} | {self.code}"

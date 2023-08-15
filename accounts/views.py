@@ -4,7 +4,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 from utils import send_otp_code
-from .models import OTPCode
 from orders.models import Order
 from .forms import UserCustomerLoginForm, OTPForm
 
@@ -29,15 +28,18 @@ class UserLoginView(View):
 
     def post(self, request):
         form = self.form_class(request.POST)
-        session = request.session["personnel_info"] = {}
+        session = request.session["personnel_verify"] = {}
         if form.is_valid():
+            current_datetime = datetime.datetime.now(tz=pytz.timezone("Asia/Tehran"))
+            request.session['my_datetime'] = current_datetime.isoformat()
             cd = form.cleaned_data
             phone_number = cd["phone_number"]
             code = randint(1000, 9999)
-            # send_otp_code(phone_number, code)
             print(code)
-            OTPCode.objects.create(phone_number=phone_number, code=code)
             session["phone_number"] = phone_number
+            session["code"] = code
+            session["created_at"] = current_datetime.isoformat()
+
             return redirect("accounts:verify_personnel")
 
         return render(request, self.template_name, {"form": form})
@@ -47,7 +49,7 @@ class UserVerifyView(View):
     form_class = OTPForm
 
     def setup(self, request, *args, **kwargs):
-        self.session = request.session["personnel_info"]
+        self.session = request.session["personnel_verify"]
         return super().setup(request, *args, **kwargs)
 
     def get(self, request):
@@ -58,7 +60,6 @@ class UserVerifyView(View):
     def post(self, request):
         form = self.form_class(request.POST)
         phone_number = self.session["phone_number"]
-        otp_instance = OTPCode.objects.get(phone_number=phone_number)
         if form.is_valid():
             cd = form.cleaned_data
             digit1 = cd["digit1"]
@@ -68,28 +69,19 @@ class UserVerifyView(View):
             entered_code = int(digit1 + digit2 + digit3 + digit4)
             print(entered_code)
 
-            expired_time = datetime.datetime.now(
-                tz=pytz.timezone("Asia/Tehran")
-            ) - datetime.timedelta(minutes=1)
-            if (
-                entered_code == otp_instance.code
-                and otp_instance.created > expired_time
-            ):
-                user = authenticate(
-                    request,
-                    phone_number=phone_number,
-                )
-                if user is not None:
-                    login(request, user)
-                    messages.success(request, "Logged in Successfully", "success")
-                    return redirect("accounts:manage_orders")
-                else:
-                    messages.error(
-                        request, "The code or phone_number is wrong!", "error"
-                    )
-                    return redirect("accounts:verify_personnel")
+            user = authenticate(
+                request,
+                phone_number=phone_number,
+                entered_code=entered_code,
+            )
+            if user is not None:
+                login(request, user)
+                messages.success(request, "Logged in Successfully", "success")
+                return redirect("accounts:manage_orders")
             else:
-                messages.error(request, "The code or phone_number is wrong!", "error")
+                messages.error(
+                    request, "The code or phone_number is wrong!", "error"
+                )
                 return redirect("accounts:verify_personnel")
 
 
