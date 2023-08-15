@@ -25,6 +25,21 @@ class DateVars:
     def get_first_day_last_month(cls):
         last_day_last_month = cls.get_last_day_last_month()
         return last_day_last_month.replace(day=1)
+    
+    @classmethod
+    def get_first_day_current_week(cls):
+        first_day_current_week = cls.current_date - datetime.timedelta(days=cls.current_date.weekday())
+        return first_day_current_week
+    
+    @classmethod
+    def get_last_day_last_week(cls):
+        last_day_last_week = cls.get_first_day_current_week() - datetime.timedelta(days=1)
+        return last_day_last_week
+    
+    @classmethod
+    def get_first_day_last_week(cls):
+        first_day_last_week = cls.get_last_day_last_week() - datetime.timedelta(days=6)
+        return first_day_last_week
 
 
 class MostSellerProducts:
