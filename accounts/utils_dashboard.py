@@ -129,15 +129,23 @@ class OrdersManager:
         )
         return this_week_orders
 
+    def yesterday_orders(self):
+        yesterday_orders = self.paid_orders.objects.filter(
+            created_at__date=DateVars.last_date
+        )
+        return yesterday_orders
+    
     def today_orders(self):
         today_orders = self.paid_orders.objects.filter(
             created_at__date=DateVars.current_date
         )
         return today_orders
 
-    def orders_with_costs(self):
+    def orders_with_costs(self, orders=None):
         total_price = []
-        for order in self.orders:
+        if not orders:
+            orders = self.orders
+        for order in orders:
             total_price.append(order.get_total_price())
         orders_with_costs = zip(self.orders, total_price)
         return orders_with_costs
