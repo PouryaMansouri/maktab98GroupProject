@@ -105,3 +105,39 @@ class OrdersManager:
 
     def count_orders(self):
         return self.paid_orders.count()
+
+
+class BestCustomer:
+    def best_customers_all(self):
+        orders = Order.objects.all()
+        best_customers_all = {}
+        return self.add_best_customer(orders, best_customers_all)
+
+    def best_customers_year(self):
+        current_year = datetime.datetime.now().year
+        orders = Order.objects.filter(create_time=current_year)
+        best_customers_year = {}
+        return self.add_best_customer(orders, best_customers_year)
+
+    def best_customers_month(self):
+        current_month = datetime.datetime.now().month
+        orders = Order.objects.filter(create_time=current_month)
+        best_customers_month = {}
+        return self.add_best_customer(orders, best_customers_month)
+
+    def best_customers_week(self):
+        current_month = datetime.datetime.now().date()
+        orders = Order.objects.filter(create_time=current_month)
+        best_customers_month = {}
+        return self.add_best_customer(orders, best_customers_month)
+
+    def add_best_customer(self, orders, best_customers):
+        for order in orders:
+            if best_customers.get(order.customer.phone_number):
+                best_customers[order.customer.phone_number] += order.get_total_price()
+            else:
+                best_customers[order.customer.phone_number] = order.get_total_price()
+        return best_customers
+
+    def count_customers(self):
+        return Customer.objects.count()
