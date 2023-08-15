@@ -10,8 +10,14 @@ from dataclasses import dataclass
 @dataclass
 class DateVars:
     current_date: datetime = datetime.datetime.now().date()
-    current_year: int = datetime.datetime.now().year
-    last_year: int = datetime.datetime.now().year - 1
+
+    @classmethod
+    def get_current_year(cls):
+        return cls.current_date.year
+    
+    @classmethod
+    def get_last_year(cls):
+        return cls.current_date.year - 1
 
     @classmethod
     def get_first_day_current_month(cls):
