@@ -14,8 +14,12 @@ class DateVars:
     def get_first_day_current_month(self):
         return self.current_date.replace(days=1)
     
-    def get_last_day_clast_month(self):
+    def get_last_day_last_month(self):
         return self.current_date.replace(days=1) - datetime.timedelta(days=1)
+    
+    def get_first_day_last_month(self):
+        last_day_last_month = self.get_last_day_last_month()
+        return last_day_last_month.replace(days=1)
 
 class MostSellerProducts:
     def most_seller_products_all(self, number):
