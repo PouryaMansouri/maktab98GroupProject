@@ -4,6 +4,17 @@ from accounts.models import Customer
 from orders.models import Order
 import datetime
 import json
+from dataclasses import dataclass
+
+@dataclass
+class DateVars:
+    current_date: datetime = datetime.datetime.now().date()
+    current_year: int = datetime.datetime.now().year
+
+    def get_first_day_current_month(self):
+        return self.current_date.replace(days=1)
+    
+
 
 
 class MostSellerProducts:
@@ -19,8 +30,8 @@ class MostSellerProducts:
         return self.count_quantity(filtered_products, number)
 
     def most_seller_products_month(self, number):
-        current_month = datetime.datetime.now().date()
-        first_day_month = current_month.replace(day=1)
+        current_date = datetime.datetime.now().date()
+        first_day_month = current_date.replace(day=1)
         filtered_products = Product.objects.filter(
             orderitem__order__create_time__date__gte=first_day_month
         )
