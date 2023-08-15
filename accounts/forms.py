@@ -26,12 +26,7 @@ class UserCustomerLoginForm(forms.Form):
         )
     )
 
-    def clean_phone_number(self):
-        phone_number = self.cleaned_data["phone_number"]
-        print(phone_number)
-        OTPCode.objects.filter(phone_number=phone_number).delete()
-        print("done")
-        return phone_number
+
 
 
 
