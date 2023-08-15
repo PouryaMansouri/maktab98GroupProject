@@ -6,20 +6,26 @@ import datetime
 import json
 from dataclasses import dataclass
 
+
 @dataclass
 class DateVars:
     current_date: datetime = datetime.datetime.now().date()
     current_year: int = datetime.datetime.now().year
+    last_year: int = datetime.datetime.now().year - 1
 
-    def get_first_day_current_month(self):
-        return self.current_date.replace(days=1)
-    
-    def get_last_day_last_month(self):
-        return self.current_date.replace(days=1) - datetime.timedelta(days=1)
-    
-    def get_first_day_last_month(self):
-        last_day_last_month = self.get_last_day_last_month()
-        return last_day_last_month.replace(days=1)
+    @classmethod
+    def get_first_day_current_month(cls):
+        return cls.current_date.replace(day=1)
+
+    @classmethod
+    def get_last_day_last_month(cls):
+        return cls.current_date.replace(day=1) - datetime.timedelta(days=1)
+
+    @classmethod
+    def get_first_day_last_month(cls):
+        last_day_last_month = cls.get_last_day_last_month()
+        return last_day_last_month.replace(day=1)
+
 
 class MostSellerProducts:
     def most_seller_products_all(self, number):
