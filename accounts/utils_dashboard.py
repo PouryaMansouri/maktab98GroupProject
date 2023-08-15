@@ -10,11 +10,12 @@ from dataclasses import dataclass
 @dataclass
 class DateVars:
     current_date: datetime = datetime.datetime.now().date()
+    last_date: datetime = datetime.datetime.now().date() - datetime.timedelta(days=1)
 
     @classmethod
     def get_current_year(cls):
         return cls.current_date.year
-    
+
     @classmethod
     def get_last_year(cls):
         return cls.current_date.year - 1
@@ -31,17 +32,21 @@ class DateVars:
     def get_first_day_last_month(cls):
         last_day_last_month = cls.get_last_day_last_month()
         return last_day_last_month.replace(day=1)
-    
+
     @classmethod
     def get_first_day_current_week(cls):
-        first_day_current_week = cls.current_date - datetime.timedelta(days=cls.current_date.weekday())
+        first_day_current_week = cls.current_date - datetime.timedelta(
+            days=cls.current_date.weekday()
+        )
         return first_day_current_week
-    
+
     @classmethod
     def get_last_day_last_week(cls):
-        last_day_last_week = cls.get_first_day_current_week() - datetime.timedelta(days=1)
+        last_day_last_week = cls.get_first_day_current_week() - datetime.timedelta(
+            days=1
+        )
         return last_day_last_week
-    
+
     @classmethod
     def get_first_day_last_week(cls):
         first_day_last_week = cls.get_last_day_last_week() - datetime.timedelta(days=6)
@@ -54,32 +59,26 @@ class MostSellerProducts:
         return self.count_quantity(filtered_products, number)
 
     def most_seller_products_year(self, number):
-        current_year = datetime.datetime.now().year
         filtered_products = Product.objects.filter(
-            orderitem__order__create_time__year=current_year
+            orderitem__order__create_time__year=DateVars.get_current_year()
         )
         return self.count_quantity(filtered_products, number)
 
     def most_seller_products_month(self, number):
-        current_date = datetime.datetime.now().date()
-        first_day_month = current_date.replace(day=1)
         filtered_products = Product.objects.filter(
-            orderitem__order__create_time__date__gte=first_day_month
+            orderitem__order__create_time__date__gte=DateVars.get_first_day_current_month()
         )
         return self.count_quantity(filtered_products, number)
 
     def most_seller_products_week(self, number):
-        current_date = datetime.datetime.now().date()
-        start_of_week = current_date - datetime.timedelta(days=current_date.weekday())
         filtered_products = Product.objects.filter(
-            orderitem__order__create_time__date__gte=start_of_week
+            orderitem__order__create_time__date__gte=DateVars.get_first_day_current_week()
         )
         return self.count_quantity(filtered_products, number)
 
     def most_seller_products_today(self, number):
-        current_date = datetime.datetime.now().date()
         filtered_products = Product.objects.filter(
-            orderitem__order__create_time__date=current_date
+            orderitem__order__create_time__date=DateVars.current_date
         )
         return self.count_quantity(filtered_products, number)
 
@@ -113,26 +112,27 @@ class OrdersManager:
         self.paid_orders = Order.objects.filter(paid=True).order_by("-create_time")
 
     def this_year_orders(self):
-        current_year = datetime.datetime.now().year
-        this_year_orders = self.paid_orders.filter(created_at__year=current_year)
+        this_year_orders = self.paid_orders.filter(
+            created_at__year=DateVars.get_current_year()
+        )
         return this_year_orders
 
     def this_month_orders(self):
-        current_month = datetime.datetime.now().month
-        this_month_orders = self.paid_orders.filter(created_at__month=current_month)
+        this_month_orders = self.paid_orders.filter(
+            created_at__date__gte=DateVars.get_first_day_current_month()
+        )
         return this_month_orders
 
     def this_week_orders(self):
-        current_date = datetime.now().date()
-        start_of_week = current_date - datetime.timedelta(days=current_date.weekday())
         this_week_orders = self.paid_orders.objects.filter(
-            created_at__date__gte=start_of_week
+            created_at__date__gte=DateVars.get_first_day_current_week()
         )
         return this_week_orders
 
     def today_orders(self):
-        current_date = datetime.now().date()
-        today_orders = self.paid_orders.objects.filter(created_at__date=current_date)
+        today_orders = self.paid_orders.objects.filter(
+            created_at__date=DateVars.current_date
+        )
         return today_orders
 
     def orders_with_costs(self):
@@ -156,20 +156,21 @@ class BestCustomer:
         return self.add_best_customer(orders, best_customers_all)
 
     def best_customers_year(self):
-        current_year = datetime.datetime.now().year
-        orders = Order.objects.filter(create_time=current_year)
+        orders = Order.objects.filter(create_time__year=DateVars.get_current_year())
         best_customers_year = {}
         return self.add_best_customer(orders, best_customers_year)
 
     def best_customers_month(self):
-        current_month = datetime.datetime.now().month
-        orders = Order.objects.filter(create_time=current_month)
+        orders = Order.objects.filter(
+            create_time__date__gte=DateVars.get_first_day_current_month()
+        )
         best_customers_month = {}
         return self.add_best_customer(orders, best_customers_month)
 
     def best_customers_week(self):
-        current_month = datetime.datetime.now().date()
-        orders = Order.objects.filter(create_time=current_month)
+        orders = Order.objects.filter(
+            create_time__date__gte=DateVars.get_first_day_current_week()
+        )
         best_customers_month = {}
         return self.add_best_customer(orders, best_customers_month)
 
@@ -191,13 +192,11 @@ class Comparison:
         self.paid_orders = Order.objects.filter(paid=True).order_by("-create_time")
 
     def compare_order_daily(self):
-        current_date = datetime.datetime.now().date()
-        last_date = current_date - datetime.timedelta(days=1)
         current_date_orders_count = self.paid_orders.objects.filter(
-            created_at__date=current_date
+            created_at__date=DateVars.current_date
         ).count()
         last_date_orders_count = self.paid_orders.objects.filter(
-            created_at__date=last_date
+            created_at__date=DateVars.last_date
         ).count()
         return {
             "current_date_orders_count": current_date_orders_count,
@@ -209,17 +208,17 @@ class Comparison:
         }
 
     def compare_order_weekly(self):
-        current_date = datetime.datetime.now().date()
-        first_day_current_week = current_date - datetime.timedelta(
-            days=current_date.weekday()
-        )
-        last_day_last_week = first_day_current_week - datetime.timedelta(days=1)
-        first_day_last_week = last_day_last_week - datetime.timedelta(days=6)
         last_week_orders_count = self.paid_orders.filter(
-            created_at__range=(first_day_last_week, last_day_last_week)
+            created_at__range=(
+                DateVars.get_first_day_last_week(),
+                DateVars.get_last_day_last_week(),
+            )
         ).count()
         current_week_orders_count = self.paid_orders.filter(
-            created_at__range=(first_day_current_week, current_date)
+            created_at__range=(
+                DateVars.get_first_day_current_week(),
+                DateVars.current_date,
+            )
         ).count()
 
         return {
@@ -232,16 +231,17 @@ class Comparison:
         }
 
     def compare_order_monthly(self):
-        current_date = datetime.datetime.now().date()
-        first_day_current_month = current_date.replace(day=1)
-        last_day_last_month = first_day_current_month - datetime.timedelta(days=1)
-        first_day_last_month = last_day_last_month.replace(day=1)
-
         last_month_orders_count = self.paid_orders.filter(
-            created_at__range=(first_day_last_month, last_day_last_month)
+            created_at__range=(
+                DateVars.get_first_day_last_month(),
+                DateVars.get_last_day_last_month(),
+            )
         ).count()
         current_month_orders_count = self.paid_orders.filter(
-            created_at__range=(first_day_current_month, current_date)
+            created_at__range=(
+                DateVars.get_first_day_current_month,
+                DateVars.current_date,
+            )
         ).count()
         return {
             "current_month_orders_count": current_month_orders_count,
@@ -253,15 +253,11 @@ class Comparison:
         }
 
     def compare_order_annual(self):
-        current_date = datetime.datetime.now().date()
-        first_day_current_year = current_date.replace(day=1, month=1)
-        last_day_last_year = first_day_current_year - datetime.timedelta(days=1)
-        first_day_last_year = last_day_last_year.replace(day=1, month=1)
         last_year_orders_count = self.paid_orders.objects.filter(
-            created_at__range=(first_day_last_year, last_day_last_year)
+            created_at__year=DateVars.get_last_year()
         ).count()
         current_year_orders_count = self.paid_orders.objects.filter(
-            created_at__range=(first_day_current_year, current_date)
+            created_at__year=DateVars.get_current_year()
         ).count()
         return {
             "current_year_orders_count": current_year_orders_count,
@@ -274,3 +270,4 @@ class Comparison:
 
     def get_change_percenatge(self, current, last):
         return (current - last) / last
+
