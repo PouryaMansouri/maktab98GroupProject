@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %} 
+<hr>  
+<div class="container pb-12">  
+        <div class="row mt-5">      
+                <div class="col-md-5">           
+                        <img src="{{ product.image.url }}" alt="Product Image" width="400" class="img-fluid">             
+                </div>             
+                <div class="col-md-6">                   
+                        <h1 class="mb-4">{{product.name}}</h1>                
+                        <p class="text-secondary">{{product.description}}</p>  
+                        <br>                        
+                        <h3 style="display: inline-block;">Price : </h3>
+                        <h3 class="text-secondary" style="display: inline-block;"> {{product.price}}</h3> 
+                        <br>                 
+                        <p>Availability: In Stock</p>
+                        <br>                      
+                        <div class="card-body">
+                                <form method="post" action="{% url 'orders:cart_add' product.id %}">
+                                    {% csrf_token %}
+                                    <div class="form-group col-3" style="display: inline-block;">
+                                        <label for="id_quantity">Quantity:</label>
+                                        {{ form.quantity }}
+                                    </div>
+                                    <div class="form-group" style="display: inline-block;">
+                                        <button type="submit" class="btn btn-primary btn-block">
+                                            <i class="fas fa-utensils"></i> Add to Order
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>                     
+                </div>                       
+        </div>                  
+        <div class="row mt-5">                            
+                <div class="col">                         
+                        <h3>Materials used</h3>                       
+                        <ul>                             
+                                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>                              
+                                <li>Duis blandit elit in eros aliquam, eget rhoncus erat ultricies.</li>                                      
+                                <li>Aliquam porttitor sapien eget malesuada tincidunt.</li>                                          
+                                <li>Proin maximus lorem sed feugiat convallis.</li>                                        
+                                <li>Cras eget metus scelerisque, vestibulum nibh quis, faucibus dolor.</li>                                     
+                        </ul>                                              
+                </div>                                                   
+        </div>                                                       
+ </div>
+ <br>
+ <br>
+ <br>
+ <br>
+ 
+{% endblock %}
