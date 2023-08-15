@@ -25,3 +25,9 @@ class SearchView(View):
             Q(name__icontains=searched) | Q(description__icontains=searched)
         ).distinct()
         return render(request, "cafe/search_results.html", {"results": results})
+
+class ProductDetailView(View):
+    def get(self, request , pk):
+        product = Product.objects.get(pk=pk)
+        form = CartAddForm()
+        return render(request , 'cafe/product_detail.html', {'product': product , "form": form})
