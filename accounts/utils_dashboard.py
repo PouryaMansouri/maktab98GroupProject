@@ -198,14 +198,7 @@ class Comparison:
         last_date_orders_count = self.paid_orders.objects.filter(
             created_at__date=DateVars.last_date
         ).count()
-        return {
-            "current_date_orders_count": current_date_orders_count,
-            "last_date_orders_count": last_date_orders_count,
-            "changes_percentage": self.get_change_percenatge(
-                current_date_orders_count, last_date_orders_count
-            ),
-            "changes_numebr": current_date_orders_count - last_date_orders_count,
-        }
+        return self.return_dictionary(current_date_orders_count, last_date_orders_count)
 
     def compare_order_weekly(self):
         last_week_orders_count = self.paid_orders.filter(
@@ -221,14 +214,7 @@ class Comparison:
             )
         ).count()
 
-        return {
-            "current_week_orders_count": current_week_orders_count,
-            "last_week_orders_count": last_week_orders_count,
-            "changes_percentage": self.get_change_percenatge(
-                current_week_orders_count, last_week_orders_count
-            ),
-            "changes_numebr": current_week_orders_count - last_week_orders_count,
-        }
+        return self.return_dictionary(current_week_orders_count, last_week_orders_count)
 
     def compare_order_monthly(self):
         last_month_orders_count = self.paid_orders.filter(
@@ -243,14 +229,9 @@ class Comparison:
                 DateVars.current_date,
             )
         ).count()
-        return {
-            "current_month_orders_count": current_month_orders_count,
-            "last_month_orders_count": last_month_orders_count,
-            "changes_percentage": self.get_change_percenatge(
-                current_month_orders_count, last_month_orders_count
-            ),
-            "changes_numebr": current_month_orders_count - last_month_orders_count,
-        }
+        return self.return_dictionary(
+            current_month_orders_count, last_month_orders_count
+        )
 
     def compare_order_annual(self):
         last_year_orders_count = self.paid_orders.objects.filter(
@@ -259,15 +240,15 @@ class Comparison:
         current_year_orders_count = self.paid_orders.objects.filter(
             created_at__year=DateVars.get_current_year()
         ).count()
-        return {
-            "current_year_orders_count": current_year_orders_count,
-            "last_year_orders_count": last_year_orders_count,
-            "changes_percentage": self.get_change_percenatge(
-                current_year_orders_count, last_year_orders_count
-            ),
-            "changes_numebr": current_year_orders_count - last_year_orders_count,
-        }
+        return self.return_dictionary(current_year_orders_count, last_year_orders_count)
 
     def get_change_percenatge(self, current, last):
         return (current - last) / last
 
+    def return_dictionary(self, current, last):
+        return {
+            "current": current,
+            "last": last,
+            "changes_percentage": self.get_change_percenatge(current, last),
+            "changes_numebr": current - last,
+        }
