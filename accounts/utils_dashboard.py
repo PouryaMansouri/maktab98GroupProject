@@ -186,7 +186,19 @@ class BestCustomer:
         return Customer.objects.count()
 
 
-class ComparisonOrders:
+class Comparison:
+    def get_change_percenatge(self, current, last):
+        return (current - last) / last
+
+    def return_dictionary(self, current, last):
+        return {
+            "current": current,
+            "last": last,
+            "changes_percentage": self.get_change_percenatge(current, last),
+            "changes_numebr": current - last,
+        }
+
+class ComparisonOrders(Comparison):
     def __init__(self):
         self.orders = Order.objects.all().order_by("-create_time")
         self.paid_orders = Order.objects.filter(paid=True).order_by("-create_time")
@@ -242,18 +254,9 @@ class ComparisonOrders:
         ).count()
         return self.return_dictionary(current_year_orders_count, last_year_orders_count)
 
-    def get_change_percenatge(self, current, last):
-        return (current - last) / last
 
-    def return_dictionary(self, current, last):
-        return {
-            "current": current,
-            "last": last,
-            "changes_percentage": self.get_change_percenatge(current, last),
-            "changes_numebr": current - last,
-        }
 
-class ComparisonCustomers:
+class ComparisonCustomers(Comparison):
     def __init__(self):
         self.customers = Customer.objects.all().order_by("-joined")
 
