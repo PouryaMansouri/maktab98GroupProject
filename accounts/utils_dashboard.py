@@ -141,3 +141,94 @@ class BestCustomer:
 
     def count_customers(self):
         return Customer.objects.count()
+
+
+class Comparison:
+    def __init__(self):
+        self.orders = Order.objects.all().order_by("-create_time")
+        self.paid_orders = Order.objects.filter(paid=True).order_by("-create_time")
+
+    def compare_order_daily(self):
+        current_date = datetime.datetime.now().date()
+        last_date = current_date - datetime.timedelta(days=1)
+        current_date_orders_count = self.paid_orders.objects.filter(
+            created_at__date=current_date
+        ).count()
+        last_date_orders_count = self.paid_orders.objects.filter(
+            created_at__date=last_date
+        ).count()
+        return {
+            "current_date_orders_count": current_date_orders_count,
+            "last_date_orders_count": last_date_orders_count,
+            "changes_percentage": self.get_change_percenatge(
+                current_date_orders_count, last_date_orders_count
+            ),
+            "changes_numebr": current_date_orders_count - last_date_orders_count,
+        }
+
+    def compare_order_weekly(self):
+        current_date = datetime.datetime.now().date()
+        first_day_current_week = current_date - datetime.timedelta(
+            days=current_date.weekday()
+        )
+        last_day_last_week = first_day_current_week - datetime.timedelta(days=1)
+        first_day_last_week = last_day_last_week - datetime.timedelta(days=6)
+        last_week_orders_count = self.paid_orders.filter(
+            created_at__range=(first_day_last_week, last_day_last_week)
+        ).count()
+        current_week_orders_count = self.paid_orders.filter(
+            created_at__range=(first_day_current_week, current_date)
+        ).count()
+
+        return {
+            "current_week_orders_count": current_week_orders_count,
+            "last_week_orders_count": last_week_orders_count,
+            "changes_percentage": self.get_change_percenatge(
+                current_week_orders_count, last_week_orders_count
+            ),
+            "changes_numebr": current_week_orders_count - last_week_orders_count,
+        }
+
+    def compare_order_monthly(self):
+        current_date = datetime.datetime.now().date()
+        first_day_current_month = current_date.replace(day=1)
+        last_day_last_month = first_day_current_month - datetime.timedelta(days=1)
+        first_day_last_month = last_day_last_month.replace(day=1)
+
+        last_month_orders_count = self.paid_orders.filter(
+            created_at__range=(first_day_last_month, last_day_last_month)
+        ).count()
+        current_month_orders_count = self.paid_orders.filter(
+            created_at__range=(first_day_current_month, current_date)
+        ).count()
+        return {
+            "current_month_orders_count": current_month_orders_count,
+            "last_month_orders_count": last_month_orders_count,
+            "changes_percentage": self.get_change_percenatge(
+                current_month_orders_count, last_month_orders_count
+            ),
+            "changes_numebr": current_month_orders_count - last_month_orders_count,
+        }
+
+    def compare_order_annual(self):
+        current_date = datetime.datetime.now().date()
+        first_day_current_year = current_date.replace(day=1, month=1)
+        last_day_last_year = first_day_current_year - datetime.timedelta(days=1)
+        first_day_last_year = last_day_last_year.replace(day=1, month=1)
+        last_year_orders_count = self.paid_orders.objects.filter(
+            created_at__range=(first_day_last_year, last_day_last_year)
+        ).count()
+        current_year_orders_count = self.paid_orders.objects.filter(
+            created_at__range=(first_day_current_year, current_date)
+        ).count()
+        return {
+            "current_year_orders_count": current_year_orders_count,
+            "last_year_orders_count": last_year_orders_count,
+            "changes_percentage": self.get_change_percenatge(
+                current_year_orders_count, last_year_orders_count
+            ),
+            "changes_numebr": current_year_orders_count - last_year_orders_count,
+        }
+
+    def get_change_percenatge(self, current, last):
+        return (current - last) / last
