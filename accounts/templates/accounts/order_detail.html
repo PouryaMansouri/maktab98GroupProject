@@ -31,7 +31,9 @@
       <div class="col-xl-12">
         <div class="cart-wrapper">
           <div class="table-content table-responsive">
-            {% for order_items in order.items %}
+            
+            
+            
             <table class="table">
               <thead>
                 <tr>
@@ -42,32 +44,31 @@
                 </tr>
               </thead>
               <tbody>
-                {% for order in order_items %}
-                {% if not forloop.last %}
+                {% for item in order_items %}
+               
                 <tr>
                   <td class="product-name">
-                    <a href="#">{{ order.product }}</a>
+                    <a href="#">{{ item.product }}</a>
                   </td>
                   <td class="product-price">
-                    <span class="amount">{{ order.price }}</span>
+                    <span class="amount">{{ item.price }}</span>
                   </td>
-                  <td class="product-quantity">{{ order.quantity }}</td>
+                  <td class="product-quantity">{{ item.quantity }}</td>
                   <td class="product-subtotal">
-                    <span class="amount">{{ order.sub_total }}</span>
+                    <span class="amount">{{ item.get_cost }}</span>
                   </td>
                 </tr>
-                {% else %}
+                
+                {% endfor %}
                 <tr class="bg-info">
                   <td>Total Price:</td>
-                  <td>{{ order }}</td>
+                  <td>{{ order.get_total_price }}</td>
                 </tr>
-                {% endif %}
-                {% endfor %}
               </tbody>
 
             </table>
 
-            {% endfor %}
+            
           </div>
         </div>
         <a href="{% url 'accounts:manage_orders' %}" class="site-btn">back to orders</a>
