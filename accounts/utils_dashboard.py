@@ -186,7 +186,7 @@ class BestCustomer:
         return Customer.objects.count()
 
 
-class Comparison:
+class ComparisonOrders:
     def __init__(self):
         self.orders = Order.objects.all().order_by("-create_time")
         self.paid_orders = Order.objects.filter(paid=True).order_by("-create_time")
@@ -252,3 +252,58 @@ class Comparison:
             "changes_percentage": self.get_change_percenatge(current, last),
             "changes_numebr": current - last,
         }
+
+class ComparisonCustomers:
+    def __init__(self):
+        self.customers = Customer.objects.all().order_by("-joined")
+
+    def compare_customer_daily(self):
+        current_date_customers_count = self.customers.objects.filter(
+            joined__date=DateVars.current_date
+        ).count()
+        last_date_customers_count = self.customers.objects.filter(
+            joined__date=DateVars.last_date
+        ).count()
+        return self.return_dictionary(current_date_customers_count, last_date_customers_count)
+
+    def compare_customer_weekly(self):
+        last_week_customers_count = self.customers.filter(
+            joined__range=(
+                DateVars.get_first_day_last_week(),
+                DateVars.get_last_day_last_week(),
+            )
+        ).count()
+        current_week_customers_count = self.customers.filter(
+            joined__range=(
+                DateVars.get_first_day_current_week(),
+                DateVars.current_date,
+            )
+        ).count()
+
+        return self.return_dictionary(current_week_customers_count, last_week_customers_count)
+
+    def compare_customer_monthly(self):
+        last_month_customers_count = self.customers.filter(
+            joined__range=(
+                DateVars.get_first_day_last_month(),
+                DateVars.get_last_day_last_month(),
+            )
+        ).count()
+        current_month_customers_count = self.customers.filter(
+            joined__range=(
+                DateVars.get_first_day_current_month,
+                DateVars.current_date,
+            )
+        ).count()
+        return self.return_dictionary(
+            current_month_customers_count, last_month_customers_count
+        )
+
+    def compare_customer_annual(self):
+        last_year_customers_count = self.customers.objects.filter(
+            joined__year=DateVars.get_last_year()
+        ).count()
+        current_year_customers_count = self.customers.objects.filter(
+            joined__year=DateVars.get_current_year()
+        ).count()
+        return self.return_dictionary(current_year_customers_count, last_year_customers_count)
