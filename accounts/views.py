@@ -124,6 +124,28 @@ class DashboardView(View):
         best_categories_month = categories.most_seller_categories_month(5)
         best_categories_week = categories.most_seller_categories_week(5)
 
+        best_customers = BestCustomer()
+        best_customers_all = best_customers.best_customers_all(5)
+        best_customers_year = best_customers.best_customers_year(5)
+        best_customers_month = best_customers.best_customers_month(5)
+        best_customers_week = best_customers.best_customers_week(5)
+        customers_count = best_customers.count_customers()
+        best_customers_list = [
+            best_customers_all,
+            best_customers_year,
+            best_customers_month,
+            best_customers_week,
+        ]
+        best_customer_titles = [
+            "Best customers of all time",
+            "Best customers of all year",
+            "Best customers of all month",
+            "Best customers of all week",
+        ]
+
+        best_customers_with_title = zip(best_customers_list, best_customer_titles)
+
+
         context = {
             # "total_sales": total_sales,
             "orders_with_costs": orders_with_costs,
