@@ -11,6 +11,7 @@ from dataclasses import dataclass
 class DateVars:
     current_date: datetime = datetime.datetime.now().date()
     last_date: datetime = datetime.datetime.now().date() - datetime.timedelta(days=1)
+    current_datetime: datetime = datetime.datetime.now()
 
     @classmethod
     def get_current_year(cls):
@@ -113,41 +114,50 @@ class OrdersManager:
 
     def this_year_orders(self):
         this_year_orders = self.paid_orders.filter(
-            created_at__year=DateVars.get_current_year()
+            create_time__year=DateVars.get_current_year()
         )
         return this_year_orders
 
     def this_month_orders(self):
         this_month_orders = self.paid_orders.filter(
-            created_at__date__gte=DateVars.get_first_day_current_month()
+            create_time__date__gte=DateVars.get_first_day_current_month()
         )
         return this_month_orders
 
     def this_week_orders(self):
         this_week_orders = self.paid_orders.objects.filter(
-            created_at__date__gte=DateVars.get_first_day_current_week()
+            create_time__date__gte=DateVars.get_first_day_current_week()
         )
         return this_week_orders
 
     def yesterday_orders(self):
         yesterday_orders = self.paid_orders.objects.filter(
-            created_at__date=DateVars.last_date
+            create_time__date=DateVars.last_date
         )
         return yesterday_orders
 
     def today_orders(self):
         today_orders = self.paid_orders.objects.filter(
-            created_at__date=DateVars.current_date
+            create_time__date=DateVars.current_date
         )
         return today_orders
 
     def get_every_hour_orders(self, hour):
-        first_hour = DateVars.current_date.replace(hour=hour)
-        second_hour = DateVars.current_date.replace(hour=hour + 1)
-        every_hour_orders_count = self.paid_orders.objects.filter(
-            created_at__range=(first_hour, second_hour)
+        first_hour = DateVars.current_datetime.replace(hour=hour, minute=0, second=0)
+        next_hour = hour + 1
+        if hour == 23:
+            next_hour = 0
+        second_hour = DateVars.current_datetime.replace(hour=next_hour, minute=0, second=0)
+        every_hour_orders_count = self.paid_orders.filter(
+            create_time__range=(first_hour, second_hour)
         ).count()
         return every_hour_orders_count
+    
+    def get_peak_business_hours(self, hour1, hour2):
+        each_hour = {}
+        for hour in range(hour1,hour2):
+            each_hour[f"{hour}-{hour+1}"] = self.get_every_hour_orders(hour)
+        return json.dumps(each_hour)
 
     def orders_with_costs(self, orders=None):
         total_price = []
@@ -335,7 +345,7 @@ class ComparisonCustomers(Comparison):
 
 
 class MostSellerCategories:
-    def most_seller_products_all(self, number):
+    def most_seller_categories_all(self, number):
         filtered_categories = Category.objects.all()
         return self.count_quantity(filtered_categories, number)
 
@@ -368,17 +378,13 @@ class MostSellerCategories:
             total_quantity=Sum("product__orderitem__quantity")
         ).order_by("-total_quantity")[:number]
         products_dict = self.to_dict(categories)
-        return products_dict
+        products_json = self.to_json(products_dict)
+        return products_json
 
     def to_dict(self, most_sellar):
         category_quantity = {}
         for category in most_sellar:
-            category_quantity[category.name] = [
-                category.id,
-                category.image.url,
-                category.name,
-                category.total_quantity,
-            ]
+            category_quantity[category.name] = category.total_quantity
         return category_quantity
 
     def to_json(self, products_dict):
