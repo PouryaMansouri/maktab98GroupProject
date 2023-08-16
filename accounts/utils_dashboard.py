@@ -108,7 +108,7 @@ class MostSellerProducts:
         products = self.count_quantity(filtered_products)
         products_dict = self.to_dict_count(products, number)
         return self.to_json(products_dict)
-    
+
     def most_seller_products_night(self, number):
         filtered_products = Product.objects.filter(
             orderitem__order__create_time__hour__range=(18, 23)
@@ -134,14 +134,18 @@ class MostSellerProducts:
                 float(product.price),
                 float(product.price) * product.total_quantity,
             ]
-        sliced_dict = {key: product_quantity[key] for key in list(product_quantity)[:number]}
+        sliced_dict = {
+            key: product_quantity[key] for key in list(product_quantity)[:number]
+        }
         return sliced_dict
 
     def to_dict_count(self, most_sellar, number):
         product_quantity = {}
         for product in most_sellar:
             product_quantity[product.name] = product.total_quantity
-        sliced_dict = {key: product_quantity[key] for key in list(product_quantity)[:number]}
+        sliced_dict = {
+            key: product_quantity[key] for key in list(product_quantity)[:number]
+        }
         other = {key: product_quantity[key] for key in list(product_quantity)[number:]}
         print(other)
         print(sum(other.values()))
@@ -213,13 +217,14 @@ class OrdersManager:
         return json.dumps(
             {"accepted": accepted, "pending": pending, "rejected": rejected}
         )
-    def orders_with_costs(self, orders=None):
+
+    def orders_with_costs(self, number, orders=None):
         total_price = []
         if not orders:
             orders = self.orders
         for order in orders:
             total_price.append(order.get_total_price())
-        orders_with_costs = zip(self.orders, total_price)
+        orders_with_costs = zip(self.orders[:number], total_price[:number])
         return orders_with_costs
 
     def total_sales(self):
