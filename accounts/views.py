@@ -118,6 +118,12 @@ class DashboardView(View):
         orders_count_by_status = orders.get_count_by_status()
         personnels_count = Personnel.objects.all().count()
 
+        categories = MostSellerCategories()
+        best_categories_all = categories.most_seller_categories_all(5)
+        best_categories_year = categories.most_seller_categories_year(5)
+        best_categories_month = categories.most_seller_categories_month(5)
+        best_categories_week = categories.most_seller_categories_week(5)
+
         context = {
             # "total_sales": total_sales,
             "orders_with_costs": orders_with_costs,
