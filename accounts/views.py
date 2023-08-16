@@ -180,18 +180,16 @@ class DashboardView(View):
 
 class SalesDashboardView(View):
     def get(self, request):
-        most_sellar = MostSellerProducts()
-        most_sellar_all = most_sellar.most_seller_products_all(3)
-        most_sellar_year = most_sellar.most_seller_products_year(3)
-        most_sellar_month = most_sellar.most_seller_products_month(3)
-        most_sellar_week = most_sellar.most_seller_products_week(3)
-        customer = BestCustomer()
-        customers_count = customer.count_customers()
-        orders = OrdersManager()
-        orders_count = orders.count_orders()
-        total_sales = orders.total_sales()
-        categories = MostSellerCategories()
-        test = categories.most_seller_categories_year(3)
+        most_seller = MostSellerProducts()
+        most_seller_all = most_seller.most_seller_products_all(3)
+        most_seller_year = most_seller.most_seller_products_year(3)
+        most_seller_month = most_seller.most_seller_products_month(3)
+        most_seller_week = most_seller.most_seller_products_week(3)
+
+        most_seller_morning = most_seller.most_seller_products_morning(3)
+        most_seller_noon = most_seller.most_seller_products_noon(3)
+        most_seller_night = most_seller.most_seller_products_night(3)
+
         context = {
             "most_sellar_all": most_sellar_all,
             "most_sellar_year": most_sellar_year,
