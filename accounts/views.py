@@ -2,9 +2,13 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.db.models import Sum, Q
 
+from .utils_dashboard import MostSellerProducts, OrdersManager, BestCustomer, MostSellerCategories
 from utils import send_otp_code
 from .models import OTPCode
+from accounts.models import Customer
+from cafe.models import Product
 from orders.models import Order , OrderItem
 from .forms import UserCustomerLoginForm, OTPForm
 
@@ -110,6 +114,48 @@ class ManageOrders(View):
         # context = {'orders': orders, "total_price": total_price}
         context = {"orders_with_costs": orders_with_costs}
         return render(request, "accounts/manage_orders.html", context=context)
+
+
+class DashboardView(View):
+    def get(self, request):
+        orders = OrdersManager()
+        orders_with_costs = orders.orders_with_costs()
+
+        context = {
+            # "total_sales": total_sales,
+            "orders_with_costs": orders_with_costs,
+            # "products": products,
+        }
+        return render(request, "accounts/dashboard.html", context=context)
+
+
+
+class SalesDashboardView(View):
+    def get(self, request):
+        most_sellar = MostSellerProducts()
+        most_sellar_all = most_sellar.most_seller_products_all(3)
+        most_sellar_year = most_sellar.most_seller_products_year(3)
+        most_sellar_month = most_sellar.most_seller_products_month(3)
+        most_sellar_week = most_sellar.most_seller_products_week(3)
+        customer = BestCustomer()
+        customers_count = customer.count_customers()
+        orders = OrdersManager()
+        orders_count = orders.count_orders()
+        total_sales = orders.total_sales()
+        categories = MostSellerCategories()
+        test = categories.most_seller_categories_year(3)
+        context = {
+            "most_sellar_all": most_sellar_all,
+            "most_sellar_year": most_sellar_year,
+            "most_sellar_month": most_sellar_month,
+            "most_sellar_week": most_sellar_week,
+            "customers_count": customers_count,
+            "orders_count": orders_count,
+            "total_sales": total_sales,
+            "test": test,
+
+        }
+        return render(request, "accounts/sales_dashboard.html", context=context)
 
 class OrderDetailView(View):
     def get(self, request , pk):
