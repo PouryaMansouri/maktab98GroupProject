@@ -189,6 +189,12 @@ class SalesDashboardView(View):
         most_seller_morning = most_seller.most_seller_products_morning(3)
         most_seller_noon = most_seller.most_seller_products_noon(3)
         most_seller_night = most_seller.most_seller_products_night(3)
+        compare_orders = ComparisonOrders()
+        compare_orders_annual = compare_orders.compare_order_annual()
+        compare_orders_monthly = compare_orders.compare_order_monthly()
+        compare_orders_weekly = compare_orders.compare_order_weekly()
+        compare_orders_daily = compare_orders.compare_order_daily()
+
 
         context = {
             "most_sellar_all": most_sellar_all,
