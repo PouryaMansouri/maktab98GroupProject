@@ -259,7 +259,11 @@ class BestCustomer:
 
 class Comparison:
     def get_change_percenatge(self, current, last):
-        return (current - last) / last
+        try:
+            result = ((current - last) / last) * 100
+        except ZeroDivisionError:
+            result = current * 100
+        return result
 
     def return_dictionary(self, current, last):
         return {
