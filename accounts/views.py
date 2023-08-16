@@ -4,11 +4,18 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db.models import Sum, Q
 
-from .utils_dashboard import MostSellerProducts, OrdersManager, BestCustomer, MostSellerCategories
+from .utils_dashboard import (
+    MostSellerProducts,
+    OrdersManager,
+    BestCustomer,
+    MostSellerCategories,
+    ComparisonCustomers,
+    ComparisonOrders,
+)
 from utils import send_otp_code
-from accounts.models import Customer
+from accounts.models import Customer, Personnel
 from cafe.models import Product
-from orders.models import Order , OrderItem
+from orders.models import Order, OrderItem
 from .forms import UserCustomerLoginForm, OTPForm
 
 
@@ -36,7 +43,7 @@ class UserLoginView(View):
         session = request.session["personnel_verify"] = {}
         if form.is_valid():
             current_datetime = datetime.datetime.now(tz=pytz.timezone("Asia/Tehran"))
-            request.session['my_datetime'] = current_datetime.isoformat()
+            request.session["my_datetime"] = current_datetime.isoformat()
             cd = form.cleaned_data
             phone_number = cd["phone_number"]
             code = randint(1000, 9999)
@@ -84,9 +91,7 @@ class UserVerifyView(View):
                 messages.success(request, "Logged in Successfully", "success")
                 return redirect("accounts:manage_orders")
             else:
-                messages.error(
-                    request, "The code or phone_number is wrong!", "error"
-                )
+                messages.error(request, "The code or phone_number is wrong!", "error")
                 return redirect("accounts:verify_personnel")
 
 
@@ -177,7 +182,6 @@ class DashboardView(View):
         return render(request, "accounts/dashboard.html", context=context)
 
 
-
 class SalesDashboardView(View):
     def get(self, request):
         most_seller = MostSellerProducts()
@@ -189,6 +193,7 @@ class SalesDashboardView(View):
         most_seller_morning = most_seller.most_seller_products_morning(3)
         most_seller_noon = most_seller.most_seller_products_noon(3)
         most_seller_night = most_seller.most_seller_products_night(3)
+
         compare_orders = ComparisonOrders()
         compare_orders_annual = compare_orders.compare_order_annual()
         compare_orders_monthly = compare_orders.compare_order_monthly()
@@ -238,7 +243,8 @@ class SalesDashboardView(View):
         }
         return render(request, "accounts/sales_dashboard.html", context=context)
 
+
 class OrderDetailView(View):
-    def get(self, request , pk):
+    def get(self, request, pk):
         order = Order.objects.get(pk=pk)
-        return render(request, "accounts/order_detail.html", {'order': order})
+        return render(request, "accounts/order_detail.html", {"order": order})
