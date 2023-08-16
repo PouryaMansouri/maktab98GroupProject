@@ -116,7 +116,7 @@ class ManageOrders(View):
 class DashboardView(View):
     def get(self, request):
         orders = OrdersManager()
-        orders_with_costs = orders.orders_with_costs()
+        orders_with_costs = orders.orders_with_costs(10)
         orders_count = orders.count_orders()
         total_sales = orders.total_sales()
         each_hour = orders.get_peak_business_hours(8, 24)
@@ -247,4 +247,5 @@ class SalesDashboardView(View):
 class OrderDetailView(View):
     def get(self, request, pk):
         order = Order.objects.get(pk=pk)
-        return render(request, "accounts/order_detail.html", {"order": order})
+        total_price = order.get_total_price()
+        return render(request, "accounts/order_detail.html", {"order": order, "total_price": total_price})
