@@ -95,7 +95,10 @@
                                                         <td>{{ cost }}</td>
                                                         <td>{{ order.create_time }}</td>
                                                         <td>{{ order.customer }} </td>
-                                                        <td><span class="badge-dot badge-brand mr-1"></span>{{ order.status }}</td>
+                                                        <td>
+                                                            <span class="badge-dot {% if order.status == 'p' %}badge-brand {% elif order.status == 'r' %}badge-danger {% else %} badge-success {% endif %}mr-1"></span>
+                                                            {% if order.status == 'p' %}Pending {% elif order.status == 'r' %}Rejected {% else %} Accepted {% endif %}
+                                                        </td>
                                                         
                                                         <!-- <td><span class="badge-dot badge-success mr-1"></span>Delivered </td> -->
                                                     </tr>
