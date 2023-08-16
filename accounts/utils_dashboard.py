@@ -192,18 +192,27 @@ class OrdersManager:
         next_hour = hour + 1
         if hour == 23:
             next_hour = 0
-        second_hour = DateVars.current_datetime.replace(hour=next_hour, minute=0, second=0)
+        second_hour = DateVars.current_datetime.replace(
+            hour=next_hour, minute=0, second=0
+        )
         every_hour_orders_count = self.paid_orders.filter(
             create_time__range=(first_hour, second_hour)
         ).count()
         return every_hour_orders_count
-    
+
     def get_peak_business_hours(self, hour1, hour2):
         each_hour = {}
-        for hour in range(hour1,hour2):
+        for hour in range(hour1, hour2):
             each_hour[f"{hour}-{hour+1}"] = self.get_every_hour_orders(hour)
         return json.dumps(each_hour)
 
+    def get_count_by_status(self):
+        accepted = Order.objects.filter(status="a").count()
+        pending = Order.objects.filter(status="p").count()
+        rejected = Order.objects.filter(status="r").count()
+        return json.dumps(
+            {"accepted": accepted, "pending": pending, "rejected": rejected}
+        )
     def orders_with_costs(self, orders=None):
         total_price = []
         if not orders:
