@@ -1,5 +1,5 @@
 from django.db.models import Sum, Count
-from cafe.models import Product
+from cafe.models import Product, Category
 from accounts.models import Customer
 from orders.models import Order
 import datetime
@@ -134,12 +134,20 @@ class OrdersManager:
             created_at__date=DateVars.last_date
         )
         return yesterday_orders
-    
+
     def today_orders(self):
         today_orders = self.paid_orders.objects.filter(
             created_at__date=DateVars.current_date
         )
         return today_orders
+
+    def get_every_hour_orders(self, hour):
+        first_hour = DateVars.current_date.replace(hour=hour)
+        second_hour = DateVars.current_date.replace(hour=hour + 1)
+        every_hour_orders_count = self.paid_orders.objects.filter(
+            created_at__range=(first_hour, second_hour)
+        ).count()
+        return every_hour_orders_count
 
     def orders_with_costs(self, orders=None):
         total_price = []
@@ -206,6 +214,7 @@ class Comparison:
             "changes_numebr": current - last,
         }
 
+
 class ComparisonOrders(Comparison):
     def __init__(self):
         self.orders = Order.objects.all().order_by("-create_time")
@@ -263,7 +272,6 @@ class ComparisonOrders(Comparison):
         return self.return_dictionary(current_year_orders_count, last_year_orders_count)
 
 
-
 class ComparisonCustomers(Comparison):
     def __init__(self):
         self.customers = Customer.objects.all().order_by("-joined")
@@ -275,7 +283,9 @@ class ComparisonCustomers(Comparison):
         last_date_customers_count = self.customers.objects.filter(
             joined__date=DateVars.last_date
         ).count()
-        return self.return_dictionary(current_date_customers_count, last_date_customers_count)
+        return self.return_dictionary(
+            current_date_customers_count, last_date_customers_count
+        )
 
     def compare_customer_weekly(self):
         last_week_customers_count = self.customers.filter(
@@ -291,7 +301,9 @@ class ComparisonCustomers(Comparison):
             )
         ).count()
 
-        return self.return_dictionary(current_week_customers_count, last_week_customers_count)
+        return self.return_dictionary(
+            current_week_customers_count, last_week_customers_count
+        )
 
     def compare_customer_monthly(self):
         last_month_customers_count = self.customers.filter(
@@ -317,4 +329,57 @@ class ComparisonCustomers(Comparison):
         current_year_customers_count = self.customers.objects.filter(
             joined__year=DateVars.get_current_year()
         ).count()
-        return self.return_dictionary(current_year_customers_count, last_year_customers_count)
+        return self.return_dictionary(
+            current_year_customers_count, last_year_customers_count
+        )
+
+
+class MostSellerCategories:
+    def most_seller_products_all(self, number):
+        filtered_categories = Category.objects.all()
+        return self.count_quantity(filtered_categories, number)
+
+    def most_seller_categories_year(self, number):
+        filtered_categories = Category.objects.filter(
+            product__orderitem__order__create_time__year=DateVars.get_current_year()
+        )
+        return self.count_quantity(filtered_categories, number)
+
+    def most_seller_categories_month(self, number):
+        filtered_categories = Category.objects.filter(
+            product__orderitem__order__create_time__date__gte=DateVars.get_first_day_current_month()
+        )
+        return self.count_quantity(filtered_categories, number)
+
+    def most_seller_categories_week(self, number):
+        filtered_categories = Category.objects.filter(
+            product__orderitem__order__create_time__date__gte=DateVars.get_first_day_current_week()
+        )
+        return self.count_quantity(filtered_categories, number)
+
+    def most_seller_categories_today(self, number):
+        filtered_categories = Category.objects.filter(
+            product__orderitem__order__create_time__date=DateVars.current_date
+        )
+        return self.count_quantity(filtered_categories, number)
+
+    def count_quantity(self, filtered_categories, number):
+        categories = filtered_categories.annotate(
+            total_quantity=Sum("product__orderitem__quantity")
+        ).order_by("-total_quantity")[:number]
+        products_dict = self.to_dict(categories)
+        return products_dict
+
+    def to_dict(self, most_sellar):
+        category_quantity = {}
+        for category in most_sellar:
+            category_quantity[category.name] = [
+                category.id,
+                category.image.url,
+                category.name,
+                category.total_quantity,
+            ]
+        return category_quantity
+
+    def to_json(self, products_dict):
+        return json.dumps(products_dict)

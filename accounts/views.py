@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db.models import Sum, Q
 
-from .utils_dashboard import MostSellerProducts, OrdersManager, BestCustomer
+from .utils_dashboard import MostSellerProducts, OrdersManager, BestCustomer, MostSellerCategories
 from utils import send_otp_code
 from .models import OTPCode
 from accounts.models import Customer
@@ -141,6 +141,8 @@ class SalesDashboardView(View):
         orders = OrdersManager()
         orders_count = orders.count_orders()
         total_sales = orders.total_sales()
+        categories = MostSellerCategories()
+        test = categories.most_seller_categories_year(3)
         context = {
             "most_sellar_all": most_sellar_all,
             "most_sellar_year": most_sellar_year,
@@ -149,5 +151,7 @@ class SalesDashboardView(View):
             "customers_count": customers_count,
             "orders_count": orders_count,
             "total_sales": total_sales,
+            "test": test,
+
         }
         return render(request, "accounts/sales_dashboard.html", context=context)
