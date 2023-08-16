@@ -195,17 +195,46 @@ class SalesDashboardView(View):
         compare_orders_weekly = compare_orders.compare_order_weekly()
         compare_orders_daily = compare_orders.compare_order_daily()
 
+        compare_orders_list = [
+            compare_orders_annual,
+            compare_orders_monthly,
+            compare_orders_weekly,
+            compare_orders_daily,
+        ]
+
+        most_seller_products_list = [
+            most_seller_all,
+            most_seller_year,
+            most_seller_month,
+            most_seller_week,
+        ]
+        
+
+        compare_orders_title = [
+            "Annual Sales",
+            "Monthly Sales",
+            "Weekly Sales",
+            "Daily Sales",
+        ]
+        most_seller_products_title = [
+            "Top Selling Products of all time",
+            "Top Selling Products of the year",
+            "Top Selling Products of the month",
+            "Top Selling Products of the week",
+        ]
+
+
+        compare_orders_with_titles = zip(compare_orders_list, compare_orders_title)
+        most_seller_products_with_titles = zip(
+            most_seller_products_list, most_seller_products_title
+        )
 
         context = {
-            "most_sellar_all": most_sellar_all,
-            "most_sellar_year": most_sellar_year,
-            "most_sellar_month": most_sellar_month,
-            "most_sellar_week": most_sellar_week,
-            "customers_count": customers_count,
-            "orders_count": orders_count,
-            "total_sales": total_sales,
-            "test": test,
-
+            "compare_orders_with_titles": compare_orders_with_titles,
+            "most_seller_products_with_titles": most_seller_products_with_titles,
+            "most_seller_morning": most_seller_morning,
+            "most_seller_noon": most_seller_noon,
+            "most_seller_night": most_seller_night,
         }
         return render(request, "accounts/sales_dashboard.html", context=context)
 
