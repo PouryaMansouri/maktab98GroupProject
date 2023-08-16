@@ -289,23 +289,23 @@ class ComparisonOrders(Comparison):
         self.paid_orders = Order.objects.filter(paid=True).order_by("-create_time")
 
     def compare_order_daily(self):
-        current_date_orders_count = self.paid_orders.objects.filter(
-            created_at__date=DateVars.current_date
+        current_date_orders_count = self.paid_orders.filter(
+            create_time__date=DateVars.current_date
         ).count()
-        last_date_orders_count = self.paid_orders.objects.filter(
-            created_at__date=DateVars.last_date
+        last_date_orders_count = self.paid_orders.filter(
+            create_time__date=DateVars.last_date
         ).count()
         return self.return_dictionary(current_date_orders_count, last_date_orders_count)
 
     def compare_order_weekly(self):
         last_week_orders_count = self.paid_orders.filter(
-            created_at__range=(
+            create_time__range=(
                 DateVars.get_first_day_last_week(),
                 DateVars.get_last_day_last_week(),
             )
         ).count()
         current_week_orders_count = self.paid_orders.filter(
-            created_at__range=(
+            create_time__range=(
                 DateVars.get_first_day_current_week(),
                 DateVars.current_date,
             )
@@ -315,14 +315,14 @@ class ComparisonOrders(Comparison):
 
     def compare_order_monthly(self):
         last_month_orders_count = self.paid_orders.filter(
-            created_at__range=(
+            create_time__range=(
                 DateVars.get_first_day_last_month(),
                 DateVars.get_last_day_last_month(),
             )
         ).count()
         current_month_orders_count = self.paid_orders.filter(
-            created_at__range=(
-                DateVars.get_first_day_current_month,
+            create_time__range=(
+                DateVars.get_first_day_current_month(),
                 DateVars.current_date,
             )
         ).count()
@@ -331,11 +331,11 @@ class ComparisonOrders(Comparison):
         )
 
     def compare_order_annual(self):
-        last_year_orders_count = self.paid_orders.objects.filter(
-            created_at__year=DateVars.get_last_year()
+        last_year_orders_count = self.paid_orders.filter(
+            create_time__year=DateVars.get_last_year()
         ).count()
-        current_year_orders_count = self.paid_orders.objects.filter(
-            created_at__year=DateVars.get_current_year()
+        current_year_orders_count = self.paid_orders.filter(
+            create_time__year=DateVars.get_current_year()
         ).count()
         return self.return_dictionary(current_year_orders_count, last_year_orders_count)
 
