@@ -1,10 +1,5 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block title %}
-{{page_data.title}}
-{% endblock %}
-{% block content %}
-<section class="breadcrumb-area pt-140 pb-140 bg_img" data-overlay="dark" data-opacity="5" data-background="{{page_data.banner.url}}">
+{% extends 'base.html' %} {% load static %} {%block content%}
+<section class="breadcrumb-area pt-140 pb-140 bg_img" data-overlay="dark" data-opacity="5">
   <div class="shape shape__1">
     <img src="{% static 'cafe/images/shape/breadcrumb-shape-1.png' %}" alt="" />
   </div>
@@ -14,11 +9,14 @@
   <div class="container">
     <div class="row">
       <div class="col-xl-12 text-center">
-        <h2 class="page-title">{{page_data.name}}</h2>
+        <h2 class="page-title">order detail</h2>
         <div class="cafena-breadcrumb breadcrumbs">
           <ul class="list-unstyled d-flex align-items-center justify-content-center">
+            <li class="cafenabcrumb-item duxinbcrumb-begin">
+              <a href="#"><span>orders</span></a>
+            </li>
             <li class="cafenabcrumb-item duxinbcrumb-end">
-              <span>{{page_data.route}}</span>
+              <span>order</span>
             </li>
           </ul>
         </div>
@@ -33,7 +31,7 @@
       <div class="col-xl-12">
         <div class="cart-wrapper">
           <div class="table-content table-responsive">
-            {% for order_id, order_items in session.items %}
+            {% for order_items in order.items %}
             <table class="table">
               <thead>
                 <tr>
@@ -71,6 +69,9 @@
 
             {% endfor %}
           </div>
+        </div>
+        <a href="{% url 'accounts:manage_orders' %}" class="site-btn">back to orders</a>
+        </div>
         </div>
       </div>
     </div>

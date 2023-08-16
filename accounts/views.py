@@ -8,9 +8,10 @@ from .utils_dashboard import MostSellerProducts, OrdersManager, BestCustomer, Mo
 from utils import send_otp_code
 from .models import OTPCode
 from accounts.models import Customer
-from orders.models import Order
 from cafe.models import Product
+from orders.models import Order , OrderItem
 from .forms import UserCustomerLoginForm, OTPForm
+
 
 from random import randint
 import datetime
@@ -155,3 +156,8 @@ class SalesDashboardView(View):
 
         }
         return render(request, "accounts/sales_dashboard.html", context=context)
+
+class OrderDetailView(View):
+    def get(self, request , pk):
+        order = Order.objects.get(pk=pk)
+        return render(request, "accounts/order_detail.html", {'order': order})
