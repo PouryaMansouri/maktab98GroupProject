@@ -145,11 +145,34 @@ class DashboardView(View):
 
         best_customers_with_title = zip(best_customers_list, best_customer_titles)
 
+        general_data_list = [
+            total_sales,
+            orders_count,
+            customers_count,
+            personnels_count,
+        ]
+        general_data_titles = [
+            "total sales",
+            "orders count",
+            "customers count",
+            "personnels count",
+        ]
+
+        general_data_with_title = zip(general_data_list, general_data_titles)
 
         context = {
-            # "total_sales": total_sales,
+            "best_categories_all": best_categories_all,
+            "best_categories_year": best_categories_year,
+            "best_categories_month": best_categories_month,
+            "best_categories_week": best_categories_week,
+            "best_customers_with_title": best_customers_with_title,
+            "customers_count": customers_count,
+            "orders_count": orders_count,
+            "total_sales": total_sales,
             "orders_with_costs": orders_with_costs,
-            # "products": products,
+            "each_hour": each_hour,
+            "orders_count_by_status": orders_count_by_status,
+            "general_data_with_title": general_data_with_title,
         }
         return render(request, "accounts/dashboard.html", context=context)
 
