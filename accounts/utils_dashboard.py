@@ -57,38 +57,71 @@ class DateVars:
 class MostSellerProducts:
     def most_seller_products_all(self, number):
         filtered_products = Product.objects.all()
-        return self.count_quantity(filtered_products, number)
+        products = self.count_quantity(filtered_products)
+        products_dict = self.to_dict(products, number)
+        return products_dict
 
     def most_seller_products_year(self, number):
         filtered_products = Product.objects.filter(
             orderitem__order__create_time__year=DateVars.get_current_year()
         )
-        return self.count_quantity(filtered_products, number)
+        products = self.count_quantity(filtered_products)
+        products_dict = self.to_dict(products, number)
+        return products_dict
 
     def most_seller_products_month(self, number):
         filtered_products = Product.objects.filter(
             orderitem__order__create_time__date__gte=DateVars.get_first_day_current_month()
         )
-        return self.count_quantity(filtered_products, number)
+        products = self.count_quantity(filtered_products)
+        products_dict = self.to_dict(products, number)
+        return products_dict
 
     def most_seller_products_week(self, number):
         filtered_products = Product.objects.filter(
             orderitem__order__create_time__date__gte=DateVars.get_first_day_current_week()
         )
-        return self.count_quantity(filtered_products, number)
+        products = self.count_quantity(filtered_products)
+        products_dict = self.to_dict(products, number)
+        return products_dict
 
     def most_seller_products_today(self, number):
         filtered_products = Product.objects.filter(
             orderitem__order__create_time__date=DateVars.current_date
         )
-        return self.count_quantity(filtered_products, number)
+        products = self.count_quantity(filtered_products)
+        products_dict = self.to_dict(products, number)
+        return products_dict
 
-    def count_quantity(self, filtered_products, number):
+    def most_seller_products_morning(self, number):
+        filtered_products = Product.objects.filter(
+            orderitem__order__create_time__hour__range=(6, 12)
+        )
+        products = self.count_quantity(filtered_products)
+        products_dict = self.to_dict_count(products, number)
+        return self.to_json(products_dict)
+
+    def most_seller_products_noon(self, number):
+        filtered_products = Product.objects.filter(
+            orderitem__order__create_time__hour__range=(12, 18)
+        )
+        products = self.count_quantity(filtered_products)
+        products_dict = self.to_dict_count(products, number)
+        return self.to_json(products_dict)
+    
+    def most_seller_products_night(self, number):
+        filtered_products = Product.objects.filter(
+            orderitem__order__create_time__hour__range=(18, 23)
+        )
+        products = self.count_quantity(filtered_products)
+        products_dict = self.to_dict_count(products, number)
+        return self.to_json(products_dict)
+
+    def count_quantity(self, filtered_products):
         products = filtered_products.annotate(
             total_quantity=Sum("orderitem__quantity")
-        ).order_by("-total_quantity")[:number]
-        products_dict = self.to_dict(products)
-        return products_dict
+        ).order_by("-total_quantity")
+        return products
 
     def to_dict(self, most_sellar, number):
         product_quantity = {}
