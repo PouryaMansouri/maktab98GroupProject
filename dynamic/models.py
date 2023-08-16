@@ -1,4 +1,4 @@
-from typing import Any
+from django.http import Http404
 from django.db import models
 from utils import item_directory_path
 from django.utils.html import mark_safe
@@ -37,3 +37,33 @@ class PageData(models.Model):
     
     def __str__(self) -> str:
         return str(self.target_name) + ' page data'
+
+    @classmethod
+    def get_page_date(cls, target):
+        try:
+            page_data = cls.objects.get(target_name = target)
+            return page_data
+        except:
+            try:
+                page_data = cls.objects.get(target_name = 'Default_Page')
+                return page_data
+            except:
+                default_footer = Footer.objects.create(
+                    footer_name = 'default',
+                    footer_phone = '+989123456789',
+                    footer_logo = 'footer_logo/logo.png',
+                    footer_email = 'mail@mail.com',
+                    footer_text = 'default text',
+                )
+
+                
+                page_data = cls.objects.create(
+                    target_name = 'Default_Page',
+                    title = 'Cafena',
+                    name = 'Cafena',
+                    route = 'Default',
+                    banner = 'PageData/banner.png',
+                    footer = default_footer
+                )
+
+                return page_data
