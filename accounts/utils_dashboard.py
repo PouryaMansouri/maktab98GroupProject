@@ -90,7 +90,7 @@ class MostSellerProducts:
         products_dict = self.to_dict(products)
         return products_dict
 
-    def to_dict(self, most_sellar):
+    def to_dict(self, most_sellar, number):
         product_quantity = {}
         for product in most_sellar:
             product_quantity[product.name] = [
@@ -101,7 +101,19 @@ class MostSellerProducts:
                 float(product.price),
                 float(product.price) * product.total_quantity,
             ]
-        return product_quantity
+        sliced_dict = {key: product_quantity[key] for key in list(product_quantity)[:number]}
+        return sliced_dict
+
+    def to_dict_count(self, most_sellar, number):
+        product_quantity = {}
+        for product in most_sellar:
+            product_quantity[product.name] = product.total_quantity
+        sliced_dict = {key: product_quantity[key] for key in list(product_quantity)[:number]}
+        other = {key: product_quantity[key] for key in list(product_quantity)[number:]}
+        print(other)
+        print(sum(other.values()))
+        sliced_dict["other"] = sum(other.values())
+        return sliced_dict
 
     def to_json(self, products_dict):
         return json.dumps(products_dict)
