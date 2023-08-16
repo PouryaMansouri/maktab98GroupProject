@@ -86,6 +86,10 @@
                                                         <th class="border-0">Order Time</th>
                                                         <th class="border-0">Customer</th>
                                                         <th class="border-0">Status</th>
+                                                        <th class="border-0">Details</th>
+                                                        <th class="border-0">Accept</th>
+                                                        <th class="border-0">Reject</th>
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -99,8 +103,11 @@
                                                             <span class="badge-dot {% if order.status == 'p' %}badge-brand {% elif order.status == 'r' %}badge-danger {% else %} badge-success {% endif %}mr-1"></span>
                                                             {% if order.status == 'p' %}Pending {% elif order.status == 'r' %}Rejected {% else %} Accepted {% endif %}
                                                         </td>
-                                                        
-                                                        <!-- <td><span class="badge-dot badge-success mr-1"></span>Delivered </td> -->
+                                                        <td><a href="{% url 'accounts:order_detail' order.pk %}" class="btn btn-primary"> details </a></td>
+                                                        {% if order.status == 'p' %}
+                                                        <td><a href="{% url 'orders:order_accept' order.pk %}" class="btn btn-success">accept</a></td>
+                                                        <td><a href="{% url 'orders:order_reject' order.pk %}" class="btn btn-danger">reject</a></td>
+                                                        {% endif %}
                                                     </tr>
                                                     {% endfor %}
                                                     <tr>
