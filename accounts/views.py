@@ -112,6 +112,11 @@ class DashboardView(View):
     def get(self, request):
         orders = OrdersManager()
         orders_with_costs = orders.orders_with_costs()
+        orders_count = orders.count_orders()
+        total_sales = orders.total_sales()
+        each_hour = orders.get_peak_business_hours(8, 24)
+        orders_count_by_status = orders.get_count_by_status()
+        personnels_count = Personnel.objects.all().count()
 
         context = {
             # "total_sales": total_sales,
