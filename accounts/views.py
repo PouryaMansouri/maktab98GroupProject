@@ -6,7 +6,6 @@ from django.db.models import Sum, Q
 
 from .utils_dashboard import MostSellerProducts, OrdersManager, BestCustomer, MostSellerCategories
 from utils import send_otp_code
-from .models import OTPCode
 from accounts.models import Customer
 from cafe.models import Product
 from orders.models import Order , OrderItem
