@@ -221,37 +221,37 @@ class OrdersManager:
 
 
 class BestCustomer:
-    def best_customers_all(self):
+    def best_customers_all(self, number):
         orders = Order.objects.all()
         best_customers_all = {}
-        return self.add_best_customer(orders, best_customers_all)
+        return self.add_best_customer(orders, best_customers_all, number)
 
-    def best_customers_year(self):
+    def best_customers_year(self, number):
         orders = Order.objects.filter(create_time__year=DateVars.get_current_year())
         best_customers_year = {}
-        return self.add_best_customer(orders, best_customers_year)
+        return self.add_best_customer(orders, best_customers_year, number)
 
-    def best_customers_month(self):
+    def best_customers_month(self, number):
         orders = Order.objects.filter(
             create_time__date__gte=DateVars.get_first_day_current_month()
         )
         best_customers_month = {}
-        return self.add_best_customer(orders, best_customers_month)
+        return self.add_best_customer(orders, best_customers_month, number)
 
-    def best_customers_week(self):
+    def best_customers_week(self, number):
         orders = Order.objects.filter(
             create_time__date__gte=DateVars.get_first_day_current_week()
         )
         best_customers_month = {}
-        return self.add_best_customer(orders, best_customers_month)
+        return self.add_best_customer(orders, best_customers_month, number)
 
-    def add_best_customer(self, orders, best_customers):
+    def add_best_customer(self, orders, best_customers, number):
         for order in orders:
             if best_customers.get(order.customer.phone_number):
                 best_customers[order.customer.phone_number] += order.get_total_price()
             else:
                 best_customers[order.customer.phone_number] = order.get_total_price()
-        return best_customers
+        return sorted(best_customers.items(), key=lambda x: x[1], reverse=True)[:number]
 
     def count_customers(self):
         return Customer.objects.count()
