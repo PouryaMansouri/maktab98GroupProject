@@ -66,4 +66,4 @@ class PageData(models.Model):
                     footer = default_footer
                 )
 
-                return default_footer
+                return page_data
