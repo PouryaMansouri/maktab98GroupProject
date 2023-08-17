@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic import DetailView
 from django.views import View
 from .models import Product, Category
 from orders.forms import CartAddForm
@@ -29,3 +30,15 @@ class SearchView(View):
         ).distinct()
         page_data = PageData.get_page_date('Search_Page')
         return render(request, "cafe/search_results.html", {"results": results, "page_data": page_data})
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'cafe/product_detail.html'
+    context_object_name = 'product'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = CartAddForm()
+        return context
+
+

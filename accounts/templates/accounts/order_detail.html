@@ -1,5 +1,10 @@
-{% extends 'base.html' %} {% load static %} {%block content%}
-<section class="breadcrumb-area pt-140 pb-140 bg_img" data-overlay="dark" data-opacity="5">
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+{{page_data.title}}
+{% endblock %}
+{% block content %}
+<section class="breadcrumb-area pt-140 pb-140 bg_img" data-overlay="dark" data-opacity="5" data-background="{{page_data.banner.url}}">
   <div class="shape shape__1">
     <img src="{% static 'cafe/images/shape/breadcrumb-shape-1.png' %}" alt="" />
   </div>
@@ -9,14 +14,11 @@
   <div class="container">
     <div class="row">
       <div class="col-xl-12 text-center">
-        <h2 class="page-title">order detail</h2>
+        <h2 class="page-title">{{page_data.name}}</h2>
         <div class="cafena-breadcrumb breadcrumbs">
           <ul class="list-unstyled d-flex align-items-center justify-content-center">
-            <li class="cafenabcrumb-item duxinbcrumb-begin">
-              <a href="#"><span>orders</span></a>
-            </li>
             <li class="cafenabcrumb-item duxinbcrumb-end">
-              <span>order</span>
+              <span>{{page_data.route}}</span>
             </li>
           </ul>
         </div>
@@ -31,6 +33,7 @@
       <div class="col-xl-12">
         <div class="cart-wrapper">
           <div class="table-content table-responsive">
+            {% for order_id, order_items in session.items %}
             <table class="table">
               <thead>
                 <tr>
@@ -41,7 +44,8 @@
                 </tr>
               </thead>
               <tbody>
-                {% for order in order.orderitem_set.all %}
+                {% for order in order_items %}
+                {% if not forloop.last %}
                 <tr>
                   <td class="product-name">
                     <a href="#">{{ order.product }}</a>
@@ -51,22 +55,22 @@
                   </td>
                   <td class="product-quantity">{{ order.quantity }}</td>
                   <td class="product-subtotal">
-                    <span class="amount">{{ order.get_cost }}</span>
+                    <span class="amount">{{ order.sub_total }}</span>
                   </td>
                 </tr>
-                {% endfor %}
+                {% else %}
                 <tr class="bg-info">
                   <td>Total Price:</td>
-                  <td>{{ total_price }}</td>
+                  <td>{{ order }}</td>
                 </tr>
+                {% endif %}
+                {% endfor %}
               </tbody>
 
             </table>
 
+            {% endfor %}
           </div>
-        </div>
-        <a href="{% url 'accounts:manage_orders' %}" class="site-btn">back to orders</a>
-        </div>
         </div>
       </div>
     </div>
