@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
+from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db.models import Sum, Q
@@ -249,3 +250,13 @@ class OrderDetailView(View):
         order = Order.objects.get(pk=pk)
         total_price = order.get_total_price()
         return render(request, "accounts/order_detail.html", {"order": order, "total_price": total_price})
+
+class ShowAllOrders(TemplateView):
+    template_name = "accounts/all_orders_table.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        orders_manager = OrdersManager()
+        orders_with_costs = orders_manager.orders_with_costs(None)
+        context["orders_with_costs"] = orders_with_costs
+        return context
