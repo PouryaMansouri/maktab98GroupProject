@@ -53,6 +53,8 @@
                 <!-- ============================================================== -->
                 <!-- pagehader  -->
                 <!-- ============================================================== -->
+
+
                 <div class="row">
                     <!-- metric -->
                     {% for order_comparison, title in compare_orders_with_titles %}
@@ -67,6 +69,27 @@
                                 </div>
                                 <div class="metric-label d-inline-block float-right {% if order_comparison.changes_percentage > 0 %}text-success{% else %}text-danger{% endif %}">
                                     <i class="fa fa-fw {% if order_comparison.changes_percentage > 0 %}fa-caret-up{% else %}fa-caret-down{% endif %}"></i><span>{{ order_comparison.changes_percentage }}%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="row">
+                    <!-- metric -->
+                    {% for customer_comparison, title in compare_customers_with_titles %}
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="text-muted">{{ title }}</h5>
+                                <div class="metric-value d-inline-block">
+                                    <h1 class="mb-1 text-primary">{{ customer_comparison.current }} </h1>
+                                    <h3 class="mb-1 text-gray">{{ customer_comparison.last }} </h3>
+
+                                </div>
+                                <div class="metric-label d-inline-block float-right {% if customer_comparison.changes_percentage > 0 %}text-success{% else %}text-danger{% endif %}">
+                                    <i class="fa fa-fw {% if customer_comparison.changes_percentage > 0 %}fa-caret-up{% else %}fa-caret-down{% endif %}"></i><span>{{ customer_comparison.changes_percentage }}%</span>
                                 </div>
                             </div>
                         </div>

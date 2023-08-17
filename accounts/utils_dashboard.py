@@ -350,10 +350,10 @@ class ComparisonCustomers(Comparison):
         self.customers = Customer.objects.all().order_by("-joined")
 
     def compare_customer_daily(self):
-        current_date_customers_count = self.customers.objects.filter(
+        current_date_customers_count = self.customers.filter(
             joined__date=DateVars.current_date
         ).count()
-        last_date_customers_count = self.customers.objects.filter(
+        last_date_customers_count = self.customers.filter(
             joined__date=DateVars.last_date
         ).count()
         return self.return_dictionary(
@@ -387,7 +387,7 @@ class ComparisonCustomers(Comparison):
         ).count()
         current_month_customers_count = self.customers.filter(
             joined__range=(
-                DateVars.get_first_day_current_month,
+                DateVars.get_first_day_current_month(),
                 DateVars.current_date,
             )
         ).count()
@@ -396,10 +396,10 @@ class ComparisonCustomers(Comparison):
         )
 
     def compare_customer_annual(self):
-        last_year_customers_count = self.customers.objects.filter(
+        last_year_customers_count = self.customers.filter(
             joined__year=DateVars.get_last_year()
         ).count()
-        current_year_customers_count = self.customers.objects.filter(
+        current_year_customers_count = self.customers.filter(
             joined__year=DateVars.get_current_year()
         ).count()
         return self.return_dictionary(

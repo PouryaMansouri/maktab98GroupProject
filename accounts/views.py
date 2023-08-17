@@ -201,11 +201,24 @@ class SalesDashboardView(View):
         compare_orders_weekly = compare_orders.compare_order_weekly()
         compare_orders_daily = compare_orders.compare_order_daily()
 
+        compare_customers = ComparisonCustomers()
+        compare_customers_annual = compare_customers.compare_customer_annual()
+        compare_customers_monthly = compare_customers.compare_customer_monthly()
+        compare_customers_weekly = compare_customers.compare_customer_weekly()
+        compare_customers_daily = compare_customers.compare_customer_daily()
+
         compare_orders_list = [
             compare_orders_annual,
             compare_orders_monthly,
             compare_orders_weekly,
             compare_orders_daily,
+        ]
+
+        compare_customers_list = [
+            compare_customers_annual,
+            compare_customers_monthly,
+            compare_customers_weekly,
+            compare_customers_daily,
         ]
 
         most_seller_products_list = [
@@ -222,6 +235,14 @@ class SalesDashboardView(View):
             "Weekly Sales",
             "Daily Sales",
         ]
+
+        compare_customers_title = [
+            "Annual Customer Changes",
+            "Monthly Customer Changes",
+            "Weekly Customer Changes",
+            "Daily Customer Changes",
+        ]
+
         most_seller_products_title = [
             "Top Selling Products of all time",
             "Top Selling Products of the year",
@@ -231,6 +252,7 @@ class SalesDashboardView(View):
 
 
         compare_orders_with_titles = zip(compare_orders_list, compare_orders_title)
+        compare_customers_with_titles = zip(compare_customers_list, compare_customers_title)
         most_seller_products_with_titles = zip(
             most_seller_products_list, most_seller_products_title
         )
@@ -241,6 +263,7 @@ class SalesDashboardView(View):
             "most_seller_morning": most_seller_morning,
             "most_seller_noon": most_seller_noon,
             "most_seller_night": most_seller_night,
+            "compare_customers_with_titles": compare_customers_with_titles,
         }
         return render(request, "accounts/sales_dashboard.html", context=context)
 
