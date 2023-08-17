@@ -1,0 +1,430 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+ 
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'accounts/assets/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <link href="{% static 'accounts/assets/vendor/fonts/circular-std/style.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'accounts/assets/libs/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/assets/vendor/fonts/fontawesome/css/fontawesome-all.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/assets/vendor/charts/chartist-bundle/chartist.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/assets/vendor/charts/morris-bundle/morris.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/assets/vendor/charts/c3charts/c3.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/assets/vendor/fonts/flag-icon-css/flag-icon.min.css' %}">
+    <title>Concept - Bootstrap 4 Admin Dashboard Template</title>
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- main wrapper -->
+    <!-- ============================================================== -->
+    <div class="dashboard-main-wrapper">
+        {% include 'inc/include.html' %}
+        <!-- ============================================================== -->
+        <!-- wrapper  -->
+        <!-- ============================================================== -->
+        <div class="dashboard-wrapper">
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content ">
+                    <!-- ============================================================== -->
+                    <!-- pageheader  -->
+                    <!-- ============================================================== -->
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="page-header">
+                                <h2 class="pageheader-title">E-commerce Dashboard Template </h2>
+                                <p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis faucibus at enim quis massa lobortis rutrum.</p>
+                                <div class="page-breadcrumb">
+                                    <nav aria-label="breadcrumb">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                                            <li class="breadcrumb-item active" aria-current="page">E-Commerce Dashboard Template</li>
+                                        </ol>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- end pageheader  -->
+                    <!-- ============================================================== -->
+                    <div class="ecommerce-widget">
+                        <div class="row">
+                            {% for item, title in general_data_with_title %}
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="text-muted">{{ title }}</h5>
+                                        <div class="metric-value d-inline-block">
+                                            <h1 class="mb-1 text-primary">{{ item }}</h1>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <!-- recent orders  -->
+                        <!-- ============================================================== -->
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="card">
+                                    <h5 class="card-header">Recent Orders</h5>
+                                    <div class="card-body p-0">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead class="bg-light">
+                                                    <tr class="border-0">
+                                                        <th class="border-0">Order Id</th>
+                                                        <th class="border-0">Price</th>
+                                                        <th class="border-0">Order Time</th>
+                                                        <th class="border-0">Customer</th>
+                                                        <th class="border-0">Status</th>
+                                                        <th class="border-0">Details</th>
+                                                        <th class="border-0">Accept</th>
+                                                        <th class="border-0">Reject</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for order, cost in orders_with_costs %}
+                                                    <tr>
+                                                        <td>{{ order.id }} </td>
+                                                        <td>{{ cost }}</td>
+                                                        <td>{{ order.create_time }}</td>
+                                                        <td>{{ order.customer }} </td>
+                                                        <td>
+                                                            <span class="badge-dot {% if order.status == 'p' %}badge-brand {% elif order.status == 'r' %}badge-danger {% else %} badge-success {% endif %}mr-1"></span>
+                                                            {% if order.status == 'p' %}Pending {% elif order.status == 'r' %}Rejected {% else %} Accepted {% endif %}
+                                                        </td>
+                                                        <td><a href="{% url 'accounts:order_detail' order.pk %}" class="btn btn-primary"> details </a></td>
+                                                        {% if order.status == 'p' %}
+                                                        <td><a href="{% url 'orders:order_accept' order.pk %}" class="btn btn-success">accept</a></td>
+                                                        <td><a href="{% url 'orders:order_reject' order.pk %}" class="btn btn-danger">reject</a></td>
+                                                        {% endif %}
+                                                    </tr>
+                                                    {% endfor %}
+                                                    <tr>
+                                                        <td colspan="9"><a href="#" class="btn btn-outline-light float-right">View Details</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <!-- ============================================================== -->
+                            <!-- end recent orders  -->
+
+                            <!-- ============================================================== -->
+                            <!-- product category  -->
+                            <!-- ============================================================== -->
+                            <div class="row">
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <h5 class="card-header"> Most sold categories</h5>
+                                    <div class="card-body">
+                                        <canvas id="bestCategoriesChartAll" width="400" height="200"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <h5 class="card-header"> Most sold categories of the year</h5>
+                                    <div class="card-body">
+                                        <canvas id="bestCategoriesChartYear" width="400" height="200"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <h5 class="card-header"> Most sold categories of the month</h5>
+                                    <div class="card-body">
+                                        <canvas id="bestCategoriesChartMonth" width="400" height="200"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <h5 class="card-header"> Most sold categories of the week</h5>
+                                    <div class="card-body">
+                                        <canvas id="bestCategoriesChartWeek"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <!-- ============================================================== -->
+                            <!-- end product category  -->
+                                   <!-- product sales  -->
+                            <!-- ============================================================== -->
+
+
+
+                            <!-- ============================================================== -->
+                                   <!-- Best customers  -->
+                            <!-- ============================================================== -->
+                            <div class="row">
+                                {% for customers, title in best_customers_with_title %}
+                                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                    <div class="card">
+                                        <h5 class="card-header">{{ title }}</h5>
+                                        <div class="card-body p-0">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead class="bg-light">
+                                                        <tr class="border-0">
+                                                            <th class="border-0">Phone Number</th>
+                                                            <th class="border-0">Buy</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for customer in customers %}
+                                                        <tr>
+                                                            <td>{{ customer.0 }} </td>
+                                                            <td>{{ customer.1 }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <!-- ============================================================== -->
+                                   <!-- End Best customers  -->
+                            <!-- ============================================================== -->
+                            
+                            <div class="row align-content-stretch">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                <div class="card">
+                                    <h5 class="card-header">Orders By Status</h5>
+                                    <div class="card-body">
+                                        <canvas id="ordersStatusChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                <div class="card">
+                                    <h5 class="card-header">Business Hours</h5>
+                                    <div class="card-body">
+                                        <canvas id="peakHoursChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- end main wrapper  -->
+    <!-- ============================================================== -->
+    <!-- Optional JavaScript -->
+    <!-- jquery 3.3.1 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+
+
+        var ctx = document.getElementById("peakHoursChart").getContext("2d");
+        var peakHoursData = JSON.parse('{{ each_hour|safe }}');
+        console.log(peakHoursData)
+        var labels = Object.keys(peakHoursData);
+        var data = Object.values(peakHoursData);
+        console.log(labels)
+        console.log(data)
+        var chartData = {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Peak Business Hours",
+                    data: data,
+                    backgroundColor: "rgba(75, 192, 192, 0.2)",
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        var peakHoursChart = new Chart(ctx, {
+            type: "bar",
+            data: chartData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+// --------------------------------------------------------------------------------
+
+        var ctx = document.getElementById("bestCategoriesChartAll").getContext("2d");
+        var bestCategoriesAll = JSON.parse('{{ best_categories_all|safe }}');
+        var labels = Object.keys(bestCategoriesAll);
+        var data = Object.values(bestCategoriesAll);
+        var chartData = {
+            labels: labels,
+            datasets: [
+                {
+                    label: "best categories all",
+                    data: data,
+                    backgroundColor: "#0d0d28",
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        var bestCategoriesAllChart = new Chart(ctx, {
+            type: "bar",
+            data: chartData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+// --------------------------------------------------------------------------------
+
+var ctx = document.getElementById("bestCategoriesChartYear").getContext("2d");
+        var bestCategoriesYear = JSON.parse('{{ best_categories_year|safe }}');
+        var labels = Object.keys(bestCategoriesYear);
+        var data = Object.values(bestCategoriesYear);
+        var chartData = {
+            labels: labels,
+            datasets: [
+                {
+                    label: "best categories all",
+                    data: data,
+                    backgroundColor: "#0d0d28",
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        var bestCategoriesYearChart = new Chart(ctx, {
+            type: "bar",
+            data: chartData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+// --------------------------------------------------------------------------------
+
+var ctx = document.getElementById("bestCategoriesChartMonth").getContext("2d");
+        var bestCategoriesMonth = JSON.parse('{{ best_categories_month|safe }}');
+        var labels = Object.keys(bestCategoriesMonth);
+        var data = Object.values(bestCategoriesMonth);
+        var chartData = {
+            labels: labels,
+            datasets: [
+                {
+                    label: "best categories all",
+                    data: data,
+                    backgroundColor: "#0d0d28",
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        var bestCategoriesMonthChart = new Chart(ctx, {
+            type: "bar",
+            data: chartData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+// --------------------------------------------------------------------------------
+
+var ctx = document.getElementById("bestCategoriesChartWeek").getContext("2d");
+        var bestCategoriesWeek = JSON.parse('{{ best_categories_week|safe }}');
+        var labels = Object.keys(bestCategoriesWeek);
+        var data = Object.values(bestCategoriesWeek);
+        var chartData = {
+            labels: labels,
+            datasets: [
+                {
+                    label: "best categories all",
+                    data: data,
+                    backgroundColor: '#0d0d28',
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        var bestCategoriesWeekChart = new Chart(ctx, {
+            type: "bar",
+            data: chartData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+// --------------------------------------------------------------------------------
+
+    var ctx = document.getElementById('ordersStatusChart').getContext('2d');
+    var ordersStatusData = JSON.parse('{{ orders_count_by_status|safe }}');
+    var labels = Object.keys(ordersStatusData);
+    var values = Object.values(ordersStatusData);
+
+    var myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: values,
+                backgroundColor: ['green', 'orange', 'red'], // Add your desired colors
+            }],
+            labels: labels,
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+        }
+    });
+
+
+    </script>
+    <script src="{% static 'accounts/assets/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'accounts/assets/vendor/bootstrap/js/bootstrap.bundle.js' %}"></script>
+</body>
+ 
+</html>

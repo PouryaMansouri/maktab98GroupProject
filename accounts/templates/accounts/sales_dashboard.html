@@ -1,0 +1,239 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+ 
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'accounts/assets/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <link href="{% static 'accounts/assets/vendor/fonts/circular-std/style.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'accounts/assets/libs/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/assets/vendor/fonts/fontawesome/css/fontawesome-all.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/assets/vendor/vector-map/jqvmap.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/assets/vendor/jvectormap/jquery-jvectormap-2.0.2.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/assets/vendor/fonts/flag-icon-css/flag-icon.min.css' %}">
+    <title>Concept - Bootstrap 4 Admin Dashboard Template</title>
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- main wrapper -->
+    <!-- ============================================================== -->
+    <div class="dashboard-main-wrapper">
+        {% include 'inc/include.html' %}
+
+        <!-- ============================================================== -->
+        <!-- wrapper  -->
+        <!-- ============================================================== -->
+        <div class="dashboard-wrapper">
+            <div class="container-fluid  dashboard-content">
+                <!-- ============================================================== -->
+                <!-- pagehader  -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-header">
+                            <h3 class="mb-2">Sales Dashboard Template </h3>
+                            <p class="pageheader-text">Lorem ipsum dolor sit ametllam fermentum ipsum eu porta consectetur adipiscing elit.Nullam vehicula nulla ut egestas rhoncus.</p>
+                            <div class="page-breadcrumb">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Sales Dashboard Template</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- pagehader  -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <!-- metric -->
+                    {% for order_comparison, title in compare_orders_with_titles %}
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="text-muted">{{ title }}</h5>
+                                <div class="metric-value d-inline-block">
+                                    <h1 class="mb-1 text-primary">{{ order_comparison.current }} </h1>
+                                    <h3 class="mb-1 text-gray">{{ order_comparison.last }} </h3>
+
+                                </div>
+                                <div class="metric-label d-inline-block float-right {% if order_comparison.changes_percentage > 0 %}text-success{% else %}text-danger{% endif %}">
+                                    <i class="fa fa-fw {% if order_comparison.changes_percentage > 0 %}fa-caret-up{% else %}fa-caret-down{% endif %}"></i><span>{{ order_comparison.changes_percentage }}%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                    <!-- ============================================================== -->
+                    <!-- top selling products  -->
+                    <!-- ============================================================== -->
+                    <div class="row">
+                    {% for products, title in most_seller_products_with_titles %}
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-6">
+                        <div class="card">
+                            <h5 class="card-header">{{ title }}</h5>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="bg-light">
+                                            <tr class="border-0">
+                                                <th class="border-0">#</th>
+                                                <th class="border-0">Image</th>
+                                                <th class="border-0">Product Name</th>
+                                                <th class="border-0">Quantity</th>
+                                                <th class="border-0">Price</th>
+                                                <th class="border-0">total price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for product,values in products.items %}
+                                            <tr>
+                                                <td>{{ values.0 }}</td>
+                                                <td>
+                                                    <div class="m-r-10"><img src="{{ values.1 }}" alt="user" class="rounded" width="45" style="width: 50px; height: 50px;"></div>
+                                                </td>
+                                                <td>{{ values.2 }} </td>
+                                                <td>{{ values.3 }}</td>
+                                                <td>{{ values.4 }}</td>
+                                                <td>{{ values.5 }}</td>
+                                                
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    </div>
+
+                    <!-- ============================================================== -->
+                    <!-- end top selling products  -->
+                    <!-- ============================================================== -->
+                    <div class="row align-content-stretch">
+                        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <h5 class="card-header">Orders In Morning</h5>
+                                <div class="card-body">
+                                    <canvas id="mostSellerProductssMorningChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <h5 class="card-header">Orders In Noon</h5>
+                                <div class="card-body">
+                                    <canvas id="mostSellerProductssNoonChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <h5 class="card-header">Orders In Night</h5>
+                                <div class="card-body">
+                                    <canvas id="mostSellerProductsNightChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- end main wrapper  -->
+    <!-- ============================================================== -->
+    <!-- Optional JavaScript -->
+    <!-- jquery 3.3.1 js-->
+    <script src="{% static 'accounts/assets/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+    <!-- bootstrap bundle js-->
+    <script src="{% static 'accounts/assets/vendor/bootstrap/js/bootstrap.bundle.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+
+// -----------------------------------------------------------------------------
+
+    var ctx = document.getElementById('mostSellerProductssMorningChart').getContext('2d');
+    var mostSellerProductssMorningData = JSON.parse('{{ most_seller_morning|safe }}');
+    var labels = Object.keys(mostSellerProductssMorningData);
+    var values = Object.values(mostSellerProductssMorningData);
+
+    var myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: values,
+                backgroundColor: ['green', 'orange', 'red', 'gray'], // Add your desired colors
+            }],
+            labels: labels,
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+        }
+    });
+
+// -----------------------------------------------------------------------------
+
+var ctx = document.getElementById('mostSellerProductssNoonChart').getContext('2d');
+    var mostSellerProductssNoonData = JSON.parse('{{ most_seller_noon|safe }}');
+    var labels = Object.keys(mostSellerProductssNoonData);
+    var values = Object.values(mostSellerProductssNoonData);
+
+    var myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: values,
+                backgroundColor: ['green', 'orange', 'red', 'gray'], // Add your desired colors
+            }],
+            labels: labels,
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+        }
+    });
+
+// -----------------------------------------------------------------------------
+
+var ctx = document.getElementById('mostSellerProductsNightChart').getContext('2d');
+    var mostSellerProductssNightData = JSON.parse('{{ most_seller_night|safe }}');
+    console.log(mostSellerProductssNightData)
+    var labels = Object.keys(mostSellerProductssNightData);
+    var values = Object.values(mostSellerProductssNightData);
+
+    var myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: values,
+                backgroundColor: ['green', 'orange', 'red', "gray"], 
+            }],
+            labels: labels,
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+        }
+    });
+
+    </script>
+</body>
+ 
+</html>

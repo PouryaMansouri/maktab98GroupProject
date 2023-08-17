@@ -6,12 +6,14 @@ from .forms import CartAddForm, CustomerForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Order, OrderItem, Table
 from accounts.models import Customer
+from dynamic.models import PageData
 
 
 class CartView(View):
     def get(self, request):
         cart = Cart(request)
-        context = {"cart": cart}
+        page_data = PageData.get_page_date('Cart_Page')
+        context = {"cart": cart, 'page_data': page_data}
         return render(request, "orders/cart.html", context)
 
 
@@ -38,7 +40,8 @@ class CartRemoveView(View):
 class CheckoutView(View):
     def get(self, request):
         form = CustomerForm()
-        context = {"form": form}
+        page_data = PageData.get_page_date('Checkout_Page')
+        context = {"form": form, 'page_data': page_data}
         return render(request, "orders/checkout.html", context=context)
 
 
@@ -106,7 +109,7 @@ class OrderAccept(View):
         order = Order.objects.get(pk=pk)
         order.status = "a"
         order.save()
-        return redirect("accounts:manage_orders")
+        return redirect("accounts:dashboard")
 
 
 class OrderReject(View):
@@ -114,10 +117,11 @@ class OrderReject(View):
         order = Order.objects.get(pk=pk)
         order.status = "r"
         order.save()
-        return redirect("accounts:manage_orders")
+        return redirect("accounts:dashboard")
 
 
 class OrderDetailView(View):
     def get(self, request):
         session = request.session.get("orders_info")
-        return render(request, "orders/detail.html", {"session": session})
+        page_data = PageData.get_page_date('Details_Page')
+        return render(request, "orders/detail.html", {"session": session, 'page_data': page_data})
