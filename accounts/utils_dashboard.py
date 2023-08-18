@@ -1,13 +1,14 @@
-from django.db.models import Sum, Count
+from django.db.models import Sum
+
 from cafe.models import Product, Category
-from accounts.models import Customer
+from accounts.models import Customer, Personnel
 from orders.models import Order
+
 import datetime
 import json
-from dataclasses import dataclass
+from typing import List, Iterable
 
 
-@dataclass
 class DateVars:
     current_date: datetime = datetime.datetime.now().date()
     last_date: datetime = datetime.datetime.now().date() - datetime.timedelta(days=1)
@@ -55,13 +56,20 @@ class DateVars:
 
 
 class MostSellerProducts:
-    def most_seller_products_all(self, number):
+    def __init__(self, number) -> None:
+        self.number = number
+
+    def most_seller_products_all(self, number=None):
+        if number == None:
+            number = self.number
         filtered_products = Product.objects.all()
         products = self.count_quantity(filtered_products)
         products_dict = self.to_dict(products, number)
         return products_dict
 
-    def most_seller_products_year(self, number):
+    def most_seller_products_year(self, number=None):
+        if number == None:
+            number = self.number
         filtered_products = Product.objects.filter(
             orderitem__order__create_time__year=DateVars.get_current_year()
         )
@@ -69,7 +77,9 @@ class MostSellerProducts:
         products_dict = self.to_dict(products, number)
         return products_dict
 
-    def most_seller_products_month(self, number):
+    def most_seller_products_month(self, number=None):
+        if number == None:
+            number = self.number
         filtered_products = Product.objects.filter(
             orderitem__order__create_time__date__gte=DateVars.get_first_day_current_month()
         )
@@ -77,7 +87,9 @@ class MostSellerProducts:
         products_dict = self.to_dict(products, number)
         return products_dict
 
-    def most_seller_products_week(self, number):
+    def most_seller_products_week(self, number=None):
+        if number == None:
+            number = self.number
         filtered_products = Product.objects.filter(
             orderitem__order__create_time__date__gte=DateVars.get_first_day_current_week()
         )
@@ -85,7 +97,9 @@ class MostSellerProducts:
         products_dict = self.to_dict(products, number)
         return products_dict
 
-    def most_seller_products_today(self, number):
+    def most_seller_products_today(self, number=None):
+        if number == None:
+            number = self.number
         filtered_products = Product.objects.filter(
             orderitem__order__create_time__date=DateVars.current_date
         )
@@ -93,7 +107,9 @@ class MostSellerProducts:
         products_dict = self.to_dict(products, number)
         return products_dict
 
-    def most_seller_products_morning(self, number):
+    def most_seller_products_morning(self, number=None):
+        if number == None:
+            number = self.number
         filtered_products = Product.objects.filter(
             orderitem__order__create_time__hour__range=(6, 12)
         )
@@ -101,7 +117,9 @@ class MostSellerProducts:
         products_dict = self.to_dict_count(products, number)
         return self.to_json(products_dict)
 
-    def most_seller_products_noon(self, number):
+    def most_seller_products_noon(self, number=None):
+        if number == None:
+            number = self.number
         filtered_products = Product.objects.filter(
             orderitem__order__create_time__hour__range=(12, 18)
         )
@@ -109,7 +127,9 @@ class MostSellerProducts:
         products_dict = self.to_dict_count(products, number)
         return self.to_json(products_dict)
 
-    def most_seller_products_night(self, number):
+    def most_seller_products_night(self, number=None):
+        if number == None:
+            number = self.number
         filtered_products = Product.objects.filter(
             orderitem__order__create_time__hour__range=(18, 23)
         )
@@ -452,3 +472,161 @@ class MostSellerCategories:
 
     def to_json(self, products_dict):
         return json.dumps(products_dict)
+
+
+class SalesDashboardVars:
+    def __call__(self):
+        most_seller: MostSellerProducts = MostSellerProducts(3)
+        most_seller_all: dict = most_seller.most_seller_products_all()
+        most_seller_year: dict = most_seller.most_seller_products_year()
+        most_seller_month: dict = most_seller.most_seller_products_month()
+        most_seller_week: dict = most_seller.most_seller_products_week()
+
+        most_seller_morning: dict = most_seller.most_seller_products_morning()
+        most_seller_noon: dict = most_seller.most_seller_products_noon()
+        most_seller_night: dict = most_seller.most_seller_products_night()
+
+        compare_orders: ComparisonOrders = ComparisonOrders()
+        compare_orders_annual: dict = compare_orders.compare_order_annual()
+        compare_orders_monthly: dict = compare_orders.compare_order_monthly()
+        compare_orders_weekly: dict = compare_orders.compare_order_weekly()
+        compare_orders_daily: dict = compare_orders.compare_order_daily()
+
+        compare_customers: ComparisonCustomers = ComparisonCustomers()
+        compare_customers_annual: dict = compare_customers.compare_customer_annual()
+        compare_customers_monthly: dict = compare_customers.compare_customer_monthly()
+        compare_customers_weekly: dict = compare_customers.compare_customer_weekly()
+        compare_customers_daily: dict = compare_customers.compare_customer_daily()
+
+        compare_orders_list: List[dict] = [
+            compare_orders_annual,
+            compare_orders_monthly,
+            compare_orders_weekly,
+            compare_orders_daily,
+        ]
+
+        compare_customers_list: List[dict] = [
+            compare_customers_annual,
+            compare_customers_monthly,
+            compare_customers_weekly,
+            compare_customers_daily,
+        ]
+
+        most_seller_products_list: List[dict] = [
+            most_seller_all,
+            most_seller_year,
+            most_seller_month,
+            most_seller_week,
+        ]
+
+        compare_orders_title: List[str] = [
+            "Annual Sales",
+            "Monthly Sales",
+            "Weekly Sales",
+            "Daily Sales",
+        ]
+
+        compare_customers_title: List[str] = [
+            "Annual Customer Changes",
+            "Monthly Customer Changes",
+            "Weekly Customer Changes",
+            "Daily Customer Changes",
+        ]
+
+        most_seller_products_title: List[str] = [
+            "Top Selling Products of all time",
+            "Top Selling Products of the year",
+            "Top Selling Products of the month",
+            "Top Selling Products of the week",
+        ]
+
+        compare_orders_with_titles: Iterable = zip(
+            compare_orders_list, compare_orders_title
+        )
+        compare_customers_with_titles: Iterable = zip(
+            compare_customers_list, compare_customers_title
+        )
+        most_seller_products_with_titles: Iterable = zip(
+            most_seller_products_list, most_seller_products_title
+        )
+
+        context = {
+            "compare_orders_with_titles": compare_orders_with_titles,
+            "most_seller_products_with_titles": most_seller_products_with_titles,
+            "most_seller_morning": most_seller_morning,
+            "most_seller_noon": most_seller_noon,
+            "most_seller_night": most_seller_night,
+            "compare_customers_with_titles": compare_customers_with_titles,
+        }
+
+        return context
+
+
+class DashboardVars:
+    def __call__(self):
+        orders = OrdersManager()
+        orders_with_costs = orders.orders_with_costs(10)
+        orders_count = orders.count_orders()
+        total_sales = orders.total_sales()
+        each_hour = orders.get_peak_business_hours(8, 24)
+        orders_count_by_status = orders.get_count_by_status()
+        personnels_count = Personnel.objects.all().count()
+
+        categories = MostSellerCategories()
+        best_categories_all = categories.most_seller_categories_all(5)
+        best_categories_year = categories.most_seller_categories_year(5)
+        best_categories_month = categories.most_seller_categories_month(5)
+        best_categories_week = categories.most_seller_categories_week(5)
+
+        best_customers = BestCustomer()
+        best_customers_all = best_customers.best_customers_all(5)
+        best_customers_year = best_customers.best_customers_year(5)
+        best_customers_month = best_customers.best_customers_month(5)
+        best_customers_week = best_customers.best_customers_week(5)
+        customers_count = best_customers.count_customers()
+        best_customers_list = [
+            best_customers_all,
+            best_customers_year,
+            best_customers_month,
+            best_customers_week,
+        ]
+        best_customer_titles = [
+            "Best customers of all time",
+            "Best customers of all year",
+            "Best customers of all month",
+            "Best customers of all week",
+        ]
+
+        best_customers_with_title = zip(best_customers_list, best_customer_titles)
+
+        general_data_list = [
+            total_sales,
+            orders_count,
+            customers_count,
+            personnels_count,
+        ]
+        general_data_titles = [
+            "total sales",
+            "orders count",
+            "customers count",
+            "personnels count",
+        ]
+
+        general_data_with_title = zip(general_data_list, general_data_titles)
+
+        context = {
+            "best_categories_all": best_categories_all,
+            "best_categories_year": best_categories_year,
+            "best_categories_month": best_categories_month,
+            "best_categories_week": best_categories_week,
+            "best_customers_with_title": best_customers_with_title,
+            "customers_count": customers_count,
+            "orders_count": orders_count,
+            "total_sales": total_sales,
+            "orders_with_costs": orders_with_costs,
+            "each_hour": each_hour,
+            "orders_count_by_status": orders_count_by_status,
+            "general_data_with_title": general_data_with_title,
+        }
+
+        return context

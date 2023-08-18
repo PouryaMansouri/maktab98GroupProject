@@ -1,3 +1,4 @@
+# django imports
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import TemplateView
@@ -5,21 +6,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db.models import Sum, Q
 
-from .utils_dashboard import (
-    MostSellerProducts,
-    OrdersManager,
-    BestCustomer,
-    MostSellerCategories,
-    ComparisonCustomers,
-    ComparisonOrders,
-)
+# inner modules imports
 from utils import send_otp_code
 from accounts.models import Customer, Personnel
 from cafe.models import Product
 from orders.models import Order, OrderItem
+from .utils_dashboard import OrdersManager, SalesDashboardVars, DashboardVars
 from .forms import UserCustomerLoginForm, OTPForm
 
-
+# third party imports
 from random import randint
 import datetime
 import pytz
@@ -116,155 +111,15 @@ class ManageOrders(View):
 
 class DashboardView(View):
     def get(self, request):
-        orders = OrdersManager()
-        orders_with_costs = orders.orders_with_costs(10)
-        orders_count = orders.count_orders()
-        total_sales = orders.total_sales()
-        each_hour = orders.get_peak_business_hours(8, 24)
-        orders_count_by_status = orders.get_count_by_status()
-        personnels_count = Personnel.objects.all().count()
-
-        categories = MostSellerCategories()
-        best_categories_all = categories.most_seller_categories_all(5)
-        best_categories_year = categories.most_seller_categories_year(5)
-        best_categories_month = categories.most_seller_categories_month(5)
-        best_categories_week = categories.most_seller_categories_week(5)
-
-        best_customers = BestCustomer()
-        best_customers_all = best_customers.best_customers_all(5)
-        best_customers_year = best_customers.best_customers_year(5)
-        best_customers_month = best_customers.best_customers_month(5)
-        best_customers_week = best_customers.best_customers_week(5)
-        customers_count = best_customers.count_customers()
-        best_customers_list = [
-            best_customers_all,
-            best_customers_year,
-            best_customers_month,
-            best_customers_week,
-        ]
-        best_customer_titles = [
-            "Best customers of all time",
-            "Best customers of all year",
-            "Best customers of all month",
-            "Best customers of all week",
-        ]
-
-        best_customers_with_title = zip(best_customers_list, best_customer_titles)
-
-        general_data_list = [
-            total_sales,
-            orders_count,
-            customers_count,
-            personnels_count,
-        ]
-        general_data_titles = [
-            "total sales",
-            "orders count",
-            "customers count",
-            "personnels count",
-        ]
-
-        general_data_with_title = zip(general_data_list, general_data_titles)
-
-        context = {
-            "best_categories_all": best_categories_all,
-            "best_categories_year": best_categories_year,
-            "best_categories_month": best_categories_month,
-            "best_categories_week": best_categories_week,
-            "best_customers_with_title": best_customers_with_title,
-            "customers_count": customers_count,
-            "orders_count": orders_count,
-            "total_sales": total_sales,
-            "orders_with_costs": orders_with_costs,
-            "each_hour": each_hour,
-            "orders_count_by_status": orders_count_by_status,
-            "general_data_with_title": general_data_with_title,
-        }
+        context_instance = DashboardVars()
+        context = context_instance()
         return render(request, "accounts/dashboard.html", context=context)
 
 
 class SalesDashboardView(View):
     def get(self, request):
-        most_seller = MostSellerProducts()
-        most_seller_all = most_seller.most_seller_products_all(3)
-        most_seller_year = most_seller.most_seller_products_year(3)
-        most_seller_month = most_seller.most_seller_products_month(3)
-        most_seller_week = most_seller.most_seller_products_week(3)
-
-        most_seller_morning = most_seller.most_seller_products_morning(3)
-        most_seller_noon = most_seller.most_seller_products_noon(3)
-        most_seller_night = most_seller.most_seller_products_night(3)
-
-        compare_orders = ComparisonOrders()
-        compare_orders_annual = compare_orders.compare_order_annual()
-        compare_orders_monthly = compare_orders.compare_order_monthly()
-        compare_orders_weekly = compare_orders.compare_order_weekly()
-        compare_orders_daily = compare_orders.compare_order_daily()
-
-        compare_customers = ComparisonCustomers()
-        compare_customers_annual = compare_customers.compare_customer_annual()
-        compare_customers_monthly = compare_customers.compare_customer_monthly()
-        compare_customers_weekly = compare_customers.compare_customer_weekly()
-        compare_customers_daily = compare_customers.compare_customer_daily()
-
-        compare_orders_list = [
-            compare_orders_annual,
-            compare_orders_monthly,
-            compare_orders_weekly,
-            compare_orders_daily,
-        ]
-
-        compare_customers_list = [
-            compare_customers_annual,
-            compare_customers_monthly,
-            compare_customers_weekly,
-            compare_customers_daily,
-        ]
-
-        most_seller_products_list = [
-            most_seller_all,
-            most_seller_year,
-            most_seller_month,
-            most_seller_week,
-        ]
-        
-
-        compare_orders_title = [
-            "Annual Sales",
-            "Monthly Sales",
-            "Weekly Sales",
-            "Daily Sales",
-        ]
-
-        compare_customers_title = [
-            "Annual Customer Changes",
-            "Monthly Customer Changes",
-            "Weekly Customer Changes",
-            "Daily Customer Changes",
-        ]
-
-        most_seller_products_title = [
-            "Top Selling Products of all time",
-            "Top Selling Products of the year",
-            "Top Selling Products of the month",
-            "Top Selling Products of the week",
-        ]
-
-
-        compare_orders_with_titles = zip(compare_orders_list, compare_orders_title)
-        compare_customers_with_titles = zip(compare_customers_list, compare_customers_title)
-        most_seller_products_with_titles = zip(
-            most_seller_products_list, most_seller_products_title
-        )
-
-        context = {
-            "compare_orders_with_titles": compare_orders_with_titles,
-            "most_seller_products_with_titles": most_seller_products_with_titles,
-            "most_seller_morning": most_seller_morning,
-            "most_seller_noon": most_seller_noon,
-            "most_seller_night": most_seller_night,
-            "compare_customers_with_titles": compare_customers_with_titles,
-        }
+        context_instance = SalesDashboardVars()
+        context = context_instance()
         return render(request, "accounts/sales_dashboard.html", context=context)
 
 
@@ -272,7 +127,12 @@ class OrderDetailView(View):
     def get(self, request, pk):
         order = Order.objects.get(pk=pk)
         total_price = order.get_total_price()
-        return render(request, "accounts/order_detail.html", {"order": order, "total_price": total_price})
+        return render(
+            request,
+            "accounts/order_detail.html",
+            {"order": order, "total_price": total_price},
+        )
+
 
 class ShowAllOrders(TemplateView):
     template_name = "accounts/all_orders_table.html"
