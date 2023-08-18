@@ -1,13 +1,16 @@
+# django imports
 from django.contrib import admin
 from django.shortcuts import render
 from django.urls import path
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import admin
 from django import forms
-from .models import Category, Product
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+
+# inner modules imports
+from .models import Category, Product
 
 
 @admin.register(Category)

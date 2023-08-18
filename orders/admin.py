@@ -1,4 +1,7 @@
+# django imports
 from django.contrib import admin
+
+# inner modules imports
 from .models import Order, OrderItem, Table
 
 # Register your models here.

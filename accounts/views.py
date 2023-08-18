@@ -4,13 +4,10 @@ from django.views import View
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.db.models import Sum, Q
 
 # inner modules imports
 from utils import send_otp_code
-from accounts.models import Customer, Personnel
-from cafe.models import Product
-from orders.models import Order, OrderItem
+from orders.models import Order
 from .utils_dashboard import OrdersManager, SalesDashboardVars, DashboardVars
 from .forms import UserCustomerLoginForm, OTPForm
 

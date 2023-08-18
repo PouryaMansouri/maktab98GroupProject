@@ -1,4 +1,7 @@
+# django imports
 from django.db import models
+
+# inner modules imports
 from utils import item_directory_path
 
 

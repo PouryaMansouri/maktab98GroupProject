@@ -1,4 +1,7 @@
+# django imports
 from django.db import models
+
+# inner modules imports
 from cafe.models import Product
 from accounts.models import Personnel, Customer
 

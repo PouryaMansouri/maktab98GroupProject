@@ -1,5 +1,8 @@
+# django imports
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
+
+# inner modules imports
 from .models import Personnel
 
 
@@ -25,9 +28,6 @@ class UserCustomerLoginForm(forms.Form):
             }
         )
     )
-
-
-
 
 
 class OTPForm(forms.Form):

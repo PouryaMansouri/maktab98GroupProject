@@ -1,6 +1,9 @@
+# django imports
 from django.shortcuts import render
 from django.views.generic import DetailView
 from django.views import View
+
+# inner modules imports
 from .models import Product, Category
 from orders.forms import CartAddForm
 from django.db.models import Q
@@ -12,7 +15,7 @@ class HomeView(View):
         all_categories = Category.objects.all()
         all_products = Product.objects.all()
         form = CartAddForm()
-        page_data = PageData.get_page_date('Menu_Page')
+        page_data = PageData.get_page_date("Menu_Page")
         context = {
             "all_categories": all_categories,
             "all_products": all_products,
@@ -28,17 +31,20 @@ class SearchView(View):
         results = Product.objects.filter(
             Q(name__icontains=searched) | Q(description__icontains=searched)
         ).distinct()
-        page_data = PageData.get_page_date('Search_Page')
-        return render(request, "cafe/search_results.html", {"results": results, "page_data": page_data})
+        page_data = PageData.get_page_date("Search_Page")
+        return render(
+            request,
+            "cafe/search_results.html",
+            {"results": results, "page_data": page_data},
+        )
+
 
 class ProductDetailView(DetailView):
     model = Product
-    template_name = 'cafe/product_detail.html'
-    context_object_name = 'product'
+    template_name = "cafe/product_detail.html"
+    context_object_name = "product"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = CartAddForm()
+        context["form"] = CartAddForm()
         return context
-
-

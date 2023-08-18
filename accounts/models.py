@@ -1,5 +1,8 @@
+# django imports
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
+
+# inner modules imports
 from .managers import PersonnelManager
 
 
@@ -40,4 +43,3 @@ class Customer(models.Model):
 
     def __str__(self) -> str:
         return f"{self.phone_number}"
-

@@ -1,7 +1,9 @@
-from django.http import Http404
+#django imports
 from django.db import models
-from utils import item_directory_path
 from django.utils.html import mark_safe
+
+#inner modules imports
+from utils import item_directory_path
 
 
 # Create your models here.

@@ -1,4 +1,4 @@
-from typing import Any
+# django imports
 from django.contrib.auth.models import BaseUserManager
 from django.core.exceptions import ValidationError
 

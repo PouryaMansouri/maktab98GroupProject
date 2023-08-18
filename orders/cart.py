@@ -1,7 +1,10 @@
+# django imports
 from django.shortcuts import redirect
 
+# inner modules imports
 from cafe.models import Product
 
+# third party imports
 import json
 
 
@@ -39,7 +42,6 @@ class Cart:
         else:
             self.cart[product_id]["quantity"] += quantity
 
-
     def remove(self, product):
         product_id = str(product.id)
         if product_id in self.cart:
@@ -55,9 +57,8 @@ class Cart:
         response = redirect(destination)
         response.set_cookie(CART_COOKIE_KEY, serialized_cart)
         return response
-    
+
     def delete(self, destination):
         response = redirect(destination)
         response.delete_cookie(CART_COOKIE_KEY)
         return response
-
