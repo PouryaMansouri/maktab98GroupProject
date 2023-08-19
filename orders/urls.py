@@ -9,7 +9,7 @@ app_name = "orders"
 
 urlpatterns = [
     path("add_order/", views.AddOrderView.as_view(), name="add_order"),
-    path("order_detail/", views.OrderDetailView.as_view(), name="order_detail"),
+    path("orders_history/", views.OrdersHistoryView.as_view(), name="orders_history"),
     path("cart/", views.CartView.as_view(), name="cart"),
     path("cart_add/<int:product_id>/", views.CartAddView.as_view(), name="cart_add"),
     path(

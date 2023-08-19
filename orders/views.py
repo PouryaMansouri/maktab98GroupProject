@@ -88,23 +88,8 @@ class AddOrderView(View):
                 request.session.modified = True
             total_cost = cart.total_price()
             session_order.append(total_cost)
-            response = cart.delete("orders:order_detail")
+            response = cart.delete("orders:orders_history")
             return response
-
-
-class OrderCreateView(LoginRequiredMixin, View):
-    def get(self, request):
-        cart = Cart(request)
-        order = Order.objects.create(user=request.user)
-        for item in cart:
-            OrderItem.objects.create(
-                product=item["product"],
-                price=float(item["price"]),
-                quantity=item["quantity"],
-            )
-        return redirect(
-            "orders:order_detail",
-        )
 
 
 class OrderAccept(View):
@@ -123,10 +108,12 @@ class OrderReject(View):
         return redirect("accounts:dashboard")
 
 
-class OrderDetailView(View):
+class OrdersHistoryView(View):
     def get(self, request):
         session = request.session.get("orders_info")
         page_data = PageData.get_page_date("Details_Page")
         return render(
-            request, "orders/detail.html", {"session": session, "page_data": page_data}
+            request,
+            "orders/orders_history.html",
+            {"session": session, "page_data": page_data},
         )
