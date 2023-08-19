@@ -119,3 +119,60 @@ class OrdersHistoryView(View):
             "orders/orders_history.html",
             {"orders": orders, "page_data": page_data},
         )
+
+class ReorderView(View):
+    form_class = CustomerForm
+
+    def get(self, request, order_id):
+        order = Order.objects.get(id=order_id)
+        last_phone_number = list(request.session.get("orders_info").values())[-1][-1]
+        initial_values = {'phone_number': last_phone_number}
+        form = self.form_class(initial=initial_values)
+        page_data = PageData.get_page_date("Checkout_Page")
+        context = {"form": form, "page_data": page_data, "order": order}
+        return render(request, "orders/reorder.html", context=context)
+
+    def post(self, request, order_id):
+        form = self.form_class(request.POST)
+        order = Order.objects.get(id=order_id)
+        if form.is_valid():
+            cd = form.cleaned_data
+            phone_number = cd["phone_number"]
+            table_number = cd["table_number"]
+            try:
+                customer = Customer.objects.get(phone_number=phone_number)
+            except:
+                customer = Customer.objects.create(phone_number=phone_number)
+
+            table = Table.objects.get(table_number=table_number)
+            new_order = Order.objects.create(table=table, customer=customer)
+
+            if request.session.get("orders_info"):
+                session = request.session.get("orders_info")
+            else:
+                session = request.session["orders_info"] = {}
+
+            session_order = session[str(new_order.id)] = []
+
+            for orderitem in order.orderitem_set.all():
+                OrderItem.objects.create(
+                    order=new_order,
+                    product=orderitem.product,
+                    quantity=orderitem.quantity,
+                    price=orderitem.price,
+                )
+            
+                session_order.append(
+                    {
+                        "product": orderitem.product.name,
+                        "price": float(orderitem.price),
+                        "quantity": orderitem.quantity,
+                        "sub_total": float(orderitem.get_cost()),
+                    }
+                )
+                request.session.modified = True
+
+            total_cost = float(order.get_total_price())
+            session_order.append(total_cost)
+            session_order.append(phone_number)
+            return redirect("orders:orders_history")

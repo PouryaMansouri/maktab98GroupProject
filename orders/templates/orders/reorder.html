@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+{{page_data.title}}
+{% endblock %}
+{% block content %}
+
+<main>
+  <!-- breadcrumb area start -->
+  <section
+    class="breadcrumb-area pt-140 pb-140 bg_img"
+    data-overlay="dark"
+    data-opacity="5"
+    data-background="{{page_data.banner.url}}"
+  >
+  <div class="shape shape__1">
+    <img src="{% static 'cafe/images/shape/breadcrumb-shape-1.png' %}" alt="" />
+  </div>
+  <div class="shape shape__2">
+    <img src="{% static 'cafe/images/shape/breadcrumb-shape-2.png' %}" alt="" />
+  </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-12 text-center">
+          <h2 class="page-title">{{page_data.name}}</h2>
+          <div class="cafena-breadcrumb breadcrumbs">
+            <ul
+              class="list-unstyled d-flex align-items-center justify-content-center"
+            >
+              <li class="cafenabcrumb-item duxinbcrumb-begin">
+                <a href=""><span>{{page_data.route}}</span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- breadcrumb area end -->
+
+  <!-- cart area start -->
+  <div class="checkout-area pt-120 pb-120">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="cart-wrapper">
+            <div class="row">
+              <div class="col-xl-9">
+                <div class="checkout-top">
+                  <div class="cart-form">
+                    <form action="{% url 'orders:reorder' order.id %}" method="post">
+                      <div class="row">
+                        <div class="col-xl-8">
+                          {% csrf_token %}
+                          <div class="from-group mt-30">{{ form }}</div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xl-8">
+                          <div class="cart-total mt-45 text-end">
+                            <h2 class="title text-start">Cart Total</h2>
+                            <div class="ct-sub ct-sub__total">
+                              <span>Total</span>
+                              <span>${{ order.get_total_price }}</span>
+                            </div>
+                            <button type="submit" class="site-btn">Procced to checkout</a>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%endblock%}
+</main>
