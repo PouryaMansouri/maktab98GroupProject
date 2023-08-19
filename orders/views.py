@@ -111,8 +111,13 @@ class OrderReject(View):
 class OrdersHistoryView(View):
     def get(self, request):
         session = request.session.get("orders_info")
-        order_ids = list(session.keys())
-        orders = Order.objects.filter(id__in=order_ids)
+        print(request.session)
+        print(session)
+        try:
+            order_ids = list(session.keys())
+            orders = Order.objects.filter(id__in=order_ids)
+        except:
+            orders = None
         page_data = PageData.get_page_date("Details_Page")
         return render(
             request,
