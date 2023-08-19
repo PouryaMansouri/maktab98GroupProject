@@ -42,9 +42,17 @@ class CartRemoveView(View):
 
 class CheckoutView(View):
     def get(self, request):
-        form = CustomerForm()
+        cart = Cart(request)
+        try:
+            last_phone_number = list(request.session.get("orders_info").values())[-1][-1]
+        except:
+            last_phone_number = None
+        total_price = cart.total_price()
+        print(request.session.get("orders_info"))
+        initial_values = {'phone_number': last_phone_number}
+        form = CustomerForm(initial=initial_values)
         page_data = PageData.get_page_date("Checkout_Page")
-        context = {"form": form, "page_data": page_data}
+        context = {"form": form, "page_data": page_data, "total_price": total_price}
         return render(request, "orders/checkout.html", context=context)
 
 
@@ -88,6 +96,7 @@ class AddOrderView(View):
                 request.session.modified = True
             total_cost = cart.total_price()
             session_order.append(total_cost)
+            session_order.append(phone_number)
             response = cart.delete("orders:orders_history")
             return response
 
@@ -124,6 +133,7 @@ class OrdersHistoryView(View):
             "orders/orders_history.html",
             {"orders": orders, "page_data": page_data},
         )
+
 
 class ReorderView(View):
     form_class = CustomerForm
