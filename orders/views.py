@@ -4,12 +4,13 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 # inner modules imports
-from .cart import Cart
 from cafe.models import Product
-from .forms import CartAddForm, CustomerForm
+from .forms import CustomerForm
 from .models import Order, OrderItem, Table
 from accounts.models import Customer
 from dynamic.models import PageData
+
+# third party imports
 import json
 import urllib.parse
 
@@ -74,28 +75,33 @@ class AddOrderView(View):
                 session = request.session["orders_info"] = {}
 
             session_order = session[str(order.id)] = []
-            cart = Cart(request)
-            for key, value in cart:
-                product = Product.objects.get(id=key)
-                OrderItem.objects.create(
-                    order=order,
-                    product=product,
-                    price=float(value["price"]),
-                    quantity=value["quantity"],
-                )
-                session_order.append(
-                    {
-                        "product": value["product"],
-                        "price": value["price"],
-                        "quantity": value["quantity"],
-                        "sub_total": value["sub_total"],
-                    }
-                )
-                request.session.modified = True
-            total_cost = cart.total_price()
+            cart_js = request.COOKIES.get(CART_COOKIE_KEY)
+            decoded_cart_js = urllib.parse.unquote(cart_js)
+            cart = json.loads(decoded_cart_js)
+            for key, value in cart.items():
+                if key != "total_price":
+                    product = Product.objects.get(id=key)
+                    OrderItem.objects.create(
+                        order=order,
+                        product=product,
+                        price=float(value["price"]),
+                        quantity=value["quantity"],
+                    )
+                    session_order.append(
+                        {
+                            "product": value["name"],
+                            "price": value["price"],
+                            "quantity": value["quantity"],
+                            "sub_total": value["sub_total"],
+                        }
+                    )
+                    request.session.modified = True
+                else:
+                    total_cost = value
             session_order.append(total_cost)
             session_order.append(phone_number)
-            response = cart.delete("orders:orders_history")
+            response = redirect("orders:orders_history")
+            response.delete_cookie(CART_COOKIE_KEY)
             return response
 
 
@@ -139,7 +145,7 @@ class ReorderView(View):
     def get(self, request, order_id):
         order = Order.objects.get(id=order_id)
         last_phone_number = list(request.session.get("orders_info").values())[-1][-1]
-        initial_values = {'phone_number': last_phone_number}
+        initial_values = {"phone_number": last_phone_number}
         form = self.form_class(initial=initial_values)
         page_data = PageData.get_page_date("Checkout_Page")
         context = {"form": form, "page_data": page_data, "order": order}
@@ -174,7 +180,7 @@ class ReorderView(View):
                     quantity=orderitem.quantity,
                     price=orderitem.price,
                 )
-            
+
                 session_order.append(
                     {
                         "product": orderitem.product.name,
