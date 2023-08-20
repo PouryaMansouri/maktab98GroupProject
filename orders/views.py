@@ -10,34 +10,29 @@ from .forms import CartAddForm, CustomerForm
 from .models import Order, OrderItem, Table
 from accounts.models import Customer
 from dynamic.models import PageData
+import json
+import urllib.parse
+
+CART_COOKIE_KEY = "cart"
 
 
 class CartView(View):
     def get(self, request):
-        cart = Cart(request)
+        if request.COOKIES.get(CART_COOKIE_KEY):
+            cart_js = request.COOKIES.get(CART_COOKIE_KEY)
+            print(cart_js)
+            decoded_cart_js = urllib.parse.unquote(cart_js)
+            print(decoded_cart_js)
+            cart = json.loads(decoded_cart_js)
+        else:
+            cart = None
+
         page_data = PageData.get_page_date("Cart_Page")
-        context = {"cart": cart, "page_data": page_data}
+        context = {
+            "cart": cart,
+            "page_data": page_data,
+        }
         return render(request, "orders/cart.html", context)
-
-
-class CartAddView(View):
-    def post(self, request, product_id):
-        cart = Cart(request)
-        product = get_object_or_404(Product, id=product_id)
-        form = CartAddForm(request.POST)
-        if form.is_valid():
-            cart.add(product, form.cleaned_data["quantity"])
-            response = cart.save("orders:cart")
-        return response
-
-
-class CartRemoveView(View):
-    def get(self, request, product_id):
-        cart = Cart(request)
-        product = get_object_or_404(Product, id=product_id)
-        cart.remove(product)
-        response = cart.save("orders:cart")
-        return response
 
 
 class CheckoutView(View):
