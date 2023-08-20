@@ -105,6 +105,7 @@ class OrderAccept(View):
     def get(self, request, pk):
         order = Order.objects.get(pk=pk)
         order.status = "a"
+        order.personnel = request.user
         order.save()
         return redirect("accounts:dashboard")
 
@@ -113,6 +114,7 @@ class OrderReject(View):
     def get(self, request, pk):
         order = Order.objects.get(pk=pk)
         order.status = "r"
+        order.personnel = request.user
         order.save()
         return redirect("accounts:dashboard")
 
