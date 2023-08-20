@@ -123,26 +123,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 <script>
-  function removeProduct(button) {
-    var productId = button.getAttribute("data-product-id");
-    const row = document.querySelector(`[data-row-id="${productId}"]`);
-    if (row) {
-      row.remove();
-    }
-    console.log(productId);
 
-    var cart = Cookies.get("cart");
-    console.log(cart);
-    cart = cart ? JSON.parse(cart) : {};
-    console.log(cart);
-    cart["total_price"] -= cart[productId]["sub_total"];
-    const totalPriceElement = document.getElementById("totalPrice");
-    totalPriceElement.textContent = cart["total_price"];
-    delete cart[productId];
-    console.log(cart);
-    Cookies.set("cart", JSON.stringify(cart));
-    alert("succes");
-  }
 </script>
 
 {% endblock %}
