@@ -37,17 +37,20 @@ class CartView(View):
 
 class CheckoutView(View):
     def get(self, request):
-        cart = Cart(request)
+        cart_js = request.COOKIES.get(CART_COOKIE_KEY)
+        decoded_cart_js = urllib.parse.unquote(cart_js)
+        cart = json.loads(decoded_cart_js)
+        total_price = cart.get("total_price") or 0
         try:
-            last_phone_number = list(request.session.get("orders_info").values())[-1][-1]
+            last_phone_number = list(request.session.get("orders_info").values())[-1][
+                -1
+            ]
         except:
             last_phone_number = None
-        total_price = cart.total_price()
-        print(request.session.get("orders_info"))
-        initial_values = {'phone_number': last_phone_number}
+        initial_values = {"phone_number": last_phone_number}
         form = CustomerForm(initial=initial_values)
         page_data = PageData.get_page_date("Checkout_Page")
-        context = {"form": form, "page_data": page_data, "total_price": total_price}
+        context = {"form": form, "total_price": total_price, "page_data": page_data}
         return render(request, "orders/checkout.html", context=context)
 
 
