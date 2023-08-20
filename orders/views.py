@@ -14,34 +14,18 @@ from dynamic.models import PageData
 import json
 import urllib.parse
 
-CART_COOKIE_KEY = "cart"
+# CART_COOKIE_KEY = "cart"
 
 
 class CartView(View):
     def get(self, request):
-        if request.COOKIES.get(CART_COOKIE_KEY):
-            cart_js = request.COOKIES.get(CART_COOKIE_KEY)
-            print(cart_js)
-            decoded_cart_js = urllib.parse.unquote(cart_js)
-            print(decoded_cart_js)
-            cart = json.loads(decoded_cart_js)
-        else:
-            cart = None
-
         page_data = PageData.get_page_date("Cart_Page")
-        context = {
-            "cart": cart,
-            "page_data": page_data,
-        }
+        context = {"page_data": page_data}
         return render(request, "orders/cart.html", context)
 
 
 class CheckoutView(View):
     def get(self, request):
-        cart_js = request.COOKIES.get(CART_COOKIE_KEY)
-        decoded_cart_js = urllib.parse.unquote(cart_js)
-        cart = json.loads(decoded_cart_js)
-        total_price = cart.get("total_price") or 0
         try:
             last_phone_number = list(request.session.get("orders_info").values())[-1][
                 -1
@@ -51,11 +35,15 @@ class CheckoutView(View):
         initial_values = {"phone_number": last_phone_number}
         form = CustomerForm(initial=initial_values)
         page_data = PageData.get_page_date("Checkout_Page")
-        context = {"form": form, "total_price": total_price, "page_data": page_data}
+        context = {"form": form, "page_data": page_data}
         return render(request, "orders/checkout.html", context=context)
 
 
 class AddOrderView(View):
+    def setup(self, request, *args, **kwargs):
+        self.CART_COOKIE_KEY = "cart"
+        return super().setup(request, *args, **kwargs)
+
     def post(self, request):
         form = CustomerForm(request.POST)
         if form.is_valid():
@@ -75,7 +63,7 @@ class AddOrderView(View):
                 session = request.session["orders_info"] = {}
 
             session_order = session[str(order.id)] = []
-            cart_js = request.COOKIES.get(CART_COOKIE_KEY)
+            cart_js = request.COOKIES.get(self.CART_COOKIE_KEY)
             decoded_cart_js = urllib.parse.unquote(cart_js)
             cart = json.loads(decoded_cart_js)
             for key, value in cart.items():
@@ -101,7 +89,7 @@ class AddOrderView(View):
             session_order.append(total_cost)
             session_order.append(phone_number)
             response = redirect("orders:orders_history")
-            response.delete_cookie(CART_COOKIE_KEY)
+            response.delete_cookie(self.CART_COOKIE_KEY)
             return response
 
 
