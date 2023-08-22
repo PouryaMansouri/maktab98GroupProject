@@ -126,3 +126,20 @@ class OrderRejectTest(TestCase):
         updated_order = Order.objects.get(pk=self.order.pk)
         self.assertEqual(updated_order.status, "r")
         self.assertEqual(updated_order.personnel, self.personnel)
+
+
+class OrderAcceptTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.personnel = baker.make(Personnel)
+        self.order = baker.make(Order, personnel=self.personnel, status="p")
+
+    def test_order_rejection(self):
+        self.client.force_login(self.personnel)
+        url = reverse("orders:order_accept", kwargs={"pk": self.order.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse("accounts:dashboard"))
+        updated_order = Order.objects.get(pk=self.order.pk)
+        self.assertEqual(updated_order.status, "a")
+        self.assertEqual(updated_order.personnel, self.personnel)
