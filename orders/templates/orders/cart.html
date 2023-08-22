@@ -1,9 +1,5 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block title %}
-{{page_data.title}}
-{% endblock %}
-{%block content%}
+{% extends 'base.html' %} {% load static %} {% block title %}
+{{page_data.title}} {% endblock %} {%block content%}
 <section
   class="breadcrumb-area pt-140 pb-140 bg_img"
   data-overlay="dark"
@@ -39,6 +35,7 @@
       <div class="col-xl-12">
         <div class="cart-wrapper">
           <div class="table-content table-responsive">
+            {% if cart %}
             <table class="table">
               <thead>
                 <tr>
@@ -49,29 +46,35 @@
                 </tr>
               </thead>
               <tbody>
-                {% for key, item in cart %}
-                <tr>
+                {% for key, value in cart.items %} {% if not forloop.last %}
+                <tr data-row-id="{{ key }}">
                   <td class="product-name">
-                    <a href="#">{{ item.product }}</a>
+                    <a href="#">{{ value.name }}</a>
                   </td>
                   <td class="product-price">
-                    <span class="amount">{{ item.price }}</span>
+                    <span class="amount">{{ value.price }}</span>
                   </td>
-                  <td class="product-quantity">{{ item.quantity }}</td>
+                  <td class="product-quantity">{{ value.quantity }}</td>
                   <td class="product-subtotal">
-                    <span class="amount">{{ item.sub_total }}</span>
+                    <span class="amount">{{ value.sub_total }}</span>
                   </td>
                   <td>
-                    <a
-                      href="{% url 'orders:cart_remove' key %}"
+                    <button
+                      type="button"
                       class="btn btn-danger"
-                      >Remove</a
+                      data-product-id="{{ key }}"
+                      onclick="removeProduct(this)"
                     >
+                      Remove
+                    </button>
                   </td>
                 </tr>
-                {% endfor %}
+                {% endif %} {% endfor %}
               </tbody>
             </table>
+            {% else %}
+            <h1 class="text-center">No orders yet!</h1>
+            {% endif %}
           </div>
         </div>
         <div class="cart-bottom-wrapper d-flex align-items-center">
@@ -105,13 +108,22 @@
           <h2 class="title">Cart Total</h2>
           <div class="ct-sub ct-sub__total">
             <span>Total</span>
-            <span>{{ cart.total_price }}</span>
+            <span id="totalPrice">{{ cart.total_price }}</span>
           </div>
-          <a href="{% url 'orders:checkout' %}" class="site-btn">Procced to checkout</a>
+          <a
+            href="{% url 'orders:checkout' %}"
+            class="btn site-btn {% if not cart %} disabled {% endif %}"
+            >Procced to checkout</a
+          >
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+<script>
+
+</script>
 
 {% endblock %}
