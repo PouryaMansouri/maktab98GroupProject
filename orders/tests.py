@@ -1,7 +1,6 @@
 from django.test import TestCase, RequestFactory, Client
 from django.urls import reverse
-from .views import CartView
-from .cart import Cart
+from .views import ReorderView
 from .models import Table, Order, OrderItem
 from accounts.models import Customer
 from cafe.models import Product
@@ -47,7 +46,6 @@ class CartViewTest(TestCase):
         self.assertTemplateUsed(response, "orders/cart.html")
 
 
-"""
 class AddOrderViewTest(TestCase):
     def setUp(self):
         self.client = Client()
@@ -107,8 +105,6 @@ class AddOrderViewTest(TestCase):
             session["orders_info"][str(order.id)][2], self.customer.phone_number
         )
         self.assertNotIn(self.client.COOKIES["cart"], self.client.cookies)
-
-"""
 
 
 class OrderRejectTest(TestCase):
