@@ -2,6 +2,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
 
 # inner modules imports
 from cafe.models import Product
@@ -91,6 +92,7 @@ class AddOrderView(View):
             response = redirect("orders:orders_history")
             response.delete_cookie(self.CART_COOKIE_KEY)
             return response
+        return HttpResponse(status=400)
 
 
 class OrderAccept(View):
