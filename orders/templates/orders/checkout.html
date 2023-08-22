@@ -63,7 +63,7 @@
                               <span>Total</span>
                               <span>$ {{ total_price }}</span>
                             </div>
-                            <button type="submit" class="site-btn">Procced to checkout</a>
+                            <button type="submit" class="btn site-btn {% if total_price == 0 %}disabled {% endif %} ">Procced to checkout</a>
                           </div>
                         </div>
                       </div>

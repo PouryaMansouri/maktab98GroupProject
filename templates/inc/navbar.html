@@ -113,7 +113,7 @@
                             </div>
                             <div class="cart cart-trigger item position-relative">
                                 <i class="fa fa-shopping-basket"></i>
-                                <span class="cart__count">3</span>
+                                <span class="cart__count">{{ length }}</span>
                             </div>
                         </div>
                     </div>
@@ -288,68 +288,50 @@
                 class="fal fa-times"></i></a>
     </div>
     <div class="cart-bar">
-        <h4 class="cart-bar__title">Cart Items - <span>4</span></h4>
-        <div class="cart-bar__lists">
-            <div class="cart-bar__item position-relative d-flex">
+        <h4 class="cart-bar__title">Cart Items</h4>
+        <div class="cart-bar__lists" id="cartItemsContainer">
+            {% for key, value in cart.items %}
+            {% if not forloop.last %}
+            <div class="cart-bar__item position-relative d-flex" data-row-id-nav="{{ key }}">
                 <div class="thumb">
-                    <img src="assets/images/top-grade/tg-1.png" alt="image_not_found">
+                    <img src="{{ value.image }}" alt="image_not_found">
                 </div>
                 <div class="content">
                     <h4 class="title">
-                        <a href="product-details.html">Rorem ipsum dolor sit amet.</a>
+                        <a >{{ value.name }}</a>
                     </h4>
-                    <span class="price">$19.00</span>
-                    <a href="#0" class="remove"><i class="fal fa-times"></i></a>
-                </div>
-            </div>
-            <div class="cart-bar__item position-relative d-flex">
-                <div class="thumb">
-                    <img src="assets/images/top-grade/tg-2.png" alt="image_not_found">
-                </div>
-                <div class="content">
-                    <h4 class="title">
-                        <a href="product-details.html">Rorem ipsum dolor sit amet.</a>
-                    </h4>
-                    <span class="price">$36.00</span>
-                    <a href="#0" class="remove"><i class="fal fa-times"></i></a>
-                </div>
-            </div>
-            <div class="cart-bar__item position-relative d-flex">
-                <div class="thumb">
-                    <img src="assets/images/top-grade/tg-3.png" alt="image_not_found">
-                </div>
-                <div class="content">
-                    <h4 class="title">
-                        <a href="product-details.html">Rorem ipsum dolor sit amet.</a>
-                    </h4>
-                    <span class="price">$20.00</span>
-                    <a href="#0" class="remove"><i class="fal fa-times"></i></a>
-                </div>
-            </div>
-            <div class="cart-bar__item position-relative d-flex">
-                <div class="thumb">
-                    <img src="assets/images/top-grade/tg-4.png" alt="image_not_found">
-                </div>
-                <div class="content">
-                    <h4 class="title">
-                        <a href="product-details.html">Rorem ipsum dolor sit amet.</a>
-                    </h4>
-                    <span class="price">$20.00</span>
-                    <a href="#0" class="remove"><i class="fal fa-times"></i></a>
+                    <span class="price">${{ value.price }}</span>
+                    <span class="price">{{ value.quantity }}</span>
+
+                    <button
+                    type="button"
+                    class="remove"                 
+                    data-product-id-nav="{{ key }}"
+                    onclick="removeProductNav(this)"
+                  >
+                  <i class="fal fa-times"></i>
+                  </button>
                 </div>
             </div>
         </div>
+        {% else %}
         <div class="cart-bar__subtotal d-flex align-items-center justify-content-between">
-            <span>Sub Total:</span>
-            <span>$87.00</span>
+            <span>Total Price:</span>
+            <span id="totalPriceNav">${{ value }}</span>
         </div>
+        {% endif %}
+        {% endfor %}
         <div class="btns d-flex align-items-center justify-content-center">
-            <a href="cart.html" class="site-btn">View Cart</a>
-            <a href="checkout.html" class="site-btn site-btn__borderd">Checkout</a>
+            <a href="{% url 'orders:cart' %}" class="site-btn">View Cart</a>
+            <a href="{% url 'orders:checkout' %}" class="site-btn site-btn__borderd">Checkout</a>
         </div>
     </div>
 </aside>
 <div class="overlay"></div>
+
+<script>    
+
+  </script>
 
 </body>
 

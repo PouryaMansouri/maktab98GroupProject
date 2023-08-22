@@ -13,6 +13,7 @@ from orders.models import Order, OrderItem
 from .utils_dashboard import OrdersManager, SalesDashboardVars, DashboardVars
 from .forms import UserCustomerLoginForm, OTPForm, OrderItemForm
 
+
 # third party imports
 from random import randint
 import datetime
@@ -42,7 +43,9 @@ class UserLoginView(View):
             cd = form.cleaned_data
             phone_number = cd["phone_number"]
             code = randint(1000, 9999)
-            print(code)
+            if Personnel.objects.filter(phone_number=phone_number).exists():
+                # send_otp_code(phone_number, code)
+                print(code)
             session["phone_number"] = phone_number
             session["code"] = code
             session["created_at"] = current_datetime.isoformat()
@@ -74,7 +77,6 @@ class UserVerifyView(View):
             digit3 = cd["digit3"]
             digit4 = cd["digit4"]
             entered_code = int(digit1 + digit2 + digit3 + digit4)
-            print(entered_code)
 
             user = authenticate(
                 request,
@@ -84,7 +86,7 @@ class UserVerifyView(View):
             if user is not None:
                 login(request, user)
                 messages.success(request, "Logged in Successfully", "success")
-                return redirect("accounts:manage_orders")
+                return redirect("accounts:dashboard")
             else:
                 messages.error(request, "The code or phone_number is wrong!", "error")
                 return redirect("accounts:verify_personnel")
