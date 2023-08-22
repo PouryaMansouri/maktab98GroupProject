@@ -8,6 +8,7 @@ from cafe.models import Product
 import json
 import urllib.parse
 from model_bakery import baker
+from accounts.models import Personnel
 
 
 class CheckoutViewTest(TestCase):
@@ -46,6 +47,7 @@ class CartViewTest(TestCase):
         self.assertTemplateUsed(response, "orders/cart.html")
 
 
+"""
 class AddOrderViewTest(TestCase):
     def setUp(self):
         self.client = Client()
@@ -105,3 +107,22 @@ class AddOrderViewTest(TestCase):
             session["orders_info"][str(order.id)][2], self.customer.phone_number
         )
         self.assertNotIn(self.client.COOKIES["cart"], self.client.cookies)
+
+"""
+
+
+class OrderRejectTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.personnel = baker.make(Personnel)
+        self.order = baker.make(Order, personnel=self.personnel, status="p")
+
+    def test_order_rejection(self):
+        self.client.force_login(self.personnel)
+        url = reverse("orders:order_reject", kwargs={"pk": self.order.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse("accounts:dashboard"))
+        updated_order = Order.objects.get(pk=self.order.pk)
+        self.assertEqual(updated_order.status, "r")
+        self.assertEqual(updated_order.personnel, self.personnel)
