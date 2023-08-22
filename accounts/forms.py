@@ -4,6 +4,7 @@ from django import forms
 
 # inner modules imports
 from .models import Personnel
+from orders.models import OrderItem
 
 
 class PersonnelCreationForm(UserCreationForm):
@@ -43,3 +44,9 @@ class OTPForm(forms.Form):
     digit4 = forms.CharField(
         max_length=1, widget=forms.TextInput(attrs={"maxlength": "1"})
     )
+
+
+class OrderItemForm(forms.ModelForm):
+    class Meta:
+        model = OrderItem
+        exclude = ["order","price"]
